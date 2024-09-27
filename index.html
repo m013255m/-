@@ -11,8 +11,8 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #3b2f2f; /* بني غامق */
-            color: #f0f0f0; /* أبيض */
+            background-color: #f2f2f2; /* خلفية بيضاء غامقة */
+            color: #333; /* لون نص غامق */
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -27,15 +27,18 @@
         }
         nav a {
             color: #f0f0f0; /* أبيض */
-            margin: 0 15px;
+            margin: 0 10px;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
             animation: slideIn 0.5s ease forwards;
+            font-size: 1.1em;
+            padding: 10px 15px;
+            border-radius: 5px;
         }
         nav a:hover {
             color: #ffcc00; /* لون مميز عند التمرير */
-            text-decoration: underline;
+            background-color: rgba(255, 204, 0, 0.2); /* خلفية عند التمرير */
         }
         @keyframes slideIn {
             from {
@@ -59,10 +62,12 @@
             margin: 0;
             font-size: 3em;
             animation: fadeIn 2s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
         header p {
             font-size: 1.2em;
             animation: fadeIn 2.5s;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -79,6 +84,7 @@
             transition: background-color 0.3s;
             text-decoration: none;
             display: inline-block;
+            margin-top: 20px;
         }
         .cta-button:hover {
             background-color: #e6b800;
@@ -187,7 +193,6 @@
         <a href="#">الأسئلة</a>
         <a href="#">المدونة</a>
         <a href="#">فروعنا</a>
-        <a href="tel:0550908543" class="cta-button">اتصل بنا</a>
     </nav>
     
     <header>
@@ -240,6 +245,7 @@
                 <p>يمكنك التواصل عبر الهاتف.</p>
             </div>
         </div>
+        
     </section>
 
     <section class="map-section">
