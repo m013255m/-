@@ -31,10 +31,21 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
+            animation: slideIn 0.5s ease forwards;
         }
         nav a:hover {
             color: #ffcc00; /* لون مميز عند التمرير */
             text-decoration: underline;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         header {
             background-image: url('https://h.top4top.io/p_31918xkac1.jpeg');
@@ -74,8 +85,8 @@
         }
         .services, .testimonials, .faq {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column; /* تغيير الاتجاه إلى عمودي */
+            align-items: center;
             margin: 20px;
         }
         .service-card, .testimonial-card, .faq-card {
@@ -87,6 +98,20 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 300px;
             transition: transform 0.3s, background-color 0.3s;
+            animation: bounceIn 1s ease;
+        }
+        @keyframes bounceIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            60% {
+                transform: translateY(10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+            }
         }
         .service-card:hover, .testimonial-card:hover, .faq-card:hover {
             transform: scale(1.05);
@@ -157,11 +182,11 @@
 <body>
     <nav>
         <a href="#">الرئيسية</a>
-        <a href="#">عن الشركة</a>
-        <a href="#">الخدمات القانونية</a>
-        <a href="#">الأسئلة الشائعة</a>
+        <a href="#">عنّا</a>
+        <a href="#">الخدمات</a>
+        <a href="#">الأسئلة</a>
         <a href="#">المدونة</a>
-        <a href="#">الفروع</a>
+        <a href="#">فروعنا</a>
         <a href="tel:0550908543" class="cta-button">اتصل بنا</a>
     </nav>
     
