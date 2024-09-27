@@ -177,6 +177,20 @@
             border: none;
             border-radius: 10px;
         }
+        .whatsapp-icon {
+            width: 60px; /* الحجم المطلوب */
+            height: 60px; /* الحجم المطلوب */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #25D366; /* لون الخلفية */
+            border-radius: 50%;
+            animation: fadeIn 0.5s; /* تأثير التلاشي */
+        }
+        .whatsapp-icon img {
+            width: 100%; /* جعل الصورة تتناسب مع الحاوية */
+            height: auto;
+        }
     </style>
     <script>
         function toggleSocialIcons() {
@@ -253,6 +267,7 @@
                 <p>يمكنك التواصل عبر الهاتف.</p>
             </div>
         </div>
+        
     </section>
 
     <section class="map-section">
@@ -270,8 +285,8 @@
         </div>
     </section>
 
-    <a href="https://wa.me/9660550908543" target="_blank" class="contact-button" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background-color: #25D366; color: white;">
-        <i class="fab fa-whatsapp" style="font-size: 15px;"></i>
+    <a href="https://wa.me/9660550908543" target="_blank" class="whatsapp-icon">
+        <img src="https://e.top4top.io/p_3192qiu671.jpg" alt="تواصل عبر واتساب">
     </a>
 
     <footer>
