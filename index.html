@@ -25,6 +25,9 @@
             top: 0;
             z-index: 1000;
             transition: background-color 0.3s, padding 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         nav.scrolled {
             background-color: #66a3ff; /* لون أزرق فاتح */
@@ -35,7 +38,11 @@
             height: 40px; /* ضبط ارتفاع الشعار */
             margin-bottom: 5px; /* مسافة بين الشعار والروابط */
         }
-        nav a {
+        nav .menu {
+            display: flex;
+            align-items: center;
+        }
+        nav .menu a {
             color: #f0f0f0;
             margin: 0 10px;
             text-decoration: none;
@@ -45,9 +52,27 @@
             padding: 10px 15px;
             border-radius: 5px;
         }
-        nav a:hover {
+        nav .menu a:hover {
             color: #ffcc00;
             background-color: rgba(255, 204, 0, 0.2);
+        }
+        .services-icon {
+            position: relative;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .services-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+            width: 200px;
+        }
+        .services-icon:hover .services-dropdown {
+            display: block;
         }
         header {
             background-image: url('https://j.top4top.io/p_3192tnq6y1.jpeg');
@@ -152,13 +177,23 @@
 </head>
 <body>
     <nav>
-        <img src="https://c.top4top.io/p_319463bhf1.png" alt="شعار المحامي">
-        <a href="#">الرئيسية</a>
-        <a href="#">عنّا</a>
-        <a href="#">الخدمات</a>
-        <a href="#">الأسئلة</a>
-        <a href="#">المدونة</a>
-        <a href="#">فروعنا</a>
+        <div class="menu">
+            <img src="https://c.top4top.io/p_319463bhf1.png" alt="شعار المحامي">
+            <a href="#">الرئيسية</a>
+            <a href="#">الخدمات</a>
+            <a href="#">فروعنا</a>
+            <div class="services-icon">
+                <i class="fas fa-bars" style="color: #f0f0f0; font-size: 1.5em;"></i>
+                <div class="services-dropdown">
+                    <h4>خدماتنا</h4>
+                    <a href="#">قضايا تجارية</a>
+                    <a href="#">قضايا عمالية</a>
+                    <a href="#">قضايا جنائية</a>
+                    <a href="#">استشارات قانونية</a>
+                    <a href="#">الترافع في المحاكم</a>
+                </div>
+            </div>
+        </div>
     </nav>
     
     <header>
