@@ -18,24 +18,18 @@
             min-height: 100vh;
         }
         nav {
-            background-color: #003366; /* لون أزرق غامق */
+            background-color: #003366; /* لون أزرق غامق ثابت */
             padding: 15px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: background-color 0.3s, padding 0.3s, transform 0.3s;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        nav.scrolled {
-            background-color: #66a3ff; /* لون أزرق فاتح */
-            padding: 10px; /* تقليل padding عند التمرير */
-            transform: scale(1.05); /* تكبير الشريط */
-        }
         nav img {
-            height: 40px; /* ضبط ارتفاع الشعار */
+            height: 60px; /* تكبير ارتفاع الشعار */
             margin-bottom: 5px; /* مسافة بين الشعار والروابط */
         }
         nav .menu {
@@ -164,21 +158,11 @@
             height: auto;
         }
     </style>
-    <script>
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-    </script>
 </head>
 <body>
     <nav>
+        <img src="https://c.top4top.io/p_319463bhf1.png" alt="شعار المحامي">
         <div class="menu">
-            <img src="https://c.top4top.io/p_319463bhf1.png" alt="شعار المحامي">
             <a href="#">الرئيسية</a>
             <a href="#">الخدمات</a>
             <a href="#">فروعنا</a>
