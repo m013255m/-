@@ -18,40 +18,25 @@
             min-height: 100vh;
         }
         nav {
-            background-color: #003366; /* لون أزرق غامق ثابت */
-            padding: 15px;
-            text-align: center;
+            background-color: #003366; /* لون أزرق غامق */
+            padding: 10px;
             position: sticky;
             top: 0;
             z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: background-color 0.3s, height 0.3s;
+            height: 60px; /* حجم الشريط */
         }
         nav img {
-            height: 60px; /* تكبير ارتفاع الشعار */
-            margin-bottom: 5px; /* مسافة بين الشعار والروابط */
+            height: 40px; /* حجم الشعار */
+            margin-bottom: 5px;
         }
         nav .menu {
-            display: flex;
-            align-items: center;
+            display: none; /* إخفاء النصوص على الهواتف */
         }
-        nav .menu a {
-            color: #f0f0f0;
-            margin: 0 10px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-            font-size: 1.1em;
-            padding: 10px 15px;
-            border-radius: 5px;
-        }
-        nav .menu a:hover {
-            color: #ffcc00;
-            background-color: rgba(255, 204, 0, 0.2);
-        }
-        .services-icon {
-            position: relative;
+        nav .services-icon {
             cursor: pointer;
             margin-right: 10px;
         }
@@ -72,7 +57,7 @@
             background-image: url('https://j.top4top.io/p_3192tnq6y1.jpeg');
             background-size: cover;
             background-position: center;
-            padding: 100px 20px;
+            padding: 80px 20px; /* تقليل الحشوة */
             text-align: center;
             color: white;
         }
@@ -157,25 +142,46 @@
             width: 100%;
             height: auto;
         }
+
+        /* تنسيق الشريط الجانبي */
+        @media (max-width: 768px) {
+            nav .menu {
+                display: none; /* إخفاء الروابط على الهواتف */
+            }
+            nav .services-icon {
+                display: flex;
+            }
+            .services-dropdown {
+                display: none; /* إخفاء القائمة المنسدلة في البداية */
+            }
+        }
     </style>
+    <script>
+        // تغيير لون الشريط العلوي أثناء النزول
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 0) {
+                nav.style.backgroundColor = '#ffffff'; // تغيير اللون إلى الأبيض
+                nav.style.height = '50px'; // تصغير حجم الشريط
+            } else {
+                nav.style.backgroundColor = '#003366'; // العودة إلى اللون الأصلي
+                nav.style.height = '60px'; // إعادة الحجم الأصلي
+            }
+        });
+    </script>
 </head>
 <body>
     <nav>
         <img src="https://c.top4top.io/p_319463bhf1.png" alt="شعار المحامي">
-        <div class="menu">
-            <a href="#">الرئيسية</a>
-            <a href="#">الخدمات</a>
-            <a href="#">فروعنا</a>
-            <div class="services-icon">
-                <i class="fas fa-bars" style="color: #f0f0f0; font-size: 1.5em;"></i>
-                <div class="services-dropdown">
-                    <h4>خدماتنا</h4>
-                    <a href="#">قضايا تجارية</a>
-                    <a href="#">قضايا عمالية</a>
-                    <a href="#">قضايا جنائية</a>
-                    <a href="#">استشارات قانونية</a>
-                    <a href="#">الترافع في المحاكم</a>
-                </div>
+        <div class="services-icon">
+            <i class="fas fa-bars" style="color: #f0f0f0; font-size: 1.5em;"></i>
+            <div class="services-dropdown">
+                <h4>خدماتنا</h4>
+                <a href="#">قضايا تجارية</a>
+                <a href="#">قضايا عمالية</a>
+                <a href="#">قضايا جنائية</a>
+                <a href="#">استشارات قانونية</a>
+                <a href="#">الترافع في المحاكم</a>
             </div>
         </div>
     </nav>
