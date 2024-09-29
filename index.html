@@ -169,15 +169,42 @@
                 transform: translateY(-10px);
             }
         }
+        /* شريط الاستشارات */
+        .consultation-bar {
+            position: fixed;
+            top: -60px; /* لإخفاء الشريط */
+            left: 0;
+            right: 0;
+            background-color: #ffcc00;
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            transition: top 0.5s;
+            z-index: 999;
+        }
+        .consultation-bar a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
     </style>
     <script>
-        function toggleSocialIcons() {
-            const icons = document.querySelector('.social-icons');
-            icons.style.display = icons.style.display === 'flex' ? 'none' : 'flex';
-        }
+        window.onscroll = function() {
+            const bar = document.getElementById("consultationBar");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                bar.style.top = "0"; // يظهر الشريط عند النزول
+            } else {
+                bar.style.top = "-60px"; // يخفي الشريط عند العودة للأعلى
+            }
+        };
     </script>
 </head>
 <body>
+    <div id="consultationBar" class="consultation-bar">
+        <a href="tel:0550908543">احجز استشاراتك الآن</a>
+    </div>
+    
     <nav>
         <a href="#">الرئيسية</a>
         <a href="#">عنّا</a>
