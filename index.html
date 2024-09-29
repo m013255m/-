@@ -18,16 +18,17 @@
             min-height: 100vh;
         }
         nav {
-            background-color: #2c2121;
+            background-color: rgba(44, 33, 33, 0.8); /* لون خلفية شبه شفاف */
             padding: 10px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 1000;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, padding 0.3s;
         }
         nav.scrolled {
             background-color: #003366; /* لون أزرق غامق */
+            padding: 5px; /* تقليل padding عند التمرير */
         }
         nav a {
             color: #f0f0f0;
