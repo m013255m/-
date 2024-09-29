@@ -136,17 +136,38 @@
             bottom: 20px;
             background-color: #25D366;
             border-radius: 50%;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.5s, bounce 1s infinite;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px; /* الحجم المطلوب */
-            height: 60px; /* الحجم المطلوب */
+            width: 70px; /* الحجم المطلوب */
+            height: 70px; /* الحجم المطلوب */
             z-index: 1000;
         }
         .whatsapp-icon img {
-            width: 100%; /* جعل الصورة تتناسب مع الحاوية */
+            width: 80%; /* جعل الصورة تتناسب مع الحاوية */
             height: auto;
+        }
+        .map-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+        .map-section iframe {
+            width: 80%; /* عرض أكبر للخريطة */
+            height: 500px; /* ارتفاع أكبر للخريطة */
+            border: 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
     </style>
     <script>
@@ -224,7 +245,6 @@
                 <p>يمكنك التواصل عبر الهاتف.</p>
             </div>
         </div>
-        
     </section>
 
     <section class="map-section">
