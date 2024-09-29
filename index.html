@@ -18,7 +18,7 @@
             min-height: 100vh;
         }
         nav {
-            background-color: #003366; /* لون أزرق غامق */
+            background-color: #003366;
             padding: 10px;
             position: sticky;
             top: 0;
@@ -27,18 +27,16 @@
             align-items: center;
             justify-content: space-between;
             transition: background-color 0.3s, height 0.3s;
-            height: 60px; /* حجم الشريط */
+            height: 70px; /* حجم الشريط */
         }
         nav img {
-            height: 40px; /* حجم الشعار */
+            height: 50px; /* حجم الشعار */
             margin-bottom: 5px;
         }
-        nav .menu {
-            display: none; /* إخفاء النصوص على الهواتف */
-        }
-        nav .services-icon {
+        .services-icon {
             cursor: pointer;
             margin-right: 10px;
+            position: relative;
         }
         .services-dropdown {
             display: none;
@@ -49,6 +47,7 @@
             padding: 10px;
             z-index: 1000;
             width: 200px;
+            left: 0; /* فتح الشريط الجانبي إلى اليسار */
         }
         .services-icon:hover .services-dropdown {
             display: block;
@@ -57,7 +56,7 @@
             background-image: url('https://j.top4top.io/p_3192tnq6y1.jpeg');
             background-size: cover;
             background-position: center;
-            padding: 80px 20px; /* تقليل الحشوة */
+            padding: 80px 20px;
             text-align: center;
             color: white;
         }
@@ -88,13 +87,13 @@
         .cta-button:hover {
             background-color: #e6b800;
         }
-        .services, .testimonials, .faq {
+        .services {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin: 20px;
         }
-        .service-card, .testimonial-card, .faq-card {
+        .service-card {
             background-color: #4b3a3a;
             color: white;
             margin: 15px;
@@ -104,7 +103,7 @@
             width: 300px;
             transition: transform 0.3s, background-color 0.3s;
         }
-        .service-card:hover, .testimonial-card:hover, .faq-card:hover {
+        .service-card:hover {
             transform: scale(1.05);
             background-color: #5d4c4c;
         }
@@ -142,8 +141,6 @@
             width: 100%;
             height: auto;
         }
-
-        /* تنسيق الشريط الجانبي */
         @media (max-width: 768px) {
             nav .menu {
                 display: none; /* إخفاء الروابط على الهواتف */
@@ -157,22 +154,21 @@
         }
     </style>
     <script>
-        // تغيير لون الشريط العلوي أثناء النزول
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 0) {
-                nav.style.backgroundColor = '#ffffff'; // تغيير اللون إلى الأبيض
-                nav.style.height = '50px'; // تصغير حجم الشريط
+                nav.style.backgroundColor = '#ffffff';
+                nav.style.height = '50px';
             } else {
-                nav.style.backgroundColor = '#003366'; // العودة إلى اللون الأصلي
-                nav.style.height = '60px'; // إعادة الحجم الأصلي
+                nav.style.backgroundColor = '#003366';
+                nav.style.height = '70px';
             }
         });
     </script>
 </head>
 <body>
     <nav>
-        <img src="https://c.top4top.io/p_319463bhf1.png" alt="شعار المحامي">
+        <img src="https://f.top4top.io/p_3194ty3uf1.jpeg" alt="شعار المحامي">
         <div class="services-icon">
             <i class="fas fa-bars" style="color: #f0f0f0; font-size: 1.5em;"></i>
             <div class="services-dropdown">
