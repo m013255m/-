@@ -24,6 +24,10 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        nav.scrolled {
+            background-color: #003366; /* لون أزرق غامق */
         }
         nav a {
             color: #f0f0f0;
@@ -31,7 +35,6 @@
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
-            animation: slideIn 0.5s ease forwards;
             font-size: 1.1em;
             padding: 10px 15px;
             border-radius: 5px;
@@ -39,16 +42,6 @@
         nav a:hover {
             color: #ffcc00;
             background-color: rgba(255, 204, 0, 0.2);
-        }
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
         header {
             background-image: url('https://j.top4top.io/p_3192tnq6y1.jpeg');
@@ -68,10 +61,6 @@
             font-size: 1.2em;
             animation: fadeIn 2.5s;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
         .cta-button {
             background-color: #ffcc00;
@@ -104,20 +93,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 300px;
             transition: transform 0.3s, background-color 0.3s;
-            animation: bounceIn 1s ease;
-        }
-        @keyframes bounceIn {
-            0% {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            60% {
-                transform: translateY(10px);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0);
-            }
         }
         .service-card:hover, .testimonial-card:hover, .faq-card:hover {
             transform: scale(1.05);
@@ -130,30 +105,43 @@
             text-align: center;
             margin-top: auto;
         }
+        .map-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .map-section iframe {
+            width: 80%;
+            height: 400px;
+            border: 0;
+            margin: 0 auto;
+        }
         .whatsapp-icon {
             position: fixed;
             right: 20px;
             bottom: 20px;
             background-color: #25D366;
             border-radius: 50%;
-            animation: fadeIn 0.5s;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px; /* الحجم المطلوب */
-            height: 60px; /* الحجم المطلوب */
+            width: 60px;
+            height: 60px;
             z-index: 1000;
         }
         .whatsapp-icon img {
-            width: 100%; /* جعل الصورة تتناسب مع الحاوية */
+            width: 100%;
             height: auto;
         }
     </style>
     <script>
-        function toggleSocialIcons() {
-            const icons = document.querySelector('.social-icons');
-            icons.style.display = icons.style.display === 'flex' ? 'none' : 'flex';
-        }
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
     </script>
 </head>
 <body>
@@ -224,7 +212,6 @@
                 <p>يمكنك التواصل عبر الهاتف.</p>
             </div>
         </div>
-        
     </section>
 
     <section class="map-section">
