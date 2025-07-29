@@ -22,6 +22,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            text-align: center;
         }
         
         .btn {
@@ -123,37 +124,56 @@
             z-index: 1001;
             box-shadow: 0 5px 25px rgba(0,0,0,0.2);
             display: none;
-            animation: fadeIn 0.4s;
             max-width: 90%;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translate(-50%, -45%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
+        .error-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            z-index: 1001;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            display: none;
+            max-width: 90%;
+            color: #ff4757;
         }
         
         .check-icon {
             color: #4CAF50;
             font-size: 55px;
             margin-bottom: 15px;
-            animation: bounce 0.8s;
         }
         
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-18px);}
-            60% {transform: translateY(-8px);}
+        .error-icon {
+            color: #ff4757;
+            font-size: 55px;
+            margin-bottom: 15px;
         }
         
         .loading-spinner {
-            display: none;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1002;
             color: white;
             font-size: 24px;
+            display: none;
+            z-index: 1002;
+        }
+        
+        .retry-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #4e54c8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -177,12 +197,11 @@
             <div class="progress-bar" id="progressBar"></div>
         </div>
         <div class="ad-content">
+            <div class="loading-spinner" id="loadingSpinner">
+                <i class="fas fa-spinner fa-spin"></i> جاري تحميل الإعلان...
+            </div>
             <iframe class="ad-frame" id="adFrame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
         </div>
-    </div>
-    
-    <div class="loading-spinner" id="loadingSpinner">
-        <i class="fas fa-spinner fa-spin"></i> جاري تحميل الإعلان...
     </div>
     
     <div class="completion-message" id="completionMessage">
@@ -191,6 +210,15 @@
         </div>
         <h2 style="margin-bottom: 10px; color: #333;">شكراً لدعمك!</h2>
         <p style="color: #555;">تمت مشاهدة الإعلان بالكامل</p>
+    </div>
+    
+    <div class="error-message" id="errorMessage">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <h2 style="margin-bottom: 10px; color: #333;">حدث خطأ!</h2>
+        <p style="color: #555;" id="errorText">تعذر تحميل الإعلان، يرجى المحاولة مرة أخرى</p>
+        <button class="retry-btn" id="retryBtn">إعادة المحاولة</button>
     </div>
 
     <script>
@@ -202,72 +230,126 @@
             const progressBar = document.getElementById('progressBar');
             const closeAdBtn = document.getElementById('closeAdBtn');
             const completionMessage = document.getElementById('completionMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorText = document.getElementById('errorText');
             const loadingSpinner = document.getElementById('loadingSpinner');
+            const retryBtn = document.getElementById('retryBtn');
             
             // إعداد رابط الإعلان
             const adUrl = 'https://www.profitableratecpm.com/kc3axmmwt?key=10e9eba7eb413216fe3f93ed7bc1aa9f';
             
-            showAdBtn.addEventListener('click', function() {
+            // متغيرات العد التنازلي
+            let countdownTimer;
+            let remainingSeconds = 10;
+            
+            function showAd() {
+                // إعادة تعيين الحالة
+                resetAdState();
+                
                 // عرض شاشة التحميل
                 loadingSpinner.style.display = 'block';
-                
-                // عرض حاوية الإعلان
                 adOverlay.style.display = 'flex';
                 
-                // بدء تحميل الإعلان
-                adFrame.src = adUrl;
-                
-                // عند تحميل الإعلان، إخفاء شاشة التحميل
-                adFrame.onload = function() {
-                    loadingSpinner.style.display = 'none';
+                // محاولة تحميل الإعلان
+                try {
+                    adFrame.src = adUrl;
                     
-                    // بدء العد التنازلي (10 ثواني)
-                    let seconds = 10;
+                    // بدء وقت التحقق من التحميل
+                    const loadCheckInterval = setInterval(() => {
+                        try {
+                            // التحقق إذا تم تحميل الإعلان (إذا كان هناك محتوى في الإطار)
+                            if (adFrame.contentWindow.document.body.children.length > 0 || 
+                                adFrame.contentDocument.body.children.length > 0) {
+                                clearInterval(loadCheckInterval);
+                                onAdLoaded();
+                            }
+                        } catch (e) {
+                            // في حالة وجود خطأ في التحقق (عادة بسبب سياسة الأمان)
+                            clearInterval(loadCheckInterval);
+                            setTimeout(() => {
+                                onAdLoaded();
+                            }, 2000);
+                        }
+                    }, 500);
+                    
+                    // وقت انتهاء الصلاحية للتحميل
+                    setTimeout(() => {
+                        clearInterval(loadCheckInterval);
+                        if (loadingSpinner.style.display !== 'none') {
+                            onAdError('استغرقت عملية التحميل وقتاً طويلاً');
+                        }
+                    }, 10000);
+                    
+                } catch (error) {
+                    onAdError('حدث خطأ في تحميل الإعلان');
+                }
+            }
+            
+            function onAdLoaded() {
+                loadingSpinner.style.display = 'none';
+                
+                // بدء العد التنازلي
+                remainingSeconds = 10;
+                updateCountdown();
+                
+                countdownTimer = setInterval(() => {
+                    remainingSeconds--;
                     updateCountdown();
                     
-                    const timer = setInterval(function() {
-                        seconds--;
-                        updateCountdown();
-                        
-                        if(seconds <= 0) {
-                            clearInterval(timer);
-                            completeAd();
-                        }
-                    }, 1000);
-                    
-                    function updateCountdown() {
-                        countdown.textContent = `زمن الإعلان: ${seconds} ثانية`;
-                        progressBar.style.width = `${100 - (seconds * 10)}%`;
-                    }
-                    
-                    function completeAd() {
-                        adOverlay.style.display = 'none';
-                        adFrame.src = '';
-                        showCompletion();
-                    }
-                    
-                    // إغلاق يدوي
-                    closeAdBtn.addEventListener('click', function() {
-                        clearInterval(timer);
+                    if (remainingSeconds <= 0) {
                         completeAd();
-                    });
-                };
-                
-                // في حالة خطأ تحميل الإعلان
-                adFrame.onerror = function() {
-                    loadingSpinner.style.display = 'none';
-                    alert('حدث خطأ في تحميل الإعلان، يرجى المحاولة مرة أخرى');
-                    adOverlay.style.display = 'none';
-                };
-            });
+                    }
+                }, 1000);
+            }
             
-            function showCompletion() {
+            function onAdError(error) {
+                loadingSpinner.style.display = 'none';
+                adOverlay.style.display = 'none';
+                errorText.textContent = error || 'تعذر تحميل الإعلان';
+                errorMessage.style.display = 'block';
+            }
+            
+            function updateCountdown() {
+                countdown.textContent = `زمن الإعلان: ${remainingSeconds} ثانية`;
+                progressBar.style.width = `${100 - (remainingSeconds * 10)}%`;
+            }
+            
+            function completeAd() {
+                clearInterval(countdownTimer);
+                adOverlay.style.display = 'none';
+                adFrame.src = '';
                 completionMessage.style.display = 'block';
                 
-                setTimeout(function() {
+                setTimeout(() => {
                     completionMessage.style.display = 'none';
-                }, 3500);
+                }, 3000);
             }
+            
+            function resetAdState() {
+                clearInterval(countdownTimer);
+                progressBar.style.width = '0%';
+                adFrame.src = '';
+            }
+            
+            // الأحداث
+            showAdBtn.addEventListener('click', showAd);
+            
+            closeAdBtn.addEventListener('click', () => {
+                clearInterval(countdownTimer);
+                completeAd();
+            });
+            
+            retryBtn.addEventListener('click', () => {
+                errorMessage.style.display = 'none';
+                showAd();
+            });
+            
+            // التحقق من توفر الصفحة عند التحميل
+            window.addEventListener('online', () => {
+                if (navigator.onLine && errorMessage.style.display === 'block') {
+                    errorMessage.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
