@@ -3,55 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إعلان مؤقت</title>
+    <title>عرض إعلان في الصفحة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Tajawal', Arial, sans-serif;
+            background: #f5f7fa;
             height: 100vh;
-            background: #f5f5f5;
-            padding: 15px;
-            touch-action: manipulation;
+            overflow-x: hidden;
         }
         
-        .container {
-            width: 100%;
-            max-width: 400px;
+        .main-content {
+            padding: 20px;
+            text-align: center;
         }
         
         .btn {
             width: 100%;
-            padding: 18px;
+            max-width: 300px;
+            padding: 16px;
             font-size: 18px;
             background: linear-gradient(135deg, #4e54c8, #8f94fb);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            font-weight: bold;
+            margin: 20px auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
+            transition: transform 0.2s;
         }
         
         .btn:active {
-            transform: scale(0.98);
+            transform: scale(0.96);
         }
         
-        .notification {
-            display: none;
+        .ad-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -59,58 +56,51 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
             z-index: 1000;
+            display: none;
             flex-direction: column;
-            justify-content: center;
+        }
+        
+        .ad-header {
+            padding: 15px;
+            background: #fff;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .countdown {
+            font-size: 16px;
+            color: #4e54c8;
+            font-weight: bold;
+        }
+        
+        .close-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .ad-frame {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background: white;
+        }
+        
+        .loading {
+            color: white;
             padding: 20px;
             text-align: center;
         }
         
-        .notification-content {
-            background: white;
-            border-radius: 16px;
-            width: 100%;
-            max-width: 340px;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.4s;
-        }
-        
-        .notification-icon {
-            font-size: 50px;
-            color: #4e54c8;
-            margin-bottom: 15px;
-        }
-        
-        .notification-title {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .notification-text {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        
-        .countdown {
-            font-size: 28px;
-            color: #4e54c8;
-            font-weight: bold;
-            margin: 15px 0;
-            font-family: monospace;
-        }
-        
         .progress-container {
             width: 100%;
-            height: 6px;
-            background: #eee;
-            border-radius: 3px;
-            overflow: hidden;
-            margin: 20px 0;
+            height: 5px;
+            background: #e0e0e0;
         }
         
         .progress-bar {
@@ -120,113 +110,123 @@
             transition: width 0.1s linear;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .completion-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1001;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s;
         }
         
-        .completed-icon {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -40%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+        
+        .check-icon {
             color: #4CAF50;
-            font-size: 60px;
+            font-size: 50px;
             margin-bottom: 15px;
-            animation: bounce 0.5s;
+            animation: bounce 0.6s;
         }
         
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
             40% {transform: translateY(-15px);}
-            60% {transform: translateY(-5px);}
+            60% {transform: translateY(-7px);}
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-content">
+        <h1>مرحباً بك في موقعنا</h1>
+        <p>اضغط على الزر أدناه لعرض الإعلان</p>
         <button class="btn" id="showAdBtn">
-            <i class="fas fa-ad"></i> اضغط لعرض الإعلان
+            <i class="fas fa-ad"></i> عرض الإعلان
         </button>
     </div>
     
-    <div class="notification" id="notification">
-        <div class="notification-content" id="notificationContent">
-            <div class="notification-icon">
-                <i class="fas fa-ad"></i>
-            </div>
-            <h2 class="notification-title">جاري تحضير الإعلان</h2>
-            <p class="notification-text">
-                شكراً لصبرك، جاري تحميل المحتوى المميز لك
-            </p>
-            <div class="countdown" id="countdown">5</div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
+    <div class="ad-container" id="adContainer">
+        <div class="ad-header">
+            <div class="countdown" id="countdown">سيغلق بعد: 5 ثانية</div>
+            <button class="close-btn" id="closeAdBtn">
+                <i class="fas fa-times"></i> إغلاق
+            </button>
         </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <iframe class="ad-frame" id="adFrame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+    </div>
+    
+    <div class="completion-message" id="completionMessage">
+        <div class="check-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>شكراً لك!</h2>
+        <p>تمت مشاهدة الإعلان بنجاح</p>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const showAdBtn = document.getElementById('showAdBtn');
-            const notification = document.getElementById('notification');
+            const adContainer = document.getElementById('adContainer');
+            const adFrame = document.getElementById('adFrame');
             const countdown = document.getElementById('countdown');
             const progressBar = document.getElementById('progressBar');
-            const notificationContent = document.getElementById('notificationContent');
+            const closeAdBtn = document.getElementById('closeAdBtn');
+            const completionMessage = document.getElementById('completionMessage');
             
             showAdBtn.addEventListener('click', function() {
-                // عرض التنبيه
-                notification.style.display = 'flex';
+                // عرض حاوية الإعلان
+                adContainer.style.display = 'flex';
                 
+                // تحميل الإعلان
+                adFrame.src = 'https://www.profitableratecpm.com/kc3axmmwt?key=10e9eba7eb413216fe3f93ed7bc1aa9f';
+                
+                // بدء العد التنازلي
                 let seconds = 5;
-                countdown.textContent = seconds;
-                progressBar.style.width = '0%';
+                updateCountdown();
                 
-                // العد التنازلي
-                const countdownInterval = setInterval(function() {
+                const timer = setInterval(function() {
                     seconds--;
-                    countdown.textContent = seconds;
-                    progressBar.style.width = `${100 - (seconds * 20)}%`;
+                    updateCountdown();
                     
                     if(seconds <= 0) {
-                        clearInterval(countdownInterval);
-                        redirectToAd();
+                        clearInterval(timer);
+                        closeAd();
                     }
                 }, 1000);
                 
-                function redirectToAd() {
-                    // حفظ وقت البداية في localStorage
-                    localStorage.setItem('adRedirectTime', Date.now());
+                function updateCountdown() {
+                    countdown.textContent = `سيغلق بعد: ${seconds} ثانية`;
+                    progressBar.style.width = `${100 - (seconds * 20)}%`;
+                }
+                
+                function closeAd() {
+                    adContainer.style.display = 'none';
+                    adFrame.src = '';
+                    clearInterval(timer);
                     
-                    // التوجيه إلى الرابط الإعلاني
-                    window.location.href = 'https://www.profitableratecpm.com/kc3axmmwt?key=10e9eba7eb413216fe3f93ed7bc1aa9f';
+                    // عرض رسالة الإكمال
+                    completionMessage.style.display = 'block';
+                    
+                    // إخفاء الرسالة بعد 3 ثواني
+                    setTimeout(function() {
+                        completionMessage.style.display = 'none';
+                    }, 3000);
                 }
+                
+                // إغلاق يدوي
+                closeAdBtn.addEventListener('click', closeAd);
             });
-            
-            // عند العودة للصفحة (إذا كان هناك وقت تخزين)
-            if(localStorage.getItem('adRedirectTime')) {
-                const redirectTime = parseInt(localStorage.getItem('adRedirectTime'));
-                const timeSpent = Math.floor((Date.now() - redirectTime) / 1000);
-                
-                if(timeSpent >= 5) {
-                    showCompletionNotification();
-                }
-                
-                localStorage.removeItem('adRedirectTime');
-            }
-            
-            function showCompletionNotification() {
-                notification.style.display = 'flex';
-                notificationContent.innerHTML = `
-                    <div class="completed-icon">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h2 class="notification-title">شكراً لك!</h2>
-                    <p class="notification-text">
-                        تمت مشاهدة الإعلان بنجاح
-                    </p>
-                `;
-                
-                setTimeout(() => {
-                    notification.style.display = 'none';
-                }, 3000);
-            }
         });
     </script>
 </body>
