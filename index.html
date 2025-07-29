@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إعلان</title>
+    <title>إعلان مؤقت</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -32,119 +32,34 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-        
-        .modal-content {
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-        
-        .countdown {
-            font-size: 24px;
-            margin: 20px 0;
-            color: #4CAF50;
-        }
-        
-        .ad-link {
-            display: inline-block;
-            margin: 20px 0;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
     <button class="btn" id="showAdBtn">اضغط الآن</button>
-    
-    <div class="modal" id="adModal">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <div class="modal-content">
-            <h2>إعلان مدعوم</h2>
-            <p>سيتم تحويلك إلى صفحة الإعلان بعد انتهاء العد التنازلي</p>
-            <div class="countdown" id="countdown">5</div>
-            <a href="https://otieu.com/4/8830396" class="ad-link" id="adLink" target="_blank">انتقل إلى الإعلان الآن</a>
-        </div>
-    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const showAdBtn = document.getElementById('showAdBtn');
-            const adModal = document.getElementById('adModal');
-            const closeModal = document.getElementById('closeModal');
-            const countdownElement = document.getElementById('countdown');
-            const adLink = document.getElementById('adLink');
+        document.getElementById('showAdBtn').addEventListener('click', function() {
+            // فتح نافذة جديدة بحجم مناسب للهاتف
+            const adWindow = window.open(
+                'https://otieu.com/4/8830396',
+                '_blank',
+                'width=360,height=640,scrollbars=yes'
+            );
             
-            let countdown;
-            let secondsLeft = 5;
+            // إذا تم منع النافذة المنبثقة، نعرض رسالة للمستخدم
+            if (!adWindow) {
+                alert('تم منع النافذة المنبثقة. يرجى السماح بالنوافذ المنبثقة لهذا الموقع.');
+                return;
+            }
             
-            showAdBtn.addEventListener('click', function() {
-                adModal.style.display = 'flex';
-                secondsLeft = 5;
-                countdownElement.textContent = secondsLeft;
-                
-                countdown = setInterval(function() {
-                    secondsLeft--;
-                    countdownElement.textContent = secondsLeft;
-                    
-                    if (secondsLeft <= 0) {
-                        clearInterval(countdown);
-                        window.close(); // إغلاق النافذة بعد انتهاء العد التنازلي
-                    }
-                }, 1000);
-            });
-            
-            closeModal.addEventListener('click', function() {
-                clearInterval(countdown);
-                adModal.style.display = 'none';
-            });
-            
-            // إغلاق النافذة عند النقر خارج المحتوى
-            adModal.addEventListener('click', function(e) {
-                if (e.target === adModal) {
-                    clearInterval(countdown);
-                    adModal.style.display = 'none';
+            // محاولة إغلاق النافذة بعد 5 ثواني
+            setTimeout(function() {
+                try {
+                    adWindow.close();
+                } catch (e) {
+                    console.log('لا يمكن إغلاق النافذة بسبب سياسة المتصفح');
                 }
-            });
-            
-            // فتح الرابط عند النقر عليه وإغلاق النافذة
-            adLink.addEventListener('click', function() {
-                clearInterval(countdown);
-                setTimeout(function() {
-                    window.close();
-                }, 100);
-            });
+            }, 5000);
         });
     </script>
 </body>
