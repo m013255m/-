@@ -136,13 +136,13 @@
             <div class="notification-icon">
                 <i class="fas fa-ad"></i>
             </div>
-            <h2 class="notification-title">شكراً لك!</h2>
+            <h2 class="notification-title">جاري التوجيه للإعلان</h2>
             <p class="notification-text">
-                جاري تحميل المحتوى المميز لك...
+                شكراً لتفهمك، جاري تحميل المحتوى المميز لك
                 <br>
-                <small>سيتم توجيهك تلقائياً خلال <span id="randomSeconds"></span> ثانية</small>
+                <small>سيتم توجيهك خلال <span id="remainingSeconds">5</span> ثانية</small>
             </p>
-            <div class="countdown" id="countdown"></div>
+            <div class="countdown">5</div>
             <div class="loading-bar">
                 <div class="loading-progress" id="loadingProgress"></div>
             </div>
@@ -153,52 +153,54 @@
         document.addEventListener('DOMContentLoaded', function() {
             const showAdBtn = document.getElementById('showAdBtn');
             const notification = document.getElementById('notification');
-            const countdown = document.getElementById('countdown');
+            const countdown = document.querySelector('.countdown');
             const loadingProgress = document.getElementById('loadingProgress');
-            const randomSecondsSpan = document.getElementById('randomSeconds');
+            const remainingSeconds = document.getElementById('remainingSeconds');
             
             showAdBtn.addEventListener('click', function() {
-                // إنشاء مدة عشوائية بين 5 و20 ثانية
-                const minSeconds = 5;
-                const maxSeconds = 20;
-                const randomDuration = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
-                
-                randomSecondsSpan.textContent = randomDuration;
-                countdown.textContent = randomDuration;
-                
-                // عرض إشعار التنبيه
+                // عرض إشعار التنبيه لمدة 5 ثواني ثابتة
                 notification.style.display = 'flex';
-                loadingProgress.style.width = '0%';
                 
-                let secondsLeft = randomDuration;
+                let seconds = 5;
+                countdown.textContent = seconds;
+                remainingSeconds.textContent = seconds;
+                loadingProgress.style.width = '0%';
                 
                 // بدء العد التنازلي
                 const timer = setInterval(function() {
-                    secondsLeft--;
-                    countdown.textContent = secondsLeft;
-                    const progressPercentage = ((randomDuration - secondsLeft) / randomDuration) * 100;
-                    loadingProgress.style.width = `${progressPercentage}%`;
+                    seconds--;
+                    countdown.textContent = seconds;
+                    remainingSeconds.textContent = seconds;
+                    loadingProgress.style.width = `${(5 - seconds) * 20}%`;
                     
-                    if (secondsLeft <= 0) {
+                    if (seconds <= 0) {
                         clearInterval(timer);
                         notification.style.display = 'none';
+                        
+                        // إنشاء مدة عشوائية للإعلان (بين 5 و20 ثانية)
+                        const adDuration = Math.floor(Math.random() * 16) + 5;
                         
                         // فتح الإعلان في نافذة جديدة
                         const adWindow = window.open('https://otieu.com/4/8830396', '_blank');
                         
                         if (adWindow) {
-                            // إغلاق النافذة بعد مدة عشوائية أخرى
-                            const closeAfter = Math.floor(Math.random() * 6) + 5; // بين 5 و10 ثواني
+                            // محاولة العودة بعد المدة العشوائية
                             setTimeout(() => {
                                 try {
                                     adWindow.close();
+                                    // يمكن إضافة رسالة ترحيب عند العودة هنا
                                 } catch (e) {
                                     console.log('لا يمكن إغلاق النافذة');
                                 }
-                            }, closeAfter * 1000);
+                            }, adDuration * 1000);
                         } else {
-                            // إذا منع المتصفح النوافذ المنبثقة، يتم التوجيه في نفس النافذة
+                            // إذا منع المتصفح النوافذ المنبثقة
                             window.location.href = 'https://otieu.com/4/8830396';
+                            
+                            // محاولة العودة بعد المدة العشوائية
+                            setTimeout(() => {
+                                window.history.back();
+                            }, adDuration * 1000);
                         }
                     }
                 }, 1000);
