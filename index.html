@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,27 +34,7 @@
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .btn:active {
-            transform: translateY(1px);
-        }
-        
-        .btn::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             background: linear-gradient(to right, #8f94fb, #4e54c8);
-            z-index: -1;
-            transition: opacity 0.4s;
-            opacity: 0;
-        }
-        
-        .btn:hover::after {
-            opacity: 1;
         }
         
         .notification {
@@ -64,7 +44,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -75,48 +55,49 @@
             background: white;
             border-radius: 15px;
             width: 90%;
-            max-width: 400px;
+            max-width: 450px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transform: scale(0.9);
             animation: scaleIn 0.5s forwards;
             position: relative;
         }
         
         .notification-icon {
-            font-size: 50px;
+            font-size: 60px;
             color: #4e54c8;
             margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            animation: pulse 1.5s infinite;
         }
         
         .notification-title {
-            font-size: 24px;
+            font-size: 26px;
             color: #333;
             margin-bottom: 15px;
             font-weight: bold;
         }
         
         .notification-text {
-            font-size: 16px;
-            color: #666;
+            font-size: 18px;
+            color: #555;
             margin-bottom: 25px;
             line-height: 1.6;
         }
         
         .countdown {
-            font-size: 28px;
+            font-size: 32px;
             color: #4e54c8;
             font-weight: bold;
             margin: 20px 0;
+            font-family: monospace;
         }
         
         .loading-bar {
-            height: 5px;
+            height: 6px;
             background: #e0e0e0;
             border-radius: 5px;
-            margin: 20px 0;
+            margin: 25px 0;
             overflow: hidden;
         }
         
@@ -125,7 +106,7 @@
             width: 0;
             background: linear-gradient(to right, #4e54c8, #8f94fb);
             border-radius: 5px;
-            transition: width 1s linear;
+            transition: width 0.1s linear;
         }
         
         @keyframes fadeIn {
@@ -139,20 +120,9 @@
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        .ad-frame {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1001;
-            display: none;
-            border: none;
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -166,18 +136,18 @@
             <div class="notification-icon">
                 <i class="fas fa-ad"></i>
             </div>
-            <h2 class="notification-title">تنبيه!</h2>
+            <h2 class="notification-title">شكراً لك!</h2>
             <p class="notification-text">
-                سيتم عرض الإعلان خلال لحظات وسيتم إعادتك تلقائيًا بعد 5 ثواني
+                جاري تحميل المحتوى المميز لك...
+                <br>
+                <small>سيتم توجيهك تلقائياً خلال <span id="randomSeconds"></span> ثانية</small>
             </p>
-            <div class="countdown" id="countdown">5</div>
+            <div class="countdown" id="countdown"></div>
             <div class="loading-bar">
                 <div class="loading-progress" id="loadingProgress"></div>
             </div>
         </div>
     </div>
-    
-    <iframe class="ad-frame" id="adFrame"></iframe>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -185,46 +155,51 @@
             const notification = document.getElementById('notification');
             const countdown = document.getElementById('countdown');
             const loadingProgress = document.getElementById('loadingProgress');
-            const adFrame = document.getElementById('adFrame');
+            const randomSecondsSpan = document.getElementById('randomSeconds');
             
             showAdBtn.addEventListener('click', function() {
+                // إنشاء مدة عشوائية بين 5 و20 ثانية
+                const minSeconds = 5;
+                const maxSeconds = 20;
+                const randomDuration = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
+                
+                randomSecondsSpan.textContent = randomDuration;
+                countdown.textContent = randomDuration;
+                
                 // عرض إشعار التنبيه
                 notification.style.display = 'flex';
-                
-                let seconds = 5;
-                countdown.textContent = seconds;
                 loadingProgress.style.width = '0%';
+                
+                let secondsLeft = randomDuration;
                 
                 // بدء العد التنازلي
                 const timer = setInterval(function() {
-                    seconds--;
-                    countdown.textContent = seconds;
-                    loadingProgress.style.width = `${(5 - seconds) * 20}%`;
+                    secondsLeft--;
+                    countdown.textContent = secondsLeft;
+                    const progressPercentage = ((randomDuration - secondsLeft) / randomDuration) * 100;
+                    loadingProgress.style.width = `${progressPercentage}%`;
                     
-                    if (seconds <= 0) {
+                    if (secondsLeft <= 0) {
                         clearInterval(timer);
                         notification.style.display = 'none';
                         
-                        // فتح الإعلان في iframe
-                        adFrame.style.display = 'block';
-                        adFrame.src = 'https://otieu.com/4/8830396';
+                        // فتح الإعلان في نافذة جديدة
+                        const adWindow = window.open('https://otieu.com/4/8830396', '_blank');
                         
-                        // إغلاق الإعلان بعد 5 ثواني
-                        setTimeout(function() {
-                            adFrame.style.display = 'none';
-                            adFrame.src = 'about:blank';
-                            
-                            // عرض رسالة العودة (اختياري)
-                            notification.querySelector('.notification-title').textContent = 'مرحبًا بعودتك!';
-                            notification.querySelector('.notification-text').textContent = 'تم إغلاق الإعلان بنجاح';
-                            notification.querySelector('.notification-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
-                            notification.style.display = 'flex';
-                            
-                            // إغلاق الإشعار بعد 2 ثانية
-                            setTimeout(function() {
-                                notification.style.display = 'none';
-                            }, 2000);
-                        }, 5000);
+                        if (adWindow) {
+                            // إغلاق النافذة بعد مدة عشوائية أخرى
+                            const closeAfter = Math.floor(Math.random() * 6) + 5; // بين 5 و10 ثواني
+                            setTimeout(() => {
+                                try {
+                                    adWindow.close();
+                                } catch (e) {
+                                    console.log('لا يمكن إغلاق النافذة');
+                                }
+                            }, closeAfter * 1000);
+                        } else {
+                            // إذا منع المتصفح النوافذ المنبثقة، يتم التوجيه في نفس النافذة
+                            window.location.href = 'https://otieu.com/4/8830396';
+                        }
                     }
                 }, 1000);
             });
