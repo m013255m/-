@@ -133,11 +133,11 @@
     
     <div class="notification" id="notification">
         <div class="notification-content">
-            <div class="notification-icon">
+            <div class="notification-icon" id="notificationIcon">
                 <i class="fas fa-ad"></i>
             </div>
-            <h2 class="notification-title">جاري التوجيه للإعلان</h2>
-            <p class="notification-text">
+            <h2 class="notification-title" id="notificationTitle">جاري التوجيه للإعلان</h2>
+            <p class="notification-text" id="notificationText">
                 شكراً لتفهمك، جاري تحميل المحتوى المميز لك
                 <br>
                 <small>سيتم توجيهك خلال <span id="remainingSeconds">5</span> ثانية</small>
@@ -156,55 +156,89 @@
             const countdown = document.querySelector('.countdown');
             const loadingProgress = document.getElementById('loadingProgress');
             const remainingSeconds = document.getElementById('remainingSeconds');
+            const notificationIcon = document.getElementById('notificationIcon');
+            const notificationTitle = document.getElementById('notificationTitle');
+            const notificationText = document.getElementById('notificationText');
             
             showAdBtn.addEventListener('click', function() {
-                // عرض إشعار التنبيه لمدة 5 ثواني ثابتة
-                notification.style.display = 'flex';
-                
-                let seconds = 5;
-                countdown.textContent = seconds;
-                remainingSeconds.textContent = seconds;
-                loadingProgress.style.width = '0%';
-                
-                // بدء العد التنازلي
-                const timer = setInterval(function() {
-                    seconds--;
-                    countdown.textContent = seconds;
-                    remainingSeconds.textContent = seconds;
-                    loadingProgress.style.width = `${(5 - seconds) * 20}%`;
-                    
-                    if (seconds <= 0) {
-                        clearInterval(timer);
-                        notification.style.display = 'none';
-                        
-                        // إنشاء مدة عشوائية للإعلان (بين 5 و20 ثانية)
-                        const adDuration = Math.floor(Math.random() * 16) + 5;
-                        
-                        // فتح الإعلان في نافذة جديدة
+                // المرحلة 1: عرض تنبيه التوجيه للإعلان (5 ثواني)
+                showNotification(
+                    '<i class="fas fa-ad"></i>',
+                    'جاري التوجيه للإعلان',
+                    'شكراً لتفهمك، جاري تحميل المحتوى المميز لك<br><small>سيتم توجيهك خلال 5 ثانية</small>',
+                    5,
+                    function() {
+                        // بعد انتهاء الـ5 ثواني، يتم التوجيه للإعلان
                         const adWindow = window.open('https://otieu.com/4/8830396', '_blank');
                         
                         if (adWindow) {
-                            // محاولة العودة بعد المدة العشوائية
+                            // المرحلة 2: الانتظار 5 ثواني ثم العودة
                             setTimeout(() => {
                                 try {
                                     adWindow.close();
-                                    // يمكن إضافة رسالة ترحيب عند العودة هنا
+                                    
+                                    // المرحلة 3: عرض تنبيه اكتمال الإعلان
+                                    showNotification(
+                                        '<i class="fas fa-check-circle"></i>',
+                                        'تم بنجاح!',
+                                        'شكراً لمشاهدتك للإعلان<br>تمت العملية بنجاح',
+                                        3,
+                                        function() {
+                                            // لا شيء بعد الإغلاق
+                                        }
+                                    );
                                 } catch (e) {
                                     console.log('لا يمكن إغلاق النافذة');
                                 }
-                            }, adDuration * 1000);
+                            }, 5000);
                         } else {
                             // إذا منع المتصفح النوافذ المنبثقة
                             window.location.href = 'https://otieu.com/4/8830396';
                             
-                            // محاولة العودة بعد المدة العشوائية
+                            // محاولة العودة بعد 5 ثواني
                             setTimeout(() => {
                                 window.history.back();
-                            }, adDuration * 1000);
+                                
+                                // عرض تنبيه اكتمال الإعلان بعد العودة
+                                setTimeout(() => {
+                                    showNotification(
+                                        '<i class="fas fa-check-circle"></i>',
+                                        'تم بنجاح!',
+                                        'شكراً لمشاهدتك للإعلان<br>تمت العملية بنجاح',
+                                        3,
+                                        function() {}
+                                    );
+                                }, 500);
+                            }, 5000);
                         }
                     }
-                }, 1000);
+                );
             });
+            
+            function showNotification(icon, title, text, seconds, callback) {
+                notificationIcon.innerHTML = icon;
+                notificationTitle.textContent = title;
+                notificationText.innerHTML = text;
+                remainingSeconds.textContent = seconds;
+                countdown.textContent = seconds;
+                loadingProgress.style.width = '0%';
+                notification.style.display = 'flex';
+                
+                let timer = setInterval(function() {
+                    seconds--;
+                    countdown.textContent = seconds;
+                    remainingSeconds.textContent = seconds;
+                    loadingProgress.style.width = `${((parseInt(countdown.dataset.total) - seconds) / parseInt(countdown.dataset.total)) * 100}%`;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(timer);
+                        notification.style.display = 'none';
+                        if (callback) callback();
+                    }
+                }, 1000);
+                
+                countdown.dataset.total = seconds;
+            }
         });
     </script>
 </body>
