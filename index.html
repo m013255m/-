@@ -192,56 +192,47 @@
                     'شكراً لتفهمك، جاري تحميل المحتوى المميز لك<br><small>سيتم توجيهك خلال 5 ثانية</small>',
                     5,
                     function() {
-                        // المرحلة 2: فتح الإعلان في نفس النافذة
-                        window.location.href = 'https://otieu.com/4/8830396';
+                        // المرحلة 2: فتح الإعلان في صفحة جديدة مع كود العودة
+                        const returnScript = `
+                            <script>
+                                setTimeout(function() {
+                                    window.location.href = '${window.location.href}?adCompleted=true';
+                                }, 5000);
+                            <\/script>
+                        `;
                         
-                        // تخزين وقت البداية في localStorage
-                        localStorage.setItem('adStartTime', new Date().getTime());
-                        
-                        // هذه الكود سيتم تنفيذه عند العودة من صفحة الإعلان
-                        window.onload = function() {
-                            const adStartTime = localStorage.getItem('adStartTime');
-                            if (adStartTime) {
-                                const currentTime = new Date().getTime();
-                                const elapsedSeconds = Math.floor((currentTime - adStartTime) / 1000);
-                                
-                                if (elapsedSeconds >= 5) {
-                                    // المرحلة 3: عرض تنبيه اكتمال الإعلان
-                                    showNotification(
-                                        '<i class="fas fa-check-circle"></i>',
-                                        'تم بنجاح!',
-                                        'شكراً لمشاهدتك للإعلان<br>تمت العملية بنجاح',
-                                        3,
-                                        function() {
-                                            localStorage.removeItem('adStartTime');
-                                        }
-                                    );
-                                }
-                            }
-                        };
+                        const adWindow = window.open('', '_blank');
+                        adWindow.document.write(`
+                            <html>
+                            <head>
+                                <title>الإعلان</title>
+                                <meta http-equiv="refresh" content="5;url=${window.location.href}?adCompleted=true">
+                            </head>
+                            <body>
+                                <p>جاري تحميل الإعلان...</p>
+                                ${returnScript}
+                                <iframe src="https://otieu.com/4/8830396" style="width:100%;height:100%;border:none;"></iframe>
+                            </body>
+                            </html>
+                        `);
+                        adWindow.document.close();
                     }
                 );
             });
             
-            // عند تحميل الصفحة، التحقق إذا كنا عدنا من الإعلان
-            const adStartTime = localStorage.getItem('adStartTime');
-            if (adStartTime) {
-                const currentTime = new Date().getTime();
-                const elapsedSeconds = Math.floor((currentTime - adStartTime) / 1000);
-                
-                if (elapsedSeconds >= 5) {
-                    showNotification(
-                        '<i class="fas fa-check-circle"></i>',
-                        'تم بنجاح!',
-                        'شكراً لمشاهدتك للإعلان<br>تمت العملية بنجاح',
-                        3,
-                        function() {
-                            localStorage.removeItem('adStartTime');
-                        }
-                    );
-                } else {
-                    localStorage.removeItem('adStartTime');
-                }
+            // التحقق من وجود معلمة إكتمال الإعلان في URL
+            if (window.location.search.includes('adCompleted=true')) {
+                // المرحلة 3: عرض تنبيه اكتمال الإعلان
+                showNotification(
+                    '<i class="fas fa-check-circle"></i>',
+                    'تم بنجاح!',
+                    'شكراً لمشاهدتك للإعلان<br>تمت العملية بنجاح',
+                    3,
+                    function() {
+                        // إزالة معلمة URL بدون تحديث الصفحة
+                        history.replaceState(null, null, window.location.pathname);
+                    }
+                );
             }
         });
     </script>
