@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>عرض إعلان في الصفحة</title>
+    <title>عرض إعلان لمدة 10 ثواني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -17,26 +17,25 @@
             font-family: 'Tajawal', Arial, sans-serif;
             background: #f5f7fa;
             height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .main-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            text-align: center;
         }
         
         .btn {
             width: 100%;
             max-width: 300px;
-            padding: 16px;
+            padding: 18px;
             font-size: 18px;
             background: linear-gradient(135deg, #4e54c8, #8f94fb);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            margin: 20px auto;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -48,13 +47,13 @@
             transform: scale(0.96);
         }
         
-        .ad-container {
+        .ad-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.97);
             z-index: 1000;
             display: none;
             flex-direction: column;
@@ -62,15 +61,14 @@
         
         .ad-header {
             padding: 15px;
-            background: #fff;
+            background: #ffffff;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .countdown {
-            font-size: 16px;
+            font-size: 17px;
             color: #4e54c8;
             font-weight: bold;
         }
@@ -79,27 +77,30 @@
             background: #ff4757;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 16px;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .ad-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
         }
         
         .ad-frame {
-            flex: 1;
             width: 100%;
+            height: 100%;
             border: none;
             background: white;
         }
         
-        .loading {
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
         .progress-container {
             width: 100%;
-            height: 5px;
+            height: 6px;
             background: #e0e0e0;
         }
         
@@ -111,122 +112,162 @@
         }
         
         .completion-message {
-            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             background: white;
             padding: 30px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             z-index: 1001;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            animation: fadeIn 0.3s;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            display: none;
+            animation: fadeIn 0.4s;
+            max-width: 90%;
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translate(-50%, -40%); }
+            from { opacity: 0; transform: translate(-50%, -45%); }
             to { opacity: 1; transform: translate(-50%, -50%); }
         }
         
         .check-icon {
             color: #4CAF50;
-            font-size: 50px;
+            font-size: 55px;
             margin-bottom: 15px;
-            animation: bounce 0.6s;
+            animation: bounce 0.8s;
         }
         
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-15px);}
-            60% {transform: translateY(-7px);}
+            40% {transform: translateY(-18px);}
+            60% {transform: translateY(-8px);}
+        }
+        
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1002;
+            color: white;
+            font-size: 24px;
         }
     </style>
 </head>
 <body>
     <div class="main-content">
-        <h1>مرحباً بك في موقعنا</h1>
-        <p>اضغط على الزر أدناه لعرض الإعلان</p>
+        <h1 style="margin-bottom: 15px; color: #333;">موقعنا الرائع</h1>
+        <p style="color: #555; margin-bottom: 25px;">اضغط على الزر لعرض الإعلان والدعم</p>
         <button class="btn" id="showAdBtn">
             <i class="fas fa-ad"></i> عرض الإعلان
         </button>
     </div>
     
-    <div class="ad-container" id="adContainer">
+    <div class="ad-overlay" id="adOverlay">
         <div class="ad-header">
-            <div class="countdown" id="countdown">سيغلق بعد: 5 ثانية</div>
+            <div class="countdown" id="countdown">زمن الإعلان: 10 ثانية</div>
             <button class="close-btn" id="closeAdBtn">
-                <i class="fas fa-times"></i> إغلاق
+                <i class="fas fa-times"></i> تخطي
             </button>
         </div>
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
-        <iframe class="ad-frame" id="adFrame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        <div class="ad-content">
+            <iframe class="ad-frame" id="adFrame" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+        </div>
+    </div>
+    
+    <div class="loading-spinner" id="loadingSpinner">
+        <i class="fas fa-spinner fa-spin"></i> جاري تحميل الإعلان...
     </div>
     
     <div class="completion-message" id="completionMessage">
         <div class="check-icon">
             <i class="fas fa-check-circle"></i>
         </div>
-        <h2>شكراً لك!</h2>
-        <p>تمت مشاهدة الإعلان بنجاح</p>
+        <h2 style="margin-bottom: 10px; color: #333;">شكراً لدعمك!</h2>
+        <p style="color: #555;">تمت مشاهدة الإعلان بالكامل</p>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const showAdBtn = document.getElementById('showAdBtn');
-            const adContainer = document.getElementById('adContainer');
+            const adOverlay = document.getElementById('adOverlay');
             const adFrame = document.getElementById('adFrame');
             const countdown = document.getElementById('countdown');
             const progressBar = document.getElementById('progressBar');
             const closeAdBtn = document.getElementById('closeAdBtn');
             const completionMessage = document.getElementById('completionMessage');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            // إعداد رابط الإعلان
+            const adUrl = 'https://www.profitableratecpm.com/kc3axmmwt?key=10e9eba7eb413216fe3f93ed7bc1aa9f';
             
             showAdBtn.addEventListener('click', function() {
+                // عرض شاشة التحميل
+                loadingSpinner.style.display = 'block';
+                
                 // عرض حاوية الإعلان
-                adContainer.style.display = 'flex';
+                adOverlay.style.display = 'flex';
                 
-                // تحميل الإعلان
-                adFrame.src = 'https://www.profitableratecpm.com/kc3axmmwt?key=10e9eba7eb413216fe3f93ed7bc1aa9f';
+                // بدء تحميل الإعلان
+                adFrame.src = adUrl;
                 
-                // بدء العد التنازلي
-                let seconds = 5;
-                updateCountdown();
-                
-                const timer = setInterval(function() {
-                    seconds--;
+                // عند تحميل الإعلان، إخفاء شاشة التحميل
+                adFrame.onload = function() {
+                    loadingSpinner.style.display = 'none';
+                    
+                    // بدء العد التنازلي (10 ثواني)
+                    let seconds = 10;
                     updateCountdown();
                     
-                    if(seconds <= 0) {
-                        clearInterval(timer);
-                        closeAd();
+                    const timer = setInterval(function() {
+                        seconds--;
+                        updateCountdown();
+                        
+                        if(seconds <= 0) {
+                            clearInterval(timer);
+                            completeAd();
+                        }
+                    }, 1000);
+                    
+                    function updateCountdown() {
+                        countdown.textContent = `زمن الإعلان: ${seconds} ثانية`;
+                        progressBar.style.width = `${100 - (seconds * 10)}%`;
                     }
-                }, 1000);
-                
-                function updateCountdown() {
-                    countdown.textContent = `سيغلق بعد: ${seconds} ثانية`;
-                    progressBar.style.width = `${100 - (seconds * 20)}%`;
-                }
-                
-                function closeAd() {
-                    adContainer.style.display = 'none';
-                    adFrame.src = '';
-                    clearInterval(timer);
                     
-                    // عرض رسالة الإكمال
-                    completionMessage.style.display = 'block';
+                    function completeAd() {
+                        adOverlay.style.display = 'none';
+                        adFrame.src = '';
+                        showCompletion();
+                    }
                     
-                    // إخفاء الرسالة بعد 3 ثواني
-                    setTimeout(function() {
-                        completionMessage.style.display = 'none';
-                    }, 3000);
-                }
+                    // إغلاق يدوي
+                    closeAdBtn.addEventListener('click', function() {
+                        clearInterval(timer);
+                        completeAd();
+                    });
+                };
                 
-                // إغلاق يدوي
-                closeAdBtn.addEventListener('click', closeAd);
+                // في حالة خطأ تحميل الإعلان
+                adFrame.onerror = function() {
+                    loadingSpinner.style.display = 'none';
+                    alert('حدث خطأ في تحميل الإعلان، يرجى المحاولة مرة أخرى');
+                    adOverlay.style.display = 'none';
+                };
             });
+            
+            function showCompletion() {
+                completionMessage.style.display = 'block';
+                
+                setTimeout(function() {
+                    completionMessage.style.display = 'none';
+                }, 3500);
+            }
         });
     </script>
 </body>
