@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>احصل على خدمة الرفع والتثبيت مجاناً لمدة شهرين</title>
+    <title>احصل على كونفج الرفع والتثبيت مجاناً لمدة شهرين</title>
     <style>
         * {
             box-sizing: border-box;
@@ -30,10 +30,12 @@
         .header h1 {
             color: #2c3e50;
             margin-bottom: 5px;
+            font-size: 28px;
         }
         .header p {
             color: #7f8c8d;
             margin-top: 0;
+            font-size: 18px;
         }
         .offer-box {
             background-color: #fff;
@@ -88,63 +90,61 @@
             font-weight: bold;
             flex-shrink: 0;
         }
-        .form-group {
-            margin-bottom: 20px;
+        .main-cta {
+            text-align: center;
+            margin: 30px 0;
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input[type="tel"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #e74c3c;
+        .cta-button {
+            background-color: #27ae60;
             color: white;
             border: none;
-            padding: 12px 20px;
-            width: 100%;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #c0392b;
-        }
-        .otp-container {
-            display: none;
-        }
-        .otp-input {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .otp-input input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
+            padding: 15px 30px;
+            border-radius: 50px;
             font-size: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .timer {
-            text-align: center;
-            color: #e74c3c;
             font-weight: bold;
-            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+            display: inline-block;
+            text-decoration: none;
         }
-        .success-message {
-            display: none;
-            text-align: center;
-            color: #2ecc71;
-            font-weight: bold;
+        .cta-button:hover {
+            background-color: #2ecc71;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(39, 174, 96, 0.6);
+        }
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+        .instructions {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
             margin: 20px 0;
+            border: 1px dashed #ddd;
+        }
+        .instructions h3 {
+            color: #e74c3c;
+            margin-top: 0;
+        }
+        .instructions ol {
+            padding-right: 20px;
+        }
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        .telegram-box {
+            background-color: #0088cc;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .telegram-box a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
         }
         .footer {
             text-align: center;
@@ -165,75 +165,48 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>احصل على خدمة الرفع والتثبيت مجاناً</h1>
-            <p>لمدة شهرين كاملين بدون أي تكاليف</p>
+            <h1>احصل على كونفج الرفع والتثبيت مجاناً</h1>
+            <p>لمدة شهرين كاملين - عرض محدود</p>
         </div>
         
         <div class="offer-box">
-            <h2>عرض حصري لفترة محدودة!</h2>
+            <h2>للحصول على الكونفج لمدة شهرين نفذ العرض الآن!</h2>
             
             <div class="offer-features">
                 <div class="feature">
                     <div class="feature-icon">✓</div>
-                    <span>رفع وتثبيت لمدة شهرين مجاناً</span>
+                    <span>كونفج رفع وتثبيت لمدة شهرين مجاناً</span>
                 </div>
                 <div class="feature">
                     <div class="feature-icon">✓</div>
-                    <span>دعم فني على مدار الساعة</span>
+                    <span>تنشيط فوري بعد تنفيذ العرض</span>
                 </div>
                 <div class="feature">
                     <div class="feature-icon">✓</div>
                     <span>سهولة في الاستخدام</span>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">✓</div>
-                    <span>تنشيط فوري بعد التأكيد</span>
-                </div>
             </div>
             
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <span>أدخل رقم هاتفك المحمول</span>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <span>ستستلم رمز تأكيد على هاتفك</span>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <span>أدخل الرمز لتأكيد رقمك</span>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <span>احصل على خدمة الرفع والتثبيت لمدة شهرين</span>
-                </div>
+            <div class="main-cta">
+                <a href="https://singingfiles.com/show.php?l=0&u=2430652&id=71458" class="cta-button">نفذ العرض واحصل على الكونفج الآن</a>
             </div>
             
-            <div class="form-container">
-                <div class="form-group">
-                    <label for="phone">رقم الهاتف:</label>
-                    <input type="tel" id="phone" placeholder="مثال: 01234567890">
-                </div>
-                <button id="send-otp">أرسل رمز التأكيد</button>
+            <div class="instructions">
+                <h3>كيفية الحصول على الخدمة:</h3>
+                <ol>
+                    <li>اضغط على زر "نفذ العرض" بالأعلى</li>
+                    <li>أدخل رقم هاتفك في صفحة العرض</li>
+                    <li>ستستلم رمز تأكيد على هاتفك</li>
+                    <li>أدخل الرمز لتأكيد رقمك</li>
+                    <li>بعد إكمال العرض، خذ سكرين شوت لصفحة التأكيد</li>
+                    <li>ارجع إلى هذه الصفحة وأرسل السكرين شوت</li>
+                    <li>سوف تصلك بيانات الكونفج خلال 24 ساعة</li>
+                </ol>
             </div>
             
-            <div class="otp-container">
-                <p>لقد أرسلنا رمز التأكيد إلى رقمك <span id="display-phone"></span></p>
-                <div class="otp-input">
-                    <input type="text" maxlength="1" pattern="[0-9]">
-                    <input type="text" maxlength="1" pattern="[0-9]">
-                    <input type="text" maxlength="1" pattern="[0-9]">
-                    <input type="text" maxlength="1" pattern="[0-9]">
-                </div>
-                <div class="timer" id="timer">02:00</div>
-                <button id="verify-otp">تأكيد الرمز</button>
-                <button id="resend-otp" style="background-color: #3498db; margin-top: 10px; display: none;">إعادة إرسال الرمز</button>
-            </div>
-            
-            <div class="success-message">
-                <p>تم تأكيد رقمك بنجاح!</p>
-                <p>جاري تحويلك لتفعيل خدمة الرفع والتثبيت...</p>
+            <div class="telegram-box">
+                <p>بعد تنفيذ العرض، أرسل سكرين شوت إلى حساب التليجرام:</p>
+                <p><a href="https://t.me/Yoter67y6" target="_blank">@Yoter67y6</a></p>
             </div>
         </div>
         
@@ -245,108 +218,5 @@
             <p>جميع الحقوق محفوظة © 2023</p>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const phoneInput = document.getElementById('phone');
-            const sendOtpBtn = document.getElementById('send-otp');
-            const verifyOtpBtn = document.getElementById('verify-otp');
-            const resendOtpBtn = document.getElementById('resend-otp');
-            const formContainer = document.querySelector('.form-container');
-            const otpContainer = document.querySelector('.otp-container');
-            const displayPhone = document.getElementById('display-phone');
-            const successMessage = document.querySelector('.success-message');
-            const timer = document.getElementById('timer');
-            const otpInputs = document.querySelectorAll('.otp-input input');
-            
-            let countdown;
-            let timeLeft = 120; // 2 minutes in seconds
-            
-            // Send OTP button click handler
-            sendOtpBtn.addEventListener('click', function() {
-                const phone = phoneInput.value.trim();
-                
-                if (!phone || !/^01[0125][0-9]{8}$/.test(phone)) {
-                    alert('الرجاء إدخال رقم هاتف محمول صحيح (11 رقم)');
-                    return;
-                }
-                
-                // Simulate sending OTP
-                formContainer.style.display = 'none';
-                otpContainer.style.display = 'block';
-                displayPhone.textContent = phone;
-                
-                // Start timer
-                startTimer();
-            });
-            
-            // Verify OTP button click handler
-            verifyOtpBtn.addEventListener('click', function() {
-                let otp = '';
-                otpInputs.forEach(input => {
-                    otp += input.value;
-                });
-                
-                if (otp.length !== 4 || !/^\d{4}$/.test(otp)) {
-                    alert('الرجاء إدخال رمز التأكيد المكون من 4 أرقام');
-                    return;
-                }
-                
-                // Simulate OTP verification
-                otpContainer.style.display = 'none';
-                successMessage.style.display = 'block';
-                
-                // Redirect to CPA offer after 3 seconds
-                setTimeout(() => {
-                    window.location.href = 'https://singingfiles.com/show.php?l=0&u=2430652&id=71458';
-                }, 3000);
-            });
-            
-            // Resend OTP button click handler
-            resendOtpBtn.addEventListener('click', function() {
-                // Simulate resending OTP
-                alert('تم إعادة إرسال رمز التأكيد إلى هاتفك');
-                resendOtpBtn.style.display = 'none';
-                verifyOtpBtn.style.display = 'block';
-                timeLeft = 120;
-                startTimer();
-            });
-            
-            // OTP input auto focus
-            otpInputs.forEach((input, index) => {
-                input.addEventListener('input', function() {
-                    if (this.value.length === 1) {
-                        if (index < otpInputs.length - 1) {
-                            otpInputs[index + 1].focus();
-                        } else {
-                            this.blur();
-                        }
-                    }
-                });
-                
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
-                        otpInputs[index - 1].focus();
-                    }
-                });
-            });
-            
-            // Timer function
-            function startTimer() {
-                clearInterval(countdown);
-                updateTimerDisplay();
-                
-                countdown = setInterval(() => {
-                    timeLeft--;
-                    updateTimerDisplay();
-                    
-                    if (timeLeft <= 0) {
-                        clearInterval(countdown);
-                        verifyOtpBtn.style.display = 'none';
-                        resendOtpBtn.style.display = 'block';
-                    }
-                }, 1000);
-            }
-            
-            function updateTimerDisplay() {
-                const
+</body>
+</html>
