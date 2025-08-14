@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -506,7 +505,6 @@
             text-shadow: 0 2px 5px rgba(212, 175, 55, 0.5);
             display: inline-block;
             transition: all 0.3s;
-            font-family: 'Reem Kufi', sans-serif;
         }
         
         .cta-button:hover span {
@@ -1154,16 +1152,6 @@
             80%, 100% { content: ''; }
         }
         
-        /* Page Load Animation */
-        @keyframes pageLoad {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        .page-load-animation {
-            animation: pageLoad 0.8s ease-out forwards;
-        }
-        
         /* Floating Elements */
         .floating {
             animation: float 6s ease-in-out infinite;
@@ -1220,74 +1208,6 @@
             .modal-container {
                 width: 95%;
                 padding: 25px;
-            }
-            
-            .offer-card,
-            .instructions,
-            .telegram-box,
-            .testimonial-card {
-                padding: 25px;
-            }
-            
-            .steps .step {
-                padding-right: 50px;
-                font-size: 16px;
-            }
-            
-            .step::before {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 24px;
-            }
-            
-            .header p {
-                font-size: 16px;
-            }
-            
-            .offer-card h2,
-            .instructions h3,
-            .telegram-box h3,
-            .testimonials h3 {
-                font-size: 22px;
-            }
-            
-            .feature {
-                padding: 15px;
-            }
-            
-            .feature-icon {
-                width: 50px;
-                height: 50px;
-                margin-left: 15px;
-            }
-            
-            .feature-icon i {
-                font-size: 20px;
-            }
-            
-            .feature-text {
-                font-size: 15px;
-            }
-            
-            .social-link {
-                width: 50px;
-                height: 50px;
-                margin: 0 10px;
-            }
-            
-            .social-link i {
-                font-size: 22px;
-            }
-            
-            .telegram-button {
-                padding: 15px 30px;
-                font-size: 16px;
             }
         }
     </style>
@@ -1505,13 +1425,6 @@
             setTimeout(function() {
                 document.querySelector('.preloader').classList.add('fade-out');
                 document.querySelector('.mobile-container').classList.add('show');
-                
-                // Add page load animation to all elements
-                document.querySelectorAll('.header, .offer-card, .feature, .testimonial-card, .instructions, .telegram-box, .footer').forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('page-load-animation');
-                    }, index * 100);
-                });
                 
                 setTimeout(function() {
                     document.querySelector('.preloader').style.display = 'none';
