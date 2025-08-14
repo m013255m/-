@@ -43,7 +43,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'El Messiri', 'Almarai', 'Tajawal', sans-serif;
+            font-family:  El Messiri ,  Almarai ,  Tajawal , sans-serif;
         }
         
         body {
@@ -102,7 +102,7 @@
         }
         
         .preloader-logo::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -137,7 +137,7 @@
         }
         
         .preloader-text::after {
-            content: '...';
+            content:  ... ;
             position: absolute;
             animation: dots 1.5s infinite;
         }
@@ -200,7 +200,6 @@
         .header {
             text-align: center;
             padding: 20px 0;
-            animation: fadeInDown 1s;
             position: relative;
         }
         
@@ -222,7 +221,7 @@
         }
         
         .logo::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -305,7 +304,6 @@
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2), var(--box-glow);
             position: relative;
             overflow: hidden;
-            animation: fadeInUp 1s;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(108, 92, 231, 0.2);
             backdrop-filter: blur(10px);
@@ -317,7 +315,7 @@
         }
         
         .offer-card::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             right: 0;
@@ -328,7 +326,7 @@
         }
         
         .offer-card::after {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -350,7 +348,7 @@
         }
         
         .offer-card h2::after {
-            content: '';
+            content:   ;
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -383,7 +381,7 @@
         }
         
         .feature::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -479,7 +477,7 @@
         }
         
         .cta-button::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: -100%;
@@ -542,7 +540,6 @@
             padding: 35px;
             margin: 30px 0;
             border: 1px dashed rgba(108, 92, 231, 0.3);
-            animation: fadeIn 1.5s;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
             transition: all 0.5s;
             position: relative;
@@ -550,7 +547,7 @@
         }
         
         .instructions::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -655,7 +652,7 @@
         }
         
         .telegram-box::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -731,7 +728,7 @@
         }
         
         .telegram-button::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -802,7 +799,7 @@
         }
         
         .testimonial-card::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -912,7 +909,7 @@
         }
         
         .social-link::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -1020,7 +1017,7 @@
         }
         
         .modal-container::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             right: 0;
@@ -1146,10 +1143,28 @@
         }
         
         @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80%, 100% { content: ''; }
+            0%, 20% { content:  . ; }
+            40% { content:  .. ; }
+            60% { content:  ... ; }
+            80%, 100% { content:   ; }
+        }
+        
+        /* Slide Up Animation */
+        .elements-slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Floating Elements */
@@ -1238,7 +1253,7 @@
     
     <!-- Mobile Content -->
     <div class="mobile-container">
-        <div class="header animate__animated animate__fadeInDown">
+        <div class="header">
             <div class="logo floating">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
@@ -1248,7 +1263,7 @@
             <p>لمدة شهرين كاملين - عرض حصري لفترة محدودة</p>
         </div>
         
-        <div class="offer-card animate__animated animate__fadeInUp" data-aos="zoom-in-up">
+        <div class="offer-card">
             <h2>للحصول على الكونفج لمدة شهرين نفذ العرض الآن!</h2>
             
             <div class="offer-expire">
@@ -1256,31 +1271,31 @@
             </div>
             
             <div class="features">
-                <div class="feature" data-aos="fade-right" data-aos-delay="100">
+                <div class="feature">
                     <div class="feature-icon">
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <span class="feature-text">كونفج رفع وتثبيت لمدة شهرين كاملين</span>
                 </div>
-                <div class="feature" data-aos="fade-right" data-aos-delay="200">
+                <div class="feature">
                     <div class="feature-icon">
                         <i class="fas fa-bolt"></i>
                     </div>
                     <span class="feature-text">تنشيط فوري بعد تنفيذ العرض</span>
                 </div>
-                <div class="feature" data-aos="fade-right" data-aos-delay="300">
+                <div class="feature">
                     <div class="feature-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <span class="feature-text">سهولة في الاستخدام والتثبيت</span>
                 </div>
-                <div class="feature" data-aos="fade-right" data-aos-delay="400">
+                <div class="feature">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
                     <span class="feature-text">دعم فني متكامل على مدار الساعة</span>
                 </div>
-                <div class="feature" data-aos="fade-right" data-aos-delay="500">
+                <div class="feature">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
@@ -1288,7 +1303,7 @@
                 </div>
             </div>
             
-            <a href="#" class="cta-button animate__animated animate__pulse animate__infinite hvr-float" id="offer-button">
+            <a href="#" class="cta-button hvr-float" id="offer-button">
                 <span>نفذ العرض واحصل على الكونفج الآن</span>
             </a>
             
@@ -1297,7 +1312,7 @@
                     <i class="fas fa-comment-alt"></i> آراء عملائنا
                 </h3>
                 
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="testimonial-card">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">م</div>
                         <div>
@@ -1316,7 +1331,7 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="testimonial-card">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">س</div>
                         <div>
@@ -1336,7 +1351,7 @@
                 </div>
             </div>
             
-            <div class="instructions" data-aos="fade-up">
+            <div class="instructions">
                 <h3>
                     <i class="fas fa-info-circle"></i>
                     خطوات الحصول على الخدمة
@@ -1353,7 +1368,7 @@
                 </div>
             </div>
             
-            <div class="telegram-box" data-aos="fade-up">
+            <div class="telegram-box">
                 <h3>
                     <i class="fab fa-telegram"></i>
                     إرسال السكرين شوت
@@ -1366,7 +1381,7 @@
             </div>
         </div>
         
-        <div class="footer" data-aos="fade-up">
+        <div class="footer">
             <div class="social-links">
                 <a href="#" class="social-link facebook hvr-bob">
                     <i class="fab fa-facebook-f"></i>
@@ -1428,6 +1443,30 @@
                 
                 setTimeout(function() {
                     document.querySelector('.preloader').style.display = 'none';
+                    
+                    // Apply slide animation to elements
+                    const animatedElements = [
+                        '.header',
+                        '.offer-card', 
+                        '.feature',
+                        '.testimonial-card',
+                        '.instructions',
+                        '.telegram-box',
+                        '.footer'
+                    ];
+
+                    function applySlideAnimation() {
+                        animatedElements.forEach((selector, index) => {
+                            const elements = document.querySelectorAll(selector);
+                            elements.forEach(el => {
+                                setTimeout(() => {
+                                    el.classList.add('elements-slide-up');
+                                }, index * 120);
+                            });
+                        });
+                    }
+                    
+                    applySlideAnimation();
                 }, 500);
             }, 2000);
         });
