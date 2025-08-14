@@ -1210,6 +1210,67 @@
                 padding: 25px;
             }
         }
+        // هذا الكود تضعه قبل </body> أو في ملف JavaScript منفصل
+<script>
+// تأثير ظهور العناصر بعد اختفاء اللودر
+document.addEventListener('DOMContentLoaded', function() {
+    // العناصر التي نريد تطبيق التأثير عليها
+    const elementsToAnimate = [
+        '.header',
+        '.offer-card',
+        '.feature',
+        '.testimonial-card',
+        '.instructions',
+        '.telegram-box',
+        '.footer'
+    ];
+
+    // وظيفة تطبيق التأثير
+    function applyLoadAnimation() {
+        elementsToAnimate.forEach((selector, index) => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => {
+                // إضافة كلاس للعنصر مع تأخير متدرج
+                setTimeout(() => {
+                    el.classList.add('element-load-animation');
+                }, index * 100);
+            });
+        });
+    }
+
+    // عند انتهاء التحميل
+    setTimeout(() => {
+        document.querySelector('.preloader').classList.add('fade-out');
+        document.querySelector('.mobile-container').classList.add('show');
+        
+        // بدء تأثير الظهور بعد اختفاء اللودر
+        setTimeout(() => {
+            document.querySelector('.preloader').style.display = 'none';
+            applyLoadAnimation();
+        }, 500);
+    }, 2000);
+});
+</script>
+
+<style>
+/* هذا الكود تضعه في قسم الـ CSS */
+.element-load-animation {
+    animation: elementLoad 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes elementLoad {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
     </style>
 </head>
 <body>
