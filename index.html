@@ -32,8 +32,6 @@
             --warning: #FDCB6E;
             --danger: #E84393;
             --info: #0984E3;
-            --gold: #FFD700;
-            --gold-light: #FFECB3;
             --text-glow: 0 0 15px rgba(108, 92, 231, 0.8);
             --box-glow: 0 0 30px rgba(108, 92, 231, 0.7);
             --neon-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--primary), 0 0 40px var(--primary);
@@ -43,7 +41,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'El Messiri', 'Almarai', 'Tajawal', sans-serif;
+            font-family:  El Messiri ,  Almarai ,  Tajawal , sans-serif;
         }
         
         body {
@@ -102,7 +100,7 @@
         }
         
         .preloader-logo::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -137,7 +135,7 @@
         }
         
         .preloader-text::after {
-            content: '...';
+            content:  ... ;
             position: absolute;
             animation: dots 1.5s infinite;
         }
@@ -222,7 +220,7 @@
         }
         
         .logo::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -317,7 +315,7 @@
         }
         
         .offer-card::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             right: 0;
@@ -328,7 +326,7 @@
         }
         
         .offer-card::after {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -350,7 +348,7 @@
         }
         
         .offer-card h2::after {
-            content: '';
+            content:   ;
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -383,7 +381,7 @@
         }
         
         .feature::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -479,7 +477,7 @@
         }
         
         .cta-button::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: -100%;
@@ -500,16 +498,16 @@
         }
         
         .cta-button span {
-            color: var(--gold);
+            color: #ff0000;
             font-weight: 900;
-            text-shadow: 0 2px 5px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
             display: inline-block;
             transition: all 0.3s;
         }
         
         .cta-button:hover span {
             transform: scale(1.1);
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
         }
         
         .offer-expire {
@@ -550,7 +548,7 @@
         }
         
         .instructions::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -655,7 +653,7 @@
         }
         
         .telegram-box::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -731,7 +729,7 @@
         }
         
         .telegram-button::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -802,7 +800,7 @@
         }
         
         .testimonial-card::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -910,7 +908,7 @@
         }
         
         .social-link::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -1018,7 +1016,7 @@
         }
         
         .modal-container::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             right: 0;
@@ -1144,113 +1142,15 @@
         }
         
         @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80%, 100% { content: ''; }
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            0%, 20% { content:  . ; }
+            40% { content:  .. ; }
+            60% { content:  ... ; }
+            80%, 100% { content:   ; }
         }
         
         /* Floating Elements */
         .floating {
             animation: float 6s ease-in-out infinite;
-        }
-        
-        /* Scroll Animations */
-        [data-aos="fade-up"] {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-        
-        [data-aos="fade-up"].aos-animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        [data-aos="fade-down"] {
-            opacity: 0;
-            transform: translateY(-50px);
-            transition: all 0.8s ease;
-        }
-        
-        [data-aos="fade-down"].aos-animate {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        [data-aos="fade-left"] {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.8s ease;
-        }
-        
-        [data-aos="fade-left"].aos-animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        [data-aos="fade-right"] {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease;
-        }
-        
-        [data-aos="fade-right"].aos-animate {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        [data-aos="zoom-in-up"] {
-            opacity: 0;
-            transform: translateY(50px) scale(0.9);
-            transition: all 0.8s ease;
-        }
-        
-        [data-aos="zoom-in-up"].aos-animate {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        
-        [data-aos="flip-up"] {
-            opacity: 0;
-            transform: perspective(1000px) rotateX(90deg);
-            transition: all 0.8s ease;
-        }
-        
-        [data-aos="flip-up"].aos-animate {
-            opacity: 1;
-            transform: perspective(1000px) rotateX(0);
         }
         
         /* Media Queries */
@@ -1385,15 +1285,15 @@
             </div>
             
             <a href="#" class="cta-button animate__animated animate__pulse animate__infinite hvr-float" id="offer-button">
-                <span style="color: var(--gold); font-weight: bold;">نفذ العرض واحصل على الكونفج الآن</span>
+                <span style="color: #ff0000; font-weight: bold;">نفذ العرض واحصل على الكونفج الآن</span>
             </a>
             
             <div class="testimonials">
-                <h3 data-aos="fade-down">
+                <h3>
                     <i class="fas fa-comment-alt"></i> آراء عملائنا
                 </h3>
                 
-                <div class="testimonial-card" data-aos="flip-up" data-aos-delay="100">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">م</div>
                         <div>
@@ -1412,7 +1312,7 @@
                     </div>
                 </div>
                 
-                <div class="testimonial-card" data-aos="flip-up" data-aos-delay="200">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="testimonial-header">
                         <div class="testimonial-avatar">س</div>
                         <div>
@@ -1462,7 +1362,7 @@
             </div>
         </div>
         
-        <div class="footer" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+        <div class="footer" data-aos="fade-up">
             <div class="social-links">
                 <a href="#" class="social-link facebook hvr-bob">
                     <i class="fab fa-facebook-f"></i>
@@ -1508,35 +1408,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Initialize AOS animation library with more options
+        // Initialize AOS animation library
         AOS.init({
             duration: 1000,
-            easing: 'ease-in-out-back',
+            easing:  ease-in-out-quad ,
             once: false,
-            mirror: true,
-            offset: 120,
-            delay: 100
+            mirror: true
         });
 
         // Enhanced Preloader
-        window.addEventListener('load', function() {
+        window.addEventListener( load , function() {
             setTimeout(function() {
-                document.querySelector('.preloader').classList.add('fade-out');
-                document.querySelector('.mobile-container').classList.add('show');
+                document.querySelector( .preloader ).classList.add( fade-out );
+                document.querySelector( .mobile-container ).classList.add( show );
                 
                 setTimeout(function() {
-                    document.querySelector('.preloader').style.display = 'none';
+                    document.querySelector( .preloader ).style.display =  none ;
                 }, 500);
             }, 2000);
         });
 
         // Create particles
-        document.addEventListener('DOMContentLoaded', function() {
-            if (document.getElementById('particles-js')) {
-                particlesJS('particles-js', {
+        document.addEventListener( DOMContentLoaded , function() {
+            if (document.getElementById( particles-js )) {
+                particlesJS( particles-js , {
                     "particles": {
                         "number": {
-                            "value": 50,
+                            "value": 40,
                             "density": {
                                 "enable": true,
                                 "value_area": 800
@@ -1648,20 +1546,20 @@
         
         // Show mobile content only on mobile devices
         if (!isMobile() && window.innerWidth > 768) {
-            document.querySelector('.mobile-container').style.display = 'none';
-            document.querySelector('.desktop-message').style.display = 'flex';
+            document.querySelector( .mobile-container ).style.display =  none ;
+            document.querySelector( .desktop-message ).style.display =  flex ;
         }
         
         // Add smooth scroll to all links
-        $('a[href*="#"]').on('click', function(e) {
+        $( a[href*="#"] ).on( click , function(e) {
             e.preventDefault();
             
-            $('html, body').animate(
+            $( html, body ).animate(
                 {
-                    scrollTop: $($(this).attr('href')).offset().top,
+                    scrollTop: $($(this).attr( href )).offset().top,
                 },
                 800,
-                'easeInOutQuad'
+                 easeInOutQuad 
             );
         });
         
@@ -1669,45 +1567,42 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    entry.target.classList.add( animate__animated ,  animate__fadeInUp );
                     observer.unobserve(entry.target);
                 }
             });
-        }, { 
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        });
+        }, { threshold: 0.1 });
         
-        document.querySelectorAll('.feature, .instructions, .telegram-box, .testimonial-card, .footer').forEach(el => {
+        document.querySelectorAll( .feature, .instructions, .telegram-box ).forEach(el => {
             observer.observe(el);
         });
         
         // Floating animation for elements
         function floatElements() {
-            $('.floating').each(function() {
-                $(this).css('animation-delay', Math.random() * 2 + 's');
+            $( .floating ).each(function() {
+                $(this).css( animation-delay , Math.random() * 2 +  s );
             });
         }
         
         floatElements();
         
         // Modal functionality
-        const modal = document.getElementById('confirmation-modal');
-        const modalClose = document.getElementById('modal-close');
-        const offerButton = document.getElementById('offer-button');
+        const modal = document.getElementById( confirmation-modal );
+        const modalClose = document.getElementById( modal-close );
+        const offerButton = document.getElementById( offer-button );
         
-        offerButton.addEventListener('click', function(e) {
+        offerButton.addEventListener( click , function(e) {
             e.preventDefault();
-            modal.classList.add('active');
+            modal.classList.add( active );
         });
         
-        modalClose.addEventListener('click', function() {
-            modal.classList.remove('active');
+        modalClose.addEventListener( click , function() {
+            modal.classList.remove( active );
         });
         
-        window.addEventListener('click', function(e) {
+        window.addEventListener( click , function(e) {
             if (e.target === modal) {
-                modal.classList.remove('active');
+                modal.classList.remove( active );
             }
         });
         
@@ -1717,55 +1612,38 @@
             
             // Scale down header on scroll
             if (scroll >= 50) {
-                $('.header h1').css({
-                    'transform': 'scale(0.95)',
-                    'opacity': '0.9'
+                $( .header h1 ).css({
+                     transform :  scale(0.95) ,
+                     opacity :  0.9 
                 });
-                $('.logo').css({
-                    'transform': 'scale(0.9)',
-                    'box-shadow': '0 5px 15px rgba(108, 92, 231, 0.3)'
+                $( .logo ).css({
+                     transform :  scale(0.9) ,
+                     box-shadow :  0 5px 15px rgba(108, 92, 231, 0.3) 
                 });
             } else {
-                $('.header h1').css({
-                    'transform': 'scale(1)',
-                    'opacity': '1'
+                $( .header h1 ).css({
+                     transform :  scale(1) ,
+                     opacity :  1 
                 });
-                $('.logo').css({
-                    'transform': 'scale(1)',
-                    'box-shadow': '0 15px 35px rgba(108, 92, 231, 0.4)'
+                $( .logo ).css({
+                     transform :  scale(1) ,
+                     box-shadow :  0 15px 35px rgba(108, 92, 231, 0.4) 
                 });
             }
-            
-            // Animate elements on scroll
-            $('[data-aos]').each(function() {
-                const elementPosition = $(this).offset().top;
-                const scrollPosition = $(window).scrollTop() + $(window).height();
-                
-                if (elementPosition < scrollPosition) {
-                    $(this).addClass('aos-animate');
-                }
-            });
         });
         
         // Add glow effect to elements on hover
-        $('.feature-icon, .logo, .cta-button').on('mouseenter', function() {
-            $(this).css('box-shadow', '0 0 30px rgba(108, 92, 231, 0.9)');
-        }).on('mouseleave', function() {
-            $(this).css('box-shadow', '');
+        $( .feature-icon, .logo, .cta-button ).on( mouseenter , function() {
+            $(this).css( box-shadow ,  0 0 30px rgba(108, 92, 231, 0.9) );
+        }).on( mouseleave , function() {
+            $(this).css( box-shadow ,   );
         });
         
         // Add parallax effect to particles
-        $(window).on('mousemove', function(e) {
+        $(window).on( mousemove , function(e) {
             const moveX = (e.pageX * -1 / 15);
             const moveY = (e.pageY * -1 / 15);
-            $('.particles').css('background-position', moveX + 'px ' + moveY + 'px');
-        });
-        
-        // Initialize animations on page load
-        $(document).ready(function() {
-            $('[data-aos]').each(function() {
-                $(this).addClass('aos-init');
-            });
+            $( .particles ).css( background-position , moveX +  px   + moveY +  px );
         });
     </script>
 </body>
