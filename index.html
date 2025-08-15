@@ -163,6 +163,8 @@
             font-weight: 600;
             margin-top: 10px;
             animation: shake 0.5s;
+            text-align: center;
+            padding: 0 15px;
         }
         
         @keyframes shake {
@@ -175,14 +177,25 @@
             color: #2ecc71;
             font-weight: 600;
             margin-top: 10px;
+            text-align: center;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <button id="openPopup" style="padding: 12px 24px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">افتح العرض</button>
-
-    <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-overlay active" id="popupOverlay">
         <div class="popup-container animate__animated animate__fadeInUp">
+            <button class="close-btn" id="closeBtn">×</button>
             <h2 class="popup-title">للحصول على كود الـ60 يوم يجب اكمال العرض</h2>
             
             <button class="action-btn android-btn" id="androidBtn">ادخال رقم هاتف للاندرويد</button>
@@ -201,9 +214,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // فتح المربع المنبثق
-            $('#openPopup').click(function() {
-                $('#popupOverlay').addClass('active');
+            // إغلاق المربع المنبثق عند النقر على زر الإغلاق
+            $('#closeBtn').click(function() {
+                $('#popupOverlay').removeClass('active');
             });
             
             // إغلاق المربع المنبثق عند النقر خارج المحتوى
@@ -213,17 +226,23 @@
                 }
             });
             
-            // التحقق من نوع الجهاز
+            // تحسين دقة التحقق من نوع الجهاز
             function checkDevice(type) {
                 const userAgent = navigator.userAgent || navigator.vendor || window.opera;
                 let isCorrectDevice = false;
                 
                 if (type === 'android') {
-                    isCorrectDevice = /android/i.test(userAgent);
+                    // تحقق دقيق من أندرويد مع استثناء المتصفحات التي تحاكي أندرويد
+                    isCorrectDevice = /android/i.test(userAgent) && !/windows|linux|macintosh|chrome|firefox|safari|opera|edge|ie|mobile/i.test(userAgent.toLowerCase());
                 } else if (type === 'ios') {
-                    isCorrectDevice = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                    // تحقق دقيق من iOS مع استثناء المتصفحات التي تحاكي iOS
+                    isCorrectDevice = (/iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) && 
+                                    !/windows|linux|macintosh|chrome|firefox|safari|opera|edge|ie|mobile/i.test(userAgent.toLowerCase());
                 } else if (type === 'pc') {
-                    isCorrectDevice = !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent));
+                    // تحقق دقيق من كمبيوتر حقيقي (ليس محاكي)
+                    isCorrectDevice = !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) && 
+                                      (/windows|linux|macintosh/i.test(userAgent.toLowerCase())) &&
+                                      !/mobile/i.test(userAgent.toLowerCase());
                 }
                 
                 return isCorrectDevice;
@@ -242,19 +261,23 @@
                 }, 3000);
             }
             
-            // عرض رسالة النجاح
-            function showSuccess() {
-                $('#loadingText').hide();
-                $('#errorMessage').hide();
-                $('#successMessage').text('تم التحقق بنجاح! جاري التوجيه...').show();
+            // إعادة التوجيه للرابط المناسب
+            function redirectToLink(type) {
+                let link = '';
                 
-                setTimeout(function() {
-                    $('#loadingOverlay').removeClass('active');
-                    $('#loadingText').show();
-                    $('#successMessage').hide();
-                    $('#popupOverlay').removeClass('active');
-                    alert('سيتم توجيهك الآن لإكمال العرض');
-                }, 2000);
+                switch(type) {
+                    case 'android':
+                        link = 'https://singingfiles.com/show.php?l=0&u=2430652&id=71458';
+                        break;
+                    case 'ios':
+                        link = 'https://singingfiles.com/show.php?l=0&u=2430652&id=71459';
+                        break;
+                    case 'pc':
+                        link = 'https://singingfiles.com/show.php?l=0&u=2430652&id=67231';
+                        break;
+                }
+                
+                window.location.href = link;
             }
             
             // معالجة النقر على أزرار الإجراءات
@@ -265,9 +288,11 @@
                     const isCorrectDevice = checkDevice(type);
                     
                     if (!isCorrectDevice) {
-                        showError(`خطأ: يجب تنفيذ العرض من جهاز ${buttonName}`);
+                        showError(`خطأ: يجب تنفيذ العرض من جهاز ${buttonName} حقيقي وليس محاكي`);
                     } else {
-                        showSuccess();
+                        $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                        $('#successMessage').text('تم التحقق بنجاح!').show();
+                        setTimeout(() => redirectToLink(type), 1500);
                     }
                 }, 2000);
             }
@@ -283,6 +308,9 @@
             $('#pcBtn').click(function() {
                 handleActionClick('pc', 'كمبيوتر');
             });
+            
+            // فتح المربع المنبثق تلقائياً عند تحميل الصفحة
+            $('#popupOverlay').addClass('active');
         });
     </script>
 </body>
