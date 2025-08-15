@@ -260,30 +260,49 @@
                 }
             });
             
-            // تحسين دقة التحقق من نوع الجهاز
+            // دالة متقدمة للتحقق من نوع الجهاز بدقة
             function checkDevice(type) {
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                let isCorrectDevice = false;
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isMobile = /mobile|android|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
+                const isTablet = /tablet|ipad|playbook|silk/i.test(userAgent);
+                const isAndroid = /android/i.test(userAgent) && !/windows/i.test(userAgent);
+                const isIOS = /iphone|ipad|ipod/i.test(userAgent);
+                const isWindows = /windows nt/i.test(userAgent);
+                const isMac = /macintosh|mac os x/i.test(userAgent);
+                const isLinux = /linux/i.test(userAgent) && !/android/i.test(userAgent);
+                const isDesktopMode = window.innerWidth > 1024 && window.innerHeight > 768;
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                 
+                // تحسين دقة كشف الأندرويد
                 if (type === 'android') {
-                    // تحقق دقيق من أندرويد
-                    isCorrectDevice = /android/i.test(userAgent) && 
-                                    !/windows|linux|macintosh|chrome|firefox|safari|opera|edge|ie|mobile/i.test(userAgent.toLowerCase()) &&
-                                    /mobile/i.test(userAgent.toLowerCase());
-                } else if (type === 'ios') {
-                    // تحقق دقيق من iOS
-                    isCorrectDevice = (/iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) && 
-                                    !/windows|linux|macintosh|chrome|firefox|safari|opera|edge|ie|mobile/i.test(userAgent.toLowerCase()) &&
-                                    /mobile/i.test(userAgent.toLowerCase());
-                } else if (type === 'pc') {
-                    // تحقق دقيق من كمبيوتر حقيقي
-                    isCorrectDevice = !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) && 
-                                    (/windows|linux|macintosh/i.test(userAgent.toLowerCase())) &&
-                                    !/mobile/i.test(userAgent.toLowerCase()) &&
-                                    !/Mobi/i.test(userAgent);
+                    return isAndroid && 
+                           !isTablet && 
+                           isMobile && 
+                           !isDesktopMode && 
+                           isTouchDevice &&
+                           !/chrome|firefox|safari|opera|edge|ie/i.test(userAgent);
                 }
                 
-                return isCorrectDevice;
+                // تحسين دقة كشف iOS
+                if (type === 'ios') {
+                    return isIOS && 
+                           !isTablet && 
+                           isMobile && 
+                           !isDesktopMode && 
+                           isTouchDevice &&
+                           !/chrome|firefox|safari|opera|edge|ie/i.test(userAgent);
+                }
+                
+                // تحسين دقة كشف الكمبيوتر
+                if (type === 'pc') {
+                    return (isWindows || isMac || isLinux) && 
+                           !isMobile && 
+                           !isTablet && 
+                           !isTouchDevice &&
+                           !/mobile/i.test(userAgent);
+                }
+                
+                return false;
             }
             
             // عرض رسالة الخطأ
@@ -326,7 +345,7 @@
                     const isCorrectDevice = checkDevice('android');
                     
                     if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من جهاز أندرويد حقيقي وليس محاكي");
+                        showError("خطأ: يجب تنفيذ العرض من جهاز أندرويد حقيقي فقط");
                     } else {
                         $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
                         $('#successMessage').text('تم التحقق بنجاح!').show();
@@ -343,7 +362,7 @@
                     const isCorrectDevice = checkDevice('ios');
                     
                     if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي وليس محاكي");
+                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي فقط");
                     } else {
                         $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
                         $('#successMessage').text('تم التحقق بنجاح!').show();
@@ -366,7 +385,7 @@
                     const isCorrectDevice = checkDevice('pc');
                     
                     if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي وليس إصدار سطح المكتب من الهاتف");
+                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط وليس إصدار سطح المكتب من الهاتف");
                     } else {
                         $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
                         $('#successMessage').text('تم التحقق بنجاح!').show();
