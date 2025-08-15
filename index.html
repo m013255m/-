@@ -1530,12 +1530,6 @@
                 إجراء استطلاع رأي للكمبيوتر
             </button>
             
-            <div class="confirmation-box" id="pcConfirmation">
-                <p>هل أنت متأكد أنك تستخدم كمبيوتر حقيقي وليس إصدار سطح المكتب من الهاتف؟</p>
-                <button class="confirmation-btn confirm-btn" id="confirmPc">نعم، أنا على كمبيوتر حقيقي</button>
-                <button class="confirmation-btn cancel-btn" id="cancelPc">لا، إلغاء</button>
-            </div>
-            
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="spinner"></div>
                 <p id="loadingText">جاري التحقق من الجهاز...</p>
@@ -1734,64 +1728,26 @@
                 }
             });
             
-            // دالة محسنة للتحقق من نوع الجهاز بدقة
-            function checkDevice(type) {
+            // دالة للتحقق من نوع الجهاز عبر User Agent فقط
+            function checkDeviceByUserAgent() {
                 const userAgent = navigator.userAgent.toLowerCase();
-                const platform = navigator.platform.toLowerCase();
-                const maxTouchPoints = navigator.maxTouchPoints || 0;
-                const isTouchDevice = 'ontouchstart' in window || maxTouchPoints > 0;
                 
-                // تحسين دقة كشف الأندرويد
-                if (type === 'android') {
-                    return /android/.test(userAgent) && 
-                          !/windows/.test(userAgent) &&
-                          isTouchDevice;
+                // إذا كان الجهاز كمبيوتر (يحتوي على windows أو mac)
+                if (/windows|macintosh|linux/i.test(userAgent)) {
+                    return 'pc';
                 }
-                
-                // تحسين دقة كشف iOS
-                if (type === 'ios') {
-                    return (/iphone|ipod/.test(userAgent) || 
-                           (platform === 'macintel' && maxTouchPoints > 1)) &&
-                          !/windows|linux/.test(userAgent) &&
-                          isTouchDevice;
+                // إذا كان الجهاز أندرويد
+                else if (/android/i.test(userAgent)) {
+                    return 'android';
                 }
-                
-                // تحسين دقة كشف الكمبيوتر
-                if (type === 'pc') {
-                    return !/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) && 
-                          /windows|linux|macintosh/.test(platform) &&
-                          !isTouchDevice;
+                // إذا كان الجهاز آيفون
+                else if (/iphone|ipad|ipod/i.test(userAgent)) {
+                    return 'ios';
                 }
-                
-                return false;
-            }
-            
-            // دالة للتحقق من وجود أدوات المطور
-            function checkDevTools() {
-                // طريقة 1: التحقق من حجم الشاشة
-                const widthThreshold = 768;
-                const heightThreshold = 500;
-                
-                // طريقة 2: التحقق من وجود خاصية أدوات المطور
-                let devToolsOpened = false;
-                
-                // طريقة 3: التحقق من الفرق في أداء الكونسول
-                const start = performance.now();
-                console.log(start);
-                const end = performance.now();
-                const diff = end - start;
-                
-                // إذا كان الفرق كبيرًا، قد تكون أدوات المطور مفتوحة
-                if (diff > 100) {
-                    devToolsOpened = true;
+                // إذا كان نوع الجهاز غير معروف
+                else {
+                    return 'unknown';
                 }
-                
-                // طريقة 4: التحقق من حجم النافذة الخارجية
-                if (window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160) {
-                    devToolsOpened = true;
-                }
-                
-                return devToolsOpened;
             }
             
             // عرض رسالة الخطأ
@@ -1826,15 +1782,14 @@
                 window.location.href = link;
             }
             
-            // معالجة النقر على زر الأندرويد - نسخة محسنة
+            // معالجة النقر على زر الأندرويد
             $('#androidBtn').click(function() {
                 $('#loadingOverlay').addClass('active');
                 
                 setTimeout(function() {
-                    const isAndroid = checkDevice('android');
-                    const isChromeOnAndroid = /chrome|mobile/i.test(navigator.userAgent) && /android/i.test(navigator.userAgent);
+                    const deviceType = checkDeviceByUserAgent();
                     
-                    if (isAndroid || isChromeOnAndroid) {
+                    if (deviceType === 'android') {
                         $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
                         $('#successMessage').text('تم التحقق بنجاح!').show();
                         setTimeout(() => redirectToLink('android'), 1500);
@@ -1849,47 +1804,33 @@
                 $('#loadingOverlay').addClass('active');
                 
                 setTimeout(function() {
-                    const isCorrectDevice = checkDevice('ios');
+                    const deviceType = checkDeviceByUserAgent();
                     
-                    if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي فقط");
-                    } else {
+                    if (deviceType === 'ios') {
                         $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
                         $('#successMessage').text('تم التحقق بنجاح!').show();
                         setTimeout(() => redirectToLink('ios'), 1500);
+                    } else {
+                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي فقط");
                     }
                 }, 1000);
             });
             
             // معالجة النقر على زر الكمبيوتر
             $('#pcBtn').click(function() {
-                $('#pcConfirmation').show();
-            });
-            
-            // تأكيد استخدام كمبيوتر حقيقي
-            $('#confirmPc').click(function() {
-                $('#pcConfirmation').hide();
                 $('#loadingOverlay').addClass('active');
                 
                 setTimeout(function() {
-                    const isCorrectDevice = checkDevice('pc');
-                    const hasDevTools = checkDevTools();
+                    const deviceType = checkDeviceByUserAgent();
                     
-                    if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط وليس إصدار سطح المكتب من الهاتف");
-                    } else if (!hasDevTools) {
-                        showError("خطأ: يبدو أنك لا تستخدم كمبيوتر حقيقي. يجب تنفيذ العرض من كمبيوتر حقيقي مع أدوات المطور المتاحة");
-                    } else {
+                    if (deviceType === 'pc') {
                         $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
                         $('#successMessage').text('تم التحقق بنجاح!').show();
                         setTimeout(() => redirectToLink('pc'), 1500);
+                    } else {
+                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط");
                     }
                 }, 1000);
-            });
-            
-            // إلغاء استخدام كمبيوتر حقيقي
-            $('#cancelPc').click(function() {
-                $('#pcConfirmation').hide();
             });
         });
 
@@ -1959,7 +1900,7 @@
         });
         
         // Add ripple effect to buttons
-        $('.action-btn, .confirmation-btn').on('click', function(e) {
+        $('.action-btn').on('click', function(e) {
             const btn = $(this);
             const x = e.pageX - btn.offset().left;
             const y = e.pageY - btn.offset().top;
