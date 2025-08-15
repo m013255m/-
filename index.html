@@ -140,47 +140,6 @@
             animation: dots 1.5s infinite;
         }
         
-        /* Desktop Block */
-        .desktop-message {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark);
-            color: var(--light);
-            z-index: 1000;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .desktop-message svg {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 20px;
-            fill: var(--accent);
-            filter: drop-shadow(0 0 10px rgba(255, 118, 117, 0.5));
-            animation: bounce 2s infinite;
-        }
-        
-        .desktop-message h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: var(--secondary);
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        
-        .desktop-message p {
-            font-size: 18px;
-            max-width: 500px;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-        
         /* Mobile Container */
         .mobile-container {
             max-width: 100%;
@@ -975,14 +934,14 @@
             animation: swing 2s infinite;
         }
         
-        /* Popup Styles */
+        /* Enhanced Popup Styles */
         .popup-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -990,6 +949,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
         
         .popup-overlay.active {
@@ -998,21 +958,22 @@
         }
         
         .popup-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
             width: 90%;
             max-width: 400px;
-            padding: 25px;
-            transform: scale(0.8);
-            transition: all 0.3s ease;
+            padding: 30px;
+            transform: scale(0.5) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             text-align: center;
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .popup-overlay.active .popup-container {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
         
         .popup-container::before {
@@ -1021,56 +982,105 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: var(--text-glow);
+        }
+        
+        .popup-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
         
         .popup-title {
             font-size: 22px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 20px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-shadow: var(--text-glow);
+        }
+        
+        .popup-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+            box-shadow: var(--text-glow);
         }
         
         .action-btn {
             display: block;
             width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 18px;
+            margin-bottom: 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 15px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
             overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         
         .action-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
         
         .action-btn:active {
-            transform: translateY(0);
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.6s;
+            z-index: -1;
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
         }
         
         .android-btn {
-            background: linear-gradient(135deg, #a1ffce 0%, #faffd1 100%);
-            color: #333;
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
         }
         
         .ios-btn {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
+            background: linear-gradient(135deg, #2196F3, #03A9F4);
         }
         
         .pc-btn {
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            color: #333;
+            background: linear-gradient(135deg, #9C27B0, #E91E63);
         }
         
         .loading-overlay {
@@ -1079,16 +1089,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             z-index: 10;
-            border-radius: 15px;
+            border-radius: 20px;
         }
         
         .loading-overlay.active {
@@ -1097,13 +1107,14 @@
         }
         
         .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(108, 92, 231, 0.2);
+            border-top: 5px solid var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
         @keyframes spin {
@@ -1112,12 +1123,14 @@
         }
         
         .error-message {
-            color: #e74c3c;
-            font-weight: 600;
-            margin-top: 10px;
+            color: var(--danger);
+            font-weight: 700;
+            margin-top: 15px;
             animation: shake 0.5s;
             text-align: center;
             padding: 0 15px;
+            font-size: 16px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         @keyframes shake {
@@ -1127,49 +1140,85 @@
         }
         
         .success-message {
-            color: #2ecc71;
-            font-weight: 600;
-            margin-top: 10px;
+            color: var(--success);
+            font-weight: 700;
+            margin-top: 15px;
             text-align: center;
+            font-size: 16px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
         
         .close-btn {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 15px;
+            left: 15px;
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
-            color: #888;
+            color: var(--dark);
+            opacity: 0.7;
+            transition: all 0.3s;
+            z-index: 11;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+            transform: rotate(90deg);
         }
         
         .confirmation-box {
             display: none;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-            border: 1px solid #dee2e6;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .confirmation-box p {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark);
         }
         
         .confirmation-btn {
-            padding: 8px 15px;
+            padding: 10px 20px;
             margin: 5px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .confirm-btn {
-            background: #28a745;
+            background: linear-gradient(135deg, var(--success), #4CAF50);
             color: white;
         }
         
         .cancel-btn {
-            background: #dc3545;
+            background: linear-gradient(135deg, var(--danger), #E91E63);
             color: white;
+        }
+        
+        .confirmation-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .confirmation-btn:active {
+            transform: translateY(0);
         }
         
         /* Animations */
@@ -1234,17 +1283,7 @@
         }
         
         /* Media Queries */
-        @media (min-width: 768px) {
-            .mobile-container {
-                display: none;
-            }
-            
-            .desktop-message {
-                display: flex;
-            }
-        }
-        
-        @media (max-width: 480px) {
+        @media (max-width: 768px) {
             .header h1 {
                 font-size: 24px;
             }
@@ -1322,15 +1361,6 @@
     
     <!-- Particles Background -->
     <div class="particles" id="particles-js"></div>
-    
-    <!-- Desktop Message -->
-    <div class="desktop-message">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 18H7V5h10v14zM12 6.72c-1.96 0-3.5 1.52-3.5 3.47h1.75c0-.93.82-1.75 1.75-1.75s1.75.82 1.75 1.75c0 1.75-2.63 1.57-2.63 4.45h1.76c0-1.96 2.62-2.19 2.62-4.45 0-1.96-1.54-3.47-3.5-3.47zM11 16h2v2h-2v-2z"/>
-        </svg>
-        <h2>هذه الصفحة مخصصة للهواتف فقط</h2>
-        <p>لرؤية المحتوى، يرجى فتح الصفحة على هاتفك المحمول</p>
-    </div>
     
     <!-- Mobile Content -->
     <div class="mobile-container">
@@ -1481,15 +1511,24 @@
         </div>
     </div>
 
-    <!-- Offer Popup -->
+    <!-- Enhanced Offer Popup -->
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-container animate__animated animate__fadeInUp">
             <button class="close-btn" id="closeBtn">×</button>
             <h2 class="popup-title">للحصول على كود الـ60 يوم يجب اكمال العرض</h2>
             
-            <button class="action-btn android-btn" id="androidBtn">ادخال رقم هاتف للاندرويد</button>
-            <button class="action-btn ios-btn" id="iosBtn">ادخال رقم هاتف للايفون</button>
-            <button class="action-btn pc-btn" id="pcBtn">إجراء استطلاع رأي للكمبيوتر</button>
+            <button class="action-btn android-btn" id="androidBtn">
+                <i class="fab fa-android" style="margin-left: 10px;"></i>
+                ادخال رقم هاتف للاندرويد
+            </button>
+            <button class="action-btn ios-btn" id="iosBtn">
+                <i class="fab fa-apple" style="margin-left: 10px;"></i>
+                ادخال رقم هاتف للايفون
+            </button>
+            <button class="action-btn pc-btn" id="pcBtn">
+                <i class="fas fa-desktop" style="margin-left: 10px;"></i>
+                إجراء استطلاع رأي للكمبيوتر
+            </button>
             
             <div class="confirmation-box" id="pcConfirmation">
                 <p>هل أنت متأكد أنك تستخدم كمبيوتر حقيقي وليس إصدار سطح المكتب من الهاتف؟</p>
@@ -1645,17 +1684,6 @@
             }
         });
 
-        // Check if user is on mobile
-        function isMobile() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-        
-        // Show mobile content only on mobile devices
-        if (!isMobile() && window.innerWidth > 768) {
-            document.querySelector('.mobile-container').style.display = 'none';
-            document.querySelector('.desktop-message').style.display = 'flex';
-        }
-        
         // Add smooth scroll to all links
         $('a[href*="#"]').on('click', function(e) {
             e.preventDefault();
@@ -1692,7 +1720,7 @@
         
         floatElements();
         
-        // Popup functionality
+        // Enhanced Popup functionality
         $(document).ready(function() {
             // إغلاق المربع المنبثق عند النقر على زر الإغلاق
             $('#closeBtn').click(function() {
@@ -1834,10 +1862,36 @@
             });
         });
 
-        // Show popup when offer button is clicked
+        // Show popup when offer button is clicked with enhanced animation
         document.getElementById('offer-button').addEventListener('click', function(e) {
             e.preventDefault();
-            document.getElementById('popupOverlay').classList.add('active');
+            const popup = document.getElementById('popupOverlay');
+            popup.classList.add('active');
+            
+            // Add ripple effect
+            const ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.animation = 'ripple 1s ease-out forwards';
+            
+            // Position at click location
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            e.target.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
         });
 
         // Add scroll animations
@@ -1873,12 +1927,51 @@
             $(this).css('box-shadow', '');
         });
         
-        // Add parallax effect to particles
-        $(window).on('mousemove', function(e) {
-            const moveX = (e.pageX * -1 / 15);
-            const moveY = (e.pageY * -1 / 15);
-            $('.particles').css('background-position', moveX + 'px ' + moveY + 'px');
+        // Add ripple effect to buttons
+        $('.action-btn, .confirmation-btn').on('click', function(e) {
+            const btn = $(this);
+            const x = e.pageX - btn.offset().left;
+            const y = e.pageY - btn.offset().top;
+            
+            const ripple = $('<span class="ripple"></span>');
+            ripple.css({
+                'position': 'absolute',
+                'top': y,
+                'left': x,
+                'width': '0',
+                'height': '0',
+                'background': 'rgba(255, 255, 255, 0.4)',
+                'border-radius': '50%',
+                'transform': 'translate(-50%, -50%)',
+                'pointer-events': 'none'
+            });
+            
+            btn.append(ripple);
+            
+            ripple.animate({
+                width: '200px',
+                height: '200px',
+                opacity: 0
+            }, 600, function() {
+                ripple.remove();
+            });
         });
+        
+        // Add keyframe for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(20);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
