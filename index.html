@@ -1728,28 +1728,36 @@
                 }
             });
             
-            // دالة للتحقق من وجود إضافات Chrome
-            function checkChromeExtensions() {
+            // دالة للتحقق من وجود Extensions في أي متصفح
+            function checkBrowserExtensions() {
                 try {
-                    // هذه الطريقة تعمل فقط في Chrome
-                    if (typeof chrome ===  undefined  || typeof chrome.runtime ===  undefined ) {
+                    // Chrome و Edge و Opera
+                    if (typeof chrome !==  undefined  && chrome.runtime) {
                         return {
-                            hasExtensions: false,
-                            message: "المتصفح ليس Chrome أو لا يدعم الإضافات"
+                            hasExtensions: true,
+                            message: "تم اكتشاف إضافات في المتصفح"
                         };
                     }
                     
-                    // محاولة الوصول إلى قائمة الإضافات
-                    if (typeof chrome.runtime.getManifest ===  function ) {
+                    // Firefox
+                    if (typeof browser !==  undefined  && browser.runtime) {
                         return {
                             hasExtensions: true,
-                            message: "تم اكتشاف إضافات Chrome في المتصفح"
+                            message: "تم اكتشاف إضافات في المتصفح"
+                        };
+                    }
+                    
+                    // Safari
+                    if (window.safari && safari.extension) {
+                        return {
+                            hasExtensions: true,
+                            message: "تم اكتشاف إضافات في المتصفح"
                         };
                     }
                     
                     return {
                         hasExtensions: false,
-                        message: "لم يتم اكتشاف إضافات Chrome في المتصفح"
+                        message: "لم يتم اكتشاف أي إضافات في المتصفح"
                     };
                 } catch (e) {
                     return {
@@ -1758,31 +1766,37 @@
                     };
                 }
             }
-            
+
             // عرض رسالة الخطأ
             function showError(message) {
-                $( #loadingText ).hide();
-                $( #errorMessage ).text(message).show();
-                $( #successMessage ).hide();
-                
-                setTimeout(function() {
-                    $( #loadingOverlay ).removeClass( active );
-                    $( #loadingText ).show();
-                    $( #errorMessage ).hide();
-                }, 3000);
+                Swal.fire({
+                    icon:  error ,
+                    title:  خطأ ,
+                    text: message,
+                    confirmButtonColor: var(--danger),
+                    confirmButtonText:  حسنا ,
+                    timer: 5000,
+                    timerProgressBar: true,
+                    backdrop: `
+                        rgba(232,67,147,0.4)
+                        url("/images/nyan-cat.gif")
+                        center top
+                        no-repeat
+                    `
+                });
             }
             
             // عرض رسالة النجاح
             function showSuccess(message) {
-                $( #loadingText ).hide();
-                $( #errorMessage ).hide();
-                $( #successMessage ).text(message).show();
-                
-                setTimeout(function() {
-                    $( #loadingOverlay ).removeClass( active );
-                    $( #loadingText ).show();
-                    $( #successMessage ).hide();
-                }, 3000);
+                Swal.fire({
+                    icon:  success ,
+                    title:  نجاح ,
+                    text: message,
+                    confirmButtonColor: var(--success),
+                    confirmButtonText:  حسنا ,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
             }
             
             // إعادة التوجيه للرابط المناسب
@@ -1809,15 +1823,7 @@
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    const userAgent = navigator.userAgent.toLowerCase();
-                    
-                    if (/android/.test(userAgent)) {
-                        $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
-                        $( #successMessage ).text( تم التحقق بنجاح! ).show();
-                        setTimeout(() => redirectToLink( android ), 1500);
-                    } else {
-                        showError("خطأ: يجب تنفيذ العرض من جهاز أندرويد حقيقي فقط");
-                    }
+                    redirectToLink( android );
                 }, 1000);
             });
             
@@ -1826,15 +1832,7 @@
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    const userAgent = navigator.userAgent.toLowerCase();
-                    
-                    if (/iphone|ipad|ipod/.test(userAgent)) {
-                        $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
-                        $( #successMessage ).text( تم التحقق بنجاح! ).show();
-                        setTimeout(() => redirectToLink( ios ), 1500);
-                    } else {
-                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي فقط");
-                    }
+                    redirectToLink( ios );
                 }, 1000);
             });
             
@@ -1843,20 +1841,14 @@
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    const userAgent = navigator.userAgent.toLowerCase();
+                    const extensionsCheck = checkBrowserExtensions();
                     
-                    if (/windows|macintosh|linux/.test(userAgent)) {
-                        // التحقق من إضافات Chrome فقط
-                        const extensionsCheck = checkChromeExtensions();
-                        
-                        if (extensionsCheck.hasExtensions) {
-                            showSuccess("تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض...");
-                            setTimeout(() => redirectToLink( pc ), 1500);
-                        } else {
-                            showError("خطأ: " + extensionsCheck.message);
-                        }
+                    if (extensionsCheck.hasExtensions) {
+                        showSuccess("تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض...");
+                        setTimeout(() => redirectToLink( pc ), 1500);
                     } else {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط");
+                        showError(extensionsCheck.message);
+                        $( #loadingOverlay ).removeClass( active );
                     }
                 }, 1000);
             });
