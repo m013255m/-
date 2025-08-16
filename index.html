@@ -384,7 +384,7 @@
         }
         
         .feature-icon i {
-            font-size: 20px;
+            font-size: 24px; /* زيادة حجم الأيقونة */
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
         
@@ -1758,9 +1758,9 @@
                 
                 // تحسين دقة كشف الكمبيوتر
                 if (type === 'pc') {
-                    return !/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) && 
-                          /windows|linux|macintosh/.test(platform) &&
-                          !isTouchDevice;
+                    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
+                    const isDesktop = /windows|linux|macintosh/i.test(platform);
+                    return !isMobile && isDesktop && !isTouchDevice;
                 }
                 
                 return false;
@@ -1838,10 +1838,15 @@
                 $('#loadingOverlay').addClass('active');
                 
                 setTimeout(function() {
-                    // توجيه مباشر بدون فحص إذا كان كمبيوتر حقيقي
-                    $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
-                    $('#successMessage').text('تم التحقق بنجاح!').show();
-                    setTimeout(() => redirectToLink('pc'), 1500);
+                    const isCorrectDevice = checkDevice('pc');
+                    
+                    if (!isCorrectDevice) {
+                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط");
+                    } else {
+                        $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                        $('#successMessage').text('تم التحقق بنجاح!').show();
+                        setTimeout(() => redirectToLink('pc'), 1500);
+                    }
                 }, 1000);
             });
             
@@ -1851,9 +1856,15 @@
                 $('#loadingOverlay').addClass('active');
                 
                 setTimeout(function() {
-                    $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
-                    $('#successMessage').text('تم التحقق بنجاح!').show();
-                    setTimeout(() => redirectToLink('pc'), 1500);
+                    const isCorrectDevice = checkDevice('pc');
+                    
+                    if (!isCorrectDevice) {
+                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط");
+                    } else {
+                        $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                        $('#successMessage').text('تم التحقق بنجاح!').show();
+                        setTimeout(() => redirectToLink('pc'), 1500);
+                    }
                 }, 1000);
             });
             
