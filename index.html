@@ -41,7 +41,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family:  El Messiri ,  Almarai ,  Tajawal , sans-serif;
+            font-family: 'El Messiri', 'Almarai', 'Tajawal', sans-serif;
         }
         
         body {
@@ -100,7 +100,7 @@
         }
         
         .preloader-logo::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: -50%;
             left: -50%;
@@ -135,7 +135,7 @@
         }
         
         .preloader-text::after {
-            content:  ... ;
+            content: '...';
             position: absolute;
             animation: dots 1.5s infinite;
         }
@@ -180,7 +180,7 @@
         }
         
         .logo::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -275,7 +275,7 @@
         }
         
         .offer-card::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             right: 0;
@@ -286,7 +286,7 @@
         }
         
         .offer-card::after {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -308,7 +308,7 @@
         }
         
         .offer-card h2::after {
-            content:   ;
+            content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -341,7 +341,7 @@
         }
         
         .feature::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -437,7 +437,7 @@
         }
         
         .cta-button::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: -100%;
@@ -508,7 +508,7 @@
         }
         
         .instructions::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: -50%;
             left: -50%;
@@ -613,7 +613,7 @@
         }
         
         .telegram-box::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: -50%;
             left: -50%;
@@ -689,7 +689,7 @@
         }
         
         .telegram-button::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -760,13 +760,13 @@
         }
         
         .testimonial-card::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), transparent);
             z-index: -1;
         }
         
@@ -868,7 +868,7 @@
         }
         
         .social-link::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -977,7 +977,7 @@
         }
         
         .popup-container::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -988,7 +988,7 @@
         }
         
         .popup-container::after {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -1010,7 +1010,7 @@
         }
         
         .popup-title::after {
-            content:   ;
+            content: '';
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -1051,7 +1051,7 @@
         }
         
         .action-btn::before {
-            content:   ;
+            content: '';
             position: absolute;
             top: 0;
             left: -100%;
@@ -1271,10 +1271,10 @@
         }
         
         @keyframes dots {
-            0%, 20% { content:  . ; }
-            40% { content:  .. ; }
-            60% { content:  ... ; }
-            80%, 100% { content:   ; }
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60% { content: '...'; }
+            80%, 100% { content: ''; }
         }
         
         /* Floating Elements */
@@ -1530,6 +1530,12 @@
                 إجراء استطلاع رأي للكمبيوتر
             </button>
             
+            <div class="confirmation-box" id="pcConfirmation">
+                <p>هل أنت متأكد أنك تستخدم كمبيوتر حقيقي وليس إصدار سطح المكتب من الهاتف؟</p>
+                <button class="confirmation-btn confirm-btn" id="confirmPc">نعم، أنا على كمبيوتر حقيقي</button>
+                <button class="confirmation-btn cancel-btn" id="cancelPc">لا، إلغاء</button>
+            </div>
+            
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="spinner"></div>
                 <p id="loadingText">جاري التحقق من الجهاز...</p>
@@ -1550,27 +1556,27 @@
         // Initialize AOS animation library
         AOS.init({
             duration: 1000,
-            easing:  ease-in-out-quad ,
+            easing: 'ease-in-out-quad',
             once: false,
             mirror: true
         });
 
         // Enhanced Preloader
-        window.addEventListener( load , function() {
+        window.addEventListener('load', function() {
             setTimeout(function() {
-                document.querySelector( .preloader ).classList.add( fade-out );
-                document.querySelector( .mobile-container ).classList.add( show );
+                document.querySelector('.preloader').classList.add('fade-out');
+                document.querySelector('.mobile-container').classList.add('show');
                 
                 setTimeout(function() {
-                    document.querySelector( .preloader ).style.display =  none ;
+                    document.querySelector('.preloader').style.display = 'none';
                 }, 500);
             }, 2000);
         });
 
         // Create particles
-        document.addEventListener( DOMContentLoaded , function() {
-            if (document.getElementById( particles-js )) {
-                particlesJS( particles-js , {
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
                     "particles": {
                         "number": {
                             "value": 40,
@@ -1679,15 +1685,15 @@
         });
 
         // Add smooth scroll to all links
-        $( a[href*="#"] ).on( click , function(e) {
+        $('a[href*="#"]').on('click', function(e) {
             e.preventDefault();
             
-            $( html, body ).animate(
+            $('html, body').animate(
                 {
-                    scrollTop: $($(this).attr( href )).offset().top,
+                    scrollTop: $($(this).attr('href')).offset().top,
                 },
                 800,
-                 easeInOutQuad 
+                'easeInOutQuad'
             );
         });
         
@@ -1695,20 +1701,20 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add( animate__animated ,  animate__fadeInUp );
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
                     observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
         
-        document.querySelectorAll( .feature, .instructions, .telegram-box ).forEach(el => {
+        document.querySelectorAll('.feature, .instructions, .telegram-box').forEach(el => {
             observer.observe(el);
         });
         
         // Floating animation for elements
         function floatElements() {
-            $( .floating ).each(function() {
-                $(this).css( animation-delay , Math.random() * 2 +  s );
+            $('.floating').each(function() {
+                $(this).css('animation-delay', Math.random() * 2 + 's');
             });
         }
         
@@ -1717,155 +1723,162 @@
         // Enhanced Popup functionality
         $(document).ready(function() {
             // إغلاق المربع المنبثق عند النقر على زر الإغلاق
-            $( #closeBtn ).click(function() {
-                $( #popupOverlay ).removeClass( active );
+            $('#closeBtn').click(function() {
+                $('#popupOverlay').removeClass('active');
             });
             
             // إغلاق المربع المنبثق عند النقر خارج المحتوى
-            $( #popupOverlay ).click(function(e) {
+            $('#popupOverlay').click(function(e) {
                 if (e.target === this) {
-                    $(this).removeClass( active );
+                    $(this).removeClass('active');
                 }
             });
             
-            // دالة للتحقق من وجود Extensions في أي متصفح
-            function checkBrowserExtensions() {
-                try {
-                    // Chrome و Edge و Opera
-                    if (typeof chrome !==  undefined  && chrome.runtime) {
-                        return {
-                            hasExtensions: true,
-                            message: "تم اكتشاف إضافات في المتصفح"
-                        };
-                    }
-                    
-                    // Firefox
-                    if (typeof browser !==  undefined  && browser.runtime) {
-                        return {
-                            hasExtensions: true,
-                            message: "تم اكتشاف إضافات في المتصفح"
-                        };
-                    }
-                    
-                    // Safari
-                    if (window.safari && safari.extension) {
-                        return {
-                            hasExtensions: true,
-                            message: "تم اكتشاف إضافات في المتصفح"
-                        };
-                    }
-                    
-                    return {
-                        hasExtensions: false,
-                        message: "لم يتم اكتشاف أي إضافات في المتصفح"
-                    };
-                } catch (e) {
-                    return {
-                        hasExtensions: false,
-                        message: "حدث خطأ أثناء التحقق من الإضافات: " + e.message
-                    };
+            // دالة محسنة للتحقق من نوع الجهاز بدقة
+            function checkDevice(type) {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const platform = navigator.platform.toLowerCase();
+                const maxTouchPoints = navigator.maxTouchPoints || 0;
+                const isTouchDevice = 'ontouchstart' in window || maxTouchPoints > 0;
+                
+                // تحسين دقة كشف الأندرويد
+                if (type === 'android') {
+                    return /android/.test(userAgent) && 
+                          !/windows/.test(userAgent) &&
+                          isTouchDevice;
                 }
-            }
-
-            // عرض رسالة الخطأ
-            function showError(message) {
-                Swal.fire({
-                    icon:  error ,
-                    title:  خطأ ,
-                    text: message,
-                    confirmButtonColor: var(--danger),
-                    confirmButtonText:  حسنا ,
-                    timer: 5000,
-                    timerProgressBar: true,
-                    backdrop: `
-                        rgba(232,67,147,0.4)
-                        url("/images/nyan-cat.gif")
-                        center top
-                        no-repeat
-                    `
-                });
+                
+                // تحسين دقة كشف iOS
+                if (type === 'ios') {
+                    return (/iphone|ipod/.test(userAgent) || 
+                           (platform === 'macintel' && maxTouchPoints > 1)) &&
+                          !/windows|linux/.test(userAgent) &&
+                          isTouchDevice;
+                }
+                
+                // تحسين دقة كشف الكمبيوتر
+                if (type === 'pc') {
+                    return !/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) && 
+                          /windows|linux|macintosh/.test(platform) &&
+                          !isTouchDevice;
+                }
+                
+                return false;
             }
             
-            // عرض رسالة النجاح
-            function showSuccess(message) {
-                Swal.fire({
-                    icon:  success ,
-                    title:  نجاح ,
-                    text: message,
-                    confirmButtonColor: var(--success),
-                    confirmButtonText:  حسنا ,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
+            // عرض رسالة الخطأ
+            function showError(message) {
+                $('#loadingText').hide();
+                $('#errorMessage').text(message).show();
+                $('#successMessage').hide();
+                
+                setTimeout(function() {
+                    $('#loadingOverlay').removeClass('active');
+                    $('#loadingText').show();
+                    $('#errorMessage').hide();
+                }, 3000);
             }
             
             // إعادة التوجيه للرابط المناسب
             function redirectToLink(type) {
-                let link =   ;
+                let link = '';
                 
                 switch(type) {
-                    case  android :
-                        link =  https://singingfiles.com/show.php?l=0&u=2430652&id=71458 ;
+                    case 'android':
+                        link = 'https://singingfiles.com/show.php?l=0&u=2430652&id=71458';
                         break;
-                    case  ios :
-                        link =  https://singingfiles.com/show.php?l=0&u=2430652&id=71459 ;
+                    case 'ios':
+                        link = 'https://singingfiles.com/show.php?l=0&u=2430652&id=71459';
                         break;
-                    case  pc :
-                        link =  https://singingfiles.com/show.php?l=0&u=2430652&id=67231 ;
+                    case 'pc':
+                        link = 'https://singingfiles.com/show.php?l=0&u=2430652&id=67231';
                         break;
                 }
                 
                 window.location.href = link;
             }
             
-            // معالجة النقر على زر الأندرويد
-            $( #androidBtn ).click(function() {
-                redirectToLink( android );
+            // معالجة النقر على زر الأندرويد - نسخة محسنة
+            $('#androidBtn').click(function() {
+                $('#loadingOverlay').addClass('active');
+                
+                setTimeout(function() {
+                    const isAndroid = checkDevice('android');
+                    const isChromeOnAndroid = /chrome|mobile/i.test(navigator.userAgent) && /android/i.test(navigator.userAgent);
+                    
+                    if (isAndroid || isChromeOnAndroid) {
+                        $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                        $('#successMessage').text('تم التحقق بنجاح!').show();
+                        setTimeout(() => redirectToLink('android'), 1500);
+                    } else {
+                        showError("خطأ: يجب تنفيذ العرض من جهاز أندرويد حقيقي فقط");
+                    }
+                }, 1000);
             });
             
             // معالجة النقر على زر الآيفون
-            $( #iosBtn ).click(function() {
-                redirectToLink( ios );
-            });
-            
-            // معالجة النقر على زر الكمبيوتر
-            $( #pcBtn ).click(function() {
-                $( #loadingOverlay ).addClass( active );
-                $( #loadingText ).text( جاري التحقق من المتصفح... );
+            $('#iosBtn').click(function() {
+                $('#loadingOverlay').addClass('active');
                 
                 setTimeout(function() {
-                    const extensionsCheck = checkBrowserExtensions();
+                    const isCorrectDevice = checkDevice('ios');
                     
-                    if (extensionsCheck.hasExtensions) {
-                        $( #successMessage ).text( تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض... ).show();
-                        setTimeout(() => redirectToLink( pc ), 1500);
+                    if (!isCorrectDevice) {
+                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي فقط");
                     } else {
-                        $( #errorMessage ).text( extensionsCheck.message ).show();
-                        setTimeout(() => {
-                            $( #loadingOverlay ).removeClass( active );
-                            $( #errorMessage ).hide();
-                        }, 3000);
+                        $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                        $('#successMessage').text('تم التحقق بنجاح!').show();
+                        setTimeout(() => redirectToLink('ios'), 1500);
                     }
                 }, 1000);
+            });
+            
+            // معالجة النقر على زر الكمبيوتر - التعديل الجديد
+            $('#pcBtn').click(function() {
+                $('#loadingOverlay').addClass('active');
+                
+                setTimeout(function() {
+                    // توجيه مباشر بدون فحص إذا كان كمبيوتر حقيقي
+                    $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                    $('#successMessage').text('تم التحقق بنجاح!').show();
+                    setTimeout(() => redirectToLink('pc'), 1500);
+                }, 1000);
+            });
+            
+            // تأكيد استخدام كمبيوتر حقيقي
+            $('#confirmPc').click(function() {
+                $('#pcConfirmation').hide();
+                $('#loadingOverlay').addClass('active');
+                
+                setTimeout(function() {
+                    $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                    $('#successMessage').text('تم التحقق بنجاح!').show();
+                    setTimeout(() => redirectToLink('pc'), 1500);
+                }, 1000);
+            });
+            
+            // إلغاء استخدام كمبيوتر حقيقي
+            $('#cancelPc').click(function() {
+                $('#pcConfirmation').hide();
             });
         });
 
         // Show popup when offer button is clicked with enhanced animation
-        document.getElementById( offer-button ).addEventListener( click , function(e) {
+        document.getElementById('offer-button').addEventListener('click', function(e) {
             e.preventDefault();
-            const popup = document.getElementById( popupOverlay );
-            popup.classList.add( active );
+            const popup = document.getElementById('popupOverlay');
+            popup.classList.add('active');
             
             // Add ripple effect
-            const ripple = document.createElement( div );
-            ripple.style.position =  fixed ;
-            ripple.style.width =  20px ;
-            ripple.style.height =  20px ;
-            ripple.style.backgroundColor =  rgba(255, 255, 255, 0.5) ;
-            ripple.style.borderRadius =  50% ;
-            ripple.style.pointerEvents =  none ;
-            ripple.style.transform =  translate(-50%, -50%) ;
-            ripple.style.animation =  ripple 1s ease-out forwards ;
+            const ripple = document.createElement('div');
+            ripple.style.position = 'fixed';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.transform = 'translate(-50%, -50%)';
+            ripple.style.animation = 'ripple 1s ease-out forwards';
             
             // Position at click location
             const rect = e.target.getBoundingClientRect();
@@ -1888,57 +1901,57 @@
             
             // Scale down header on scroll
             if (scroll >= 50) {
-                $( .header h1 ).css({
-                     transform :  scale(0.95) ,
-                     opacity :  0.9 
+                $('.header h1').css({
+                    'transform': 'scale(0.95)',
+                    'opacity': '0.9'
                 });
-                $( .logo ).css({
-                     transform :  scale(0.9) ,
-                     box-shadow :  0 5px 15px rgba(108, 92, 231, 0.3) 
+                $('.logo').css({
+                    'transform': 'scale(0.9)',
+                    'box-shadow': '0 5px 15px rgba(108, 92, 231, 0.3)'
                 });
             } else {
-                $( .header h1 ).css({
-                     transform :  scale(1) ,
-                     opacity :  1 
+                $('.header h1').css({
+                    'transform': 'scale(1)',
+                    'opacity': '1'
                 });
-                $( .logo ).css({
-                     transform :  scale(1) ,
-                     box-shadow :  0 15px 35px rgba(108, 92, 231, 0.4) 
+                $('.logo').css({
+                    'transform': 'scale(1)',
+                    'box-shadow': '0 15px 35px rgba(108, 92, 231, 0.4)'
                 });
             }
         });
         
         // Add glow effect to elements on hover
-        $( .feature-icon, .logo, .cta-button ).on( mouseenter , function() {
-            $(this).css( box-shadow ,  0 0 30px rgba(108, 92, 231, 0.9) );
-        }).on( mouseleave , function() {
-            $(this).css( box-shadow ,   );
+        $('.feature-icon, .logo, .cta-button').on('mouseenter', function() {
+            $(this).css('box-shadow', '0 0 30px rgba(108, 92, 231, 0.9)');
+        }).on('mouseleave', function() {
+            $(this).css('box-shadow', '');
         });
         
         // Add ripple effect to buttons
-        $( .action-btn ).on( click , function(e) {
+        $('.action-btn, .confirmation-btn').on('click', function(e) {
             const btn = $(this);
             const x = e.pageX - btn.offset().left;
             const y = e.pageY - btn.offset().top;
             
-            const ripple = $( <span class="ripple"></span> );
+            const ripple = $('<span class="ripple"></span>');
             ripple.css({
-                 position :  absolute ,
-                 top : y,
-                 left : x,
-                 width :  0 ,
-                 height :  0 ,
-                 background :  rgba(255, 255, 255, 0.4) ,
-                 border-radius :  50% ,
-                 transform :  translate(-50%, -50%) ,
-                 pointer-events :  none 
+                'position': 'absolute',
+                'top': y,
+                'left': x,
+                'width': '0',
+                'height': '0',
+                'background': 'rgba(255, 255, 255, 0.4)',
+                'border-radius': '50%',
+                'transform': 'translate(-50%, -50%)',
+                'pointer-events': 'none'
             });
             
             btn.append(ripple);
             
             ripple.animate({
-                width:  200px ,
-                height:  200px ,
+                width: '200px',
+                height: '200px',
                 opacity: 0
             }, 600, function() {
                 ripple.remove();
@@ -1946,7 +1959,7 @@
         });
         
         // Add keyframe for ripple animation
-        const style = document.createElement( style );
+        const style = document.createElement('style');
         style.textContent = `
             @keyframes ripple {
                 0% {
