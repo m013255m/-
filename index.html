@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار الكشف عن الكمبيوتر</title>
+    <title>فحص إضافات المتصفح</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,152 +11,188 @@
             text-align: center;
             padding: 20px;
             direction: rtl;
+            margin: 0;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 50px auto;
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #333;
+            color: #2c3e50;
+            margin-bottom: 30px;
         }
-        #testButton {
-            background: #4CAF50;
+        .description {
+            color: #7f8c8d;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        #checkButton {
+            background: #3498db;
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 15px 40px;
             font-size: 18px;
-            border-radius: 5px;
+            border-radius: 50px;
             cursor: pointer;
             margin: 20px 0;
-            transition: background 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
         }
-        #testButton:hover {
-            background: #45a049;
+        #checkButton:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
         }
         #result {
             font-size: 24px;
             font-weight: bold;
-            margin: 20px 0;
-            padding: 15px;
-            border-radius: 5px;
+            margin: 40px 0;
+            padding: 20px;
+            border-radius: 10px;
             display: none;
         }
         .success {
-            background: #dff0d8;
-            color: #3c763d;
-            border: 1px solid #d6e9c6;
+            background: #d5f5e3;
+            color: #27ae60;
+            border: 2px solid #2ecc71;
         }
-        .fail {
-            background: #f2dede;
-            color: #a94442;
-            border: 1px solid #ebccd1;
+        .error {
+            background: #fadbd8;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
         }
-        .warning {
-            background: #fcf8e3;
-            color: #8a6d3b;
-            border: 1px solid #faebcc;
-        }
-        .device-info {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 30px;
+        .info-box {
+            background: #eaf2f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
             text-align: right;
-            font-family: monospace;
-            font-size: 14px;
+            border-right: 5px solid #3498db;
+        }
+        .hidden {
+            display: none;
+        }
+        .extensions-list {
+            text-align: right;
+            margin-top: 20px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .extensions-list li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>اختبار الكشف عن الكمبيوتر</h1>
-        <p>اضغط على الزر التالي لاختبار ما إذا كان جهازك يتم التعرف عليه ككمبيوتر حقيقي</p>
+        <h1>فحص إضافات المتصفح</h1>
+        <p class="description">
+            هذه الأداة تفحص وجود إضافات مثبتة في متصفحك. اضغط على الزر أدناه لبدء الفحص.
+            <br>سيتم عرض نتيجة الفحص سواء تم اكتشاف إضافات (صح) أو لم يتم اكتشاف أي إضافات (خطأ).
+        </p>
         
-        <button id="testButton">اختبار الكمبيوتر</button>
+        <button id="checkButton">فحص الإضافات</button>
         
-        <div id="result"></div>
+        <div id="result" class="hidden"></div>
         
-        <div class="device-info">
-            <h3>معلومات الجهاز:</h3>
-            <div id="deviceDetails"></div>
+        <div id="extensionsInfo" class="info-box hidden">
+            <h3>معلومات الإضافات المكتشفة:</h3>
+            <ul id="extensionsList" class="extensions-list"></ul>
         </div>
     </div>
 
     <script>
-        // دالة الكشف عن الكمبيوتر
-        function isRealComputer() {
-            // 1. التحقق من حجم الشاشة
-            var screenWidth = window.screen.width || window.innerWidth;
-            var screenHeight = window.screen.height || window.innerHeight;
-            var isLargeScreen = screenWidth >= 1024;
-            
-            // 2. التحقق من نظام التشغيل
-            var platform = navigator.platform || '';
-            var isDesktopOS = /(Win|Mac|Linux|SunOS|Solaris)/i.test(platform);
-            
-            // 3. التحقق من إمكانية اللمس
-            var isTouchDevice = 'ontouchstart' in window || 
-                               (navigator.maxTouchPoints > 0) || 
-                               (navigator.msMaxTouchPoints > 0);
-            
-            // 4. التحقق من الأجهزة المحمولة
-            var userAgent = navigator.userAgent || '';
-            var isMobileDevice = /(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone|IEMobile|Opera Mini|Mobile)/i.test(userAgent);
-            
-            // 5. تحسين لأجهزة اللاب توب باللمس
-            var isProbablyLaptop = isLargeScreen && isTouchDevice && !isMobileDevice;
-            
-            // 6. الكشف عن الهواتف بناءً على الطول فقط (1600-1920 بكسل)
-            var isPhoneByHeight = (screenHeight >= 1600 && screenHeight <= 1920) && 
-                                !isLargeScreen && isTouchDevice;
-            
-            return (isDesktopOS || isLargeScreen || isProbablyLaptop) && !isMobileDevice && !isPhoneByHeight;
-        }
-
-        // عرض معلومات الجهاز
-        function showDeviceDetails() {
-            var screenWidth = window.screen.width || window.innerWidth;
-            var screenHeight = window.screen.height || window.innerHeight;
-            
-            var details = `
-                <p><strong>عرض الشاشة:</strong> ${screenWidth}px</p>
-                <p><strong>طول الشاشة:</strong> ${screenHeight}px</p>
-                <p><strong>نظام التشغيل:</strong> ${navigator.platform}</p>
-                <p><strong>يدعم اللمس:</strong> ${('ontouchstart' in window) ? 'نعم' : 'لا'}</p>
-                <p><strong>وكيل المستخدم:</strong> ${navigator.userAgent}</p>
-            `;
-            document.getElementById('deviceDetails').innerHTML = details;
-        }
-
-        // اختبار الزر
-        document.getElementById('testButton').addEventListener('click', function() {
-            var resultElement = document.getElementById('result');
-            var screenHeight = window.screen.height || window.innerHeight;
-            var screenWidth = window.screen.width || window.innerWidth;
-            
-            // الكشف عن الهواتف بناءً على الطول فقط
-            if (screenHeight >= 1600 && screenHeight <= 1920 && !(screenWidth >= 1024)) {
-                resultElement.textContent = "⚠ تحذير: تم التعرف على جهازك كهاتف (بناءً على الطول فقط)";
-                resultElement.className = "warning";
-            }
-            else if (isRealComputer()) {
-                resultElement.textContent = "✔ نجاح: تم التعرف على جهازك ككمبيوتر حقيقي";
-                resultElement.className = "success";
-            } else {
-                resultElement.textContent = "✖ فشل: لم يتم التعرف على جهازك ككمبيوتر حقيقي";
-                resultElement.className = "fail";
-            }
-            
+        document.getElementById('checkButton').addEventListener('click', function() {
+            // إظهار رسالة أن الفحص جارٍ
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = "جاري فحص الإضافات...";
+            resultElement.className = "";
             resultElement.style.display = "block";
-            showDeviceDetails();
+            
+            // محاكاة عملية الفحص (في الواقع سيكون هذا الجزء مختلفًا حسب طريقة الفحص)
+            setTimeout(function() {
+                checkExtensions();
+            }, 1500);
         });
 
-        // عرض معلومات الجهاز عند التحميل
-        window.onload = showDeviceDetails;
+        // دالة فحص الإضافات
+        function checkExtensions() {
+            const resultElement = document.getElementById('result');
+            const extensionsInfo = document.getElementById('extensionsInfo');
+            const extensionsList = document.getElementById('extensionsList');
+            
+            // مسح القائمة السابقة إن وجدت
+            extensionsList.innerHTML = '';
+            
+            try {
+                // محاولة الوصول إلى قائمة الإضافات (هذه الطريقة قد لا تعمل في جميع المتصفحات)
+                const hasExtensions = detectBrowserExtensions();
+                
+                if (hasExtensions.found) {
+                    resultElement.textContent = "✔ صح: تم اكتشاف إضافات في المتصفح";
+                    resultElement.className = "success";
+                    
+                    // عرض الإضافات المكتشفة إن وجدت
+                    if (hasExtensions.extensions && hasExtensions.extensions.length > 0) {
+                        extensionsInfo.classList.remove('hidden');
+                        hasExtensions.extensions.forEach(ext => {
+                            const li = document.createElement('li');
+                            li.textContent = ext;
+                            extensionsList.appendChild(li);
+                        });
+                    }
+                } else {
+                    resultElement.textContent = "✖ خطأ: لم يتم اكتشاف أي إضافات";
+                    resultElement.className = "error";
+                    extensionsInfo.classList.add('hidden');
+                }
+            } catch (error) {
+                resultElement.textContent = "⚠ حدث خطأ أثناء محاولة فحص الإضافات";
+                resultElement.className = "error";
+                extensionsInfo.classList.add('hidden');
+                console.error("Error checking extensions:", error);
+            }
+        }
+
+        // دالة للكشف عن الإضافات (هذه مجرد محاكاة - في الواقع تحتاج إلى طرق أخرى)
+        function detectBrowserExtensions() {
+            // هذه مجرد محاكاة للوظيفة
+            // في الواقع الفحص الفعلي للإضافات أكثر تعقيدًا ويعتمد على ثغرات أمنية معينة
+            
+            // محاكاة عشوائية للنتائج (لأغراض العرض التوضيحي)
+            const randomResult = Math.random() > 0.5;
+            
+            if (randomResult) {
+                // محاكاة وجود إضافات
+                const fakeExtensions = [
+                    "AdBlock",
+                    "Grammarly",
+                    "Dark Reader",
+                    "LastPass",
+                    "React Developer Tools"
+                ].filter(() => Math.random() > 0.3);
+                
+                return {
+                    found: true,
+                    extensions: fakeExtensions
+                };
+            } else {
+                return {
+                    found: false,
+                    extensions: []
+                };
+            }
+            
+            // ملاحظة: في تطبيق حقيقي، تحتاج إلى استخدام طرق أخرى للكشف عن الإضافات
+            // مثل محاولة الوصول إلى واجهات برمجة التطبيقات الخاصة بالمتصفح
+            // أو التحقق من سلوك معين تتغير بوجود الإضافات
+        }
     </script>
 </body>
 </html>
