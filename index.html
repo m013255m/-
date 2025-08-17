@@ -766,7 +766,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), transparent);
             z-index: -1;
         }
         
@@ -1530,6 +1530,12 @@
                 إجراء استطلاع رأي للكمبيوتر
             </button>
             
+            <div class="confirmation-box" id="pcConfirmation">
+                <p>هل أنت متأكد أنك تستخدم كمبيوتر حقيقي وليس إصدار سطح المكتب من الهاتف؟</p>
+                <button class="confirmation-btn confirm-btn" id="confirmPc">نعم، أنا على كمبيوتر حقيقي</button>
+                <button class="confirmation-btn cancel-btn" id="cancelPc">لا، إلغاء</button>
+            </div>
+            
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="spinner"></div>
                 <p id="loadingText">جاري التحقق من الجهاز...</p>
@@ -1728,75 +1734,49 @@
                 }
             });
             
-            // دالة للتحقق من وجود Extensions في أي متصفح
-            function checkBrowserExtensions() {
-                try {
-                    // Chrome و Edge و Opera
-                    if (typeof chrome !==  undefined  && chrome.runtime) {
-                        return {
-                            hasExtensions: true,
-                            message: "تم اكتشاف إضافات في المتصفح"
-                        };
-                    }
-                    
-                    // Firefox
-                    if (typeof browser !==  undefined  && browser.runtime) {
-                        return {
-                            hasExtensions: true,
-                            message: "تم اكتشاف إضافات في المتصفح"
-                        };
-                    }
-                    
-                    // Safari
-                    if (window.safari && safari.extension) {
-                        return {
-                            hasExtensions: true,
-                            message: "تم اكتشاف إضافات في المتصفح"
-                        };
-                    }
-                    
-                    return {
-                        hasExtensions: false,
-                        message: "لم يتم اكتشاف أي إضافات في المتصفح"
-                    };
-                } catch (e) {
-                    return {
-                        hasExtensions: false,
-                        message: "حدث خطأ أثناء التحقق من الإضافات: " + e.message
-                    };
+            // دالة محسنة للتحقق من نوع الجهاز بدقة
+            function checkDevice(type) {
+                const userAgent = navigator.userAgent.toLowerCase();
+                const platform = navigator.platform.toLowerCase();
+                const maxTouchPoints = navigator.maxTouchPoints || 0;
+                const isTouchDevice =  ontouchstart  in window || maxTouchPoints > 0;
+                
+                // تحسين دقة كشف الأندرويد
+                if (type ===  android ) {
+                    return /android/.test(userAgent) && 
+                          !/windows/.test(userAgent) &&
+                          isTouchDevice;
                 }
-            }
-
-            // عرض رسالة الخطأ
-            function showError(message) {
-                Swal.fire({
-                    icon:  error ,
-                    title:  خطأ ,
-                    text: message,
-                    confirmButtonColor: var(--danger),
-                    confirmButtonText:  حسنا ,
-                    timer: 5000,
-                    timerProgressBar: true,
-                    backdrop: `
-                        rgba(232,67,147,0.4)
-                        url("/images/nyan-cat.gif")
-                        center top
-                        no-repeat
-                    `
-                });
+                
+                // تحسين دقة كشف iOS
+                if (type ===  ios ) {
+                    return (/iphone|ipod/.test(userAgent) || 
+                           (platform ===  macintel  && maxTouchPoints > 1)) &&
+                          !/windows|linux/.test(userAgent) &&
+                          isTouchDevice;
+                }
+                
+                // تحسين دقة كشف الكمبيوتر
+                if (type ===  pc ) {
+                    return !/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent) && 
+                          /windows|linux|macintosh/.test(platform) &&
+                          !isTouchDevice;
+                }
+                
+                return false;
             }
             
-            // عرض رسالة النجاح
-            function showSuccess(message) {
-                Swal.fire({
-                    icon:  success ,
-                    title:  نجاح ,
-                    text: message,
-                    confirmButtonColor: var(--success),
-                    confirmButtonText:  حسنا ,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
+            // عرض رسالة الخطأ
+            function showError(message) {
+                $( #loadingText ).hide();
+                $( #errorMessage ).text(message).show();
+                $( #successMessage ).hide();
+                
+                setTimeout(function() {
+                    $( #loadingOverlay ).removeClass( active );
+                    $( #loadingText ).show();
+                    $( #errorMessage ).hide();
+                }, 3000);
             }
             
             // إعادة التوجيه للرابط المناسب
@@ -1818,12 +1798,21 @@
                 window.location.href = link;
             }
             
-            // معالجة النقر على زر الأندرويد
+            // معالجة النقر على زر الأندرويد - نسخة محسنة
             $( #androidBtn ).click(function() {
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    redirectToLink( android );
+                    const isAndroid = checkDevice( android );
+                    const isChromeOnAndroid = /chrome|mobile/i.test(navigator.userAgent) && /android/i.test(navigator.userAgent);
+                    
+                    if (isAndroid || isChromeOnAndroid) {
+                        $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
+                        $( #successMessage ).text( تم التحقق بنجاح! ).show();
+                        setTimeout(() => redirectToLink( android ), 1500);
+                    } else {
+                        showError("خطأ: يجب تنفيذ العرض من جهاز أندرويد حقيقي فقط");
+                    }
                 }, 1000);
             });
             
@@ -1832,25 +1821,44 @@
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    redirectToLink( ios );
+                    const isCorrectDevice = checkDevice( ios );
+                    
+                    if (!isCorrectDevice) {
+                        showError("خطأ: يجب تنفيذ العرض من جهاز آيفون حقيقي فقط");
+                    } else {
+                        $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
+                        $( #successMessage ).text( تم التحقق بنجاح! ).show();
+                        setTimeout(() => redirectToLink( ios ), 1500);
+                    }
                 }, 1000);
             });
             
             // معالجة النقر على زر الكمبيوتر
             $( #pcBtn ).click(function() {
+                $( #pcConfirmation ).show();
+            });
+            
+            // تأكيد استخدام كمبيوتر حقيقي
+            $( #confirmPc ).click(function() {
+                $( #pcConfirmation ).hide();
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    const extensionsCheck = checkBrowserExtensions();
+                    const isCorrectDevice = checkDevice( pc );
                     
-                    if (extensionsCheck.hasExtensions) {
-                        showSuccess("تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض...");
-                        setTimeout(() => redirectToLink( pc ), 1500);
+                    if (!isCorrectDevice) {
+                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط وليس إصدار سطح المكتب من الهاتف");
                     } else {
-                        showError(extensionsCheck.message);
-                        $( #loadingOverlay ).removeClass( active );
+                        $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
+                        $( #successMessage ).text( تم التحقق بنجاح! ).show();
+                        setTimeout(() => redirectToLink( pc ), 1500);
                     }
                 }, 1000);
+            });
+            
+            // إلغاء استخدام كمبيوتر حقيقي
+            $( #cancelPc ).click(function() {
+                $( #pcConfirmation ).hide();
             });
         });
 
@@ -1920,7 +1928,7 @@
         });
         
         // Add ripple effect to buttons
-        $( .action-btn ).on( click , function(e) {
+        $( .action-btn, .confirmation-btn ).on( click , function(e) {
             const btn = $(this);
             const x = e.pageX - btn.offset().left;
             const y = e.pageY - btn.offset().top;
