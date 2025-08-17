@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فحص إضافات المتصفح</title>
+    <title>كشف دعم الإضافات في المتصفح</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,187 +11,134 @@
             text-align: center;
             padding: 20px;
             direction: rtl;
-            margin: 0;
         }
         .container {
-            max-width: 800px;
-            margin: 50px auto;
+            max-width: 600px;
+            margin: 0 auto;
             background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
         h1 {
-            color: #2c3e50;
-            margin-bottom: 30px;
+            color: #333;
         }
-        .description {
-            color: #7f8c8d;
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-        #checkButton {
-            background: #3498db;
+        #checkBtn {
+            background: #4CAF50;
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 15px 30px;
             font-size: 18px;
-            border-radius: 50px;
+            border-radius: 5px;
             cursor: pointer;
             margin: 20px 0;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            transition: background 0.3s;
         }
-        #checkButton:hover {
-            background: #2980b9;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+        #checkBtn:hover {
+            background: #45a049;
         }
         #result {
             font-size: 24px;
             font-weight: bold;
-            margin: 40px 0;
-            padding: 20px;
-            border-radius: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
             display: none;
         }
         .success {
-            background: #d5f5e3;
-            color: #27ae60;
-            border: 2px solid #2ecc71;
+            background: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
         }
         .error {
-            background: #fadbd8;
-            color: #e74c3c;
-            border: 2px solid #e74c3c;
+            background: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
         }
-        .info-box {
-            background: #eaf2f8;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 40px;
+        .info {
+            background: #d9edf7;
+            color: #31708f;
+            border: 1px solid #bce8f1;
             text-align: right;
-            border-right: 5px solid #3498db;
-        }
-        .hidden {
-            display: none;
-        }
-        .extensions-list {
-            text-align: right;
-            margin-top: 20px;
-            padding: 0;
-            list-style-type: none;
-        }
-        .extensions-list li {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+            padding: 15px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>فحص إضافات المتصفح</h1>
-        <p class="description">
-            هذه الأداة تفحص وجود إضافات مثبتة في متصفحك. اضغط على الزر أدناه لبدء الفحص.
-            <br>سيتم عرض نتيجة الفحص سواء تم اكتشاف إضافات (صح) أو لم يتم اكتشاف أي إضافات (خطأ).
-        </p>
+        <h1>كشف دعم الإضافات في المتصفح</h1>
+        <p>هذا الاختبار يتحقق مما إذا كان متصفحك يدعم تثبيت الإضافات (Extensions)</p>
         
-        <button id="checkButton">فحص الإضافات</button>
+        <button id="checkBtn">فحص دعم الإضافات</button>
         
-        <div id="result" class="hidden"></div>
+        <div id="result"></div>
         
-        <div id="extensionsInfo" class="info-box hidden">
-            <h3>معلومات الإضافات المكتشفة:</h3>
-            <ul id="extensionsList" class="extensions-list"></ul>
+        <div class="info">
+            <h3>كيف يعمل هذا الفحص؟</h3>
+            <p>
+                - المتصفحات التي تدعم الإضافات (مثل كروم، فايرفوكس، إدج) ستعطي نتيجة "صح"<br>
+                - متصفحات الهاتف العادية (مثل كروم للجوال، سافاري) ستعطي نتيجة "خطأ"<br>
+                - النتيجة تعتمد على وجود مسار <code>chrome://extensions</code> أو ما يعادله
+            </p>
         </div>
     </div>
 
     <script>
-        document.getElementById('checkButton').addEventListener('click', function() {
-            // إظهار رسالة أن الفحص جارٍ
+        document.getElementById('checkBtn').addEventListener('click', function() {
             const resultElement = document.getElementById('result');
-            resultElement.textContent = "جاري فحص الإضافات...";
-            resultElement.className = "";
+            resultElement.textContent = "جاري الفحص...";
             resultElement.style.display = "block";
             
-            // محاكاة عملية الفحص (في الواقع سيكون هذا الجزء مختلفًا حسب طريقة الفحص)
-            setTimeout(function() {
-                checkExtensions();
-            }, 1500);
-        });
-
-        // دالة فحص الإضافات
-        function checkExtensions() {
-            const resultElement = document.getElementById('result');
-            const extensionsInfo = document.getElementById('extensionsInfo');
-            const extensionsList = document.getElementById('extensionsList');
-            
-            // مسح القائمة السابقة إن وجدت
-            extensionsList.innerHTML = '';
-            
+            // محاولة الوصول إلى صفحة الإضافات (هذه الطريقة تعمل في كروم وفايرفوكس)
             try {
-                // محاولة الوصول إلى قائمة الإضافات (هذه الطريقة قد لا تعمل في جميع المتصفحات)
-                const hasExtensions = detectBrowserExtensions();
+                // إنشاء عنصر iframe خفي لمحاولة الوصول إلى صفحة الإضافات
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
                 
-                if (hasExtensions.found) {
-                    resultElement.textContent = "✔ صح: تم اكتشاف إضافات في المتصفح";
+                iframe.onload = function() {
+                    // إذا تم تحميل الإطار بنجاح، المتصفح يدعم الإضافات
+                    resultElement.textContent = "✔ صح: المتصفح يدعم الإضافات";
                     resultElement.className = "success";
-                    
-                    // عرض الإضافات المكتشفة إن وجدت
-                    if (hasExtensions.extensions && hasExtensions.extensions.length > 0) {
-                        extensionsInfo.classList.remove('hidden');
-                        hasExtensions.extensions.forEach(ext => {
-                            const li = document.createElement('li');
-                            li.textContent = ext;
-                            extensionsList.appendChild(li);
-                        });
-                    }
-                } else {
-                    resultElement.textContent = "✖ خطأ: لم يتم اكتشاف أي إضافات";
-                    resultElement.className = "error";
-                    extensionsInfo.classList.add('hidden');
-                }
-            } catch (error) {
-                resultElement.textContent = "⚠ حدث خطأ أثناء محاولة فحص الإضافات";
-                resultElement.className = "error";
-                extensionsInfo.classList.add('hidden');
-                console.error("Error checking extensions:", error);
-            }
-        }
-
-        // دالة للكشف عن الإضافات (هذه مجرد محاكاة - في الواقع تحتاج إلى طرق أخرى)
-        function detectBrowserExtensions() {
-            // هذه مجرد محاكاة للوظيفة
-            // في الواقع الفحص الفعلي للإضافات أكثر تعقيدًا ويعتمد على ثغرات أمنية معينة
-            
-            // محاكاة عشوائية للنتائج (لأغراض العرض التوضيحي)
-            const randomResult = Math.random() > 0.5;
-            
-            if (randomResult) {
-                // محاكاة وجود إضافات
-                const fakeExtensions = [
-                    "AdBlock",
-                    "Grammarly",
-                    "Dark Reader",
-                    "LastPass",
-                    "React Developer Tools"
-                ].filter(() => Math.random() > 0.3);
+                    document.body.removeChild(iframe);
+                };
                 
-                return {
-                    found: true,
-                    extensions: fakeExtensions
+                iframe.onerror = function() {
+                    // إذا فشل التحميل، المتصفح لا يدعم الإضافات
+                    resultElement.textContent = "✖ خطأ: المتصفح لا يدعم الإضافات";
+                    resultElement.className = "error";
+                    document.body.removeChild(iframe);
                 };
-            } else {
-                return {
-                    found: false,
-                    extensions: []
-                };
+                
+                // محاولة تحميل صفحة الإضافات (هذا المسار يعمل في كروم)
+                iframe.src = 'chrome://extensions';
+                document.body.appendChild(iframe);
+                
+            } catch (e) {
+                // إذا حدث خطأ، نتحقق من طريقة أخرى
+                checkAlternativeMethod();
             }
+        });
+        
+        // طريقة بديلة للفحص
+        function checkAlternativeMethod() {
+            const resultElement = document.getElementById('result');
             
-            // ملاحظة: في تطبيق حقيقي، تحتاج إلى استخدام طرق أخرى للكشف عن الإضافات
-            // مثل محاولة الوصول إلى واجهات برمجة التطبيقات الخاصة بالمتصفح
-            // أو التحقق من سلوك معين تتغير بوجود الإضافات
+            // التحقق من وجود واجهة برمجة التطبيقات الخاصة بالإضافات
+            if (window.chrome && chrome.runtime) {
+                resultElement.textContent = "✔ صح: المتصفح يدعم الإضافات";
+                resultElement.className = "success";
+            } 
+            // التحقق من متصفح فايرفوكس
+            else if (typeof InstallTrigger !== 'undefined') {
+                resultElement.textContent = "✔ صح: المتصفح يدعم الإضافات";
+                resultElement.className = "success";
+            }
+            // إذا لم يتم اكتشاف أي دعم
+            else {
+                resultElement.textContent = "✖ خطأ: المتصفح لا يدعم الإضافات";
+                resultElement.className = "error";
+            }
         }
     </script>
 </body>
