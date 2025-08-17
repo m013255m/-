@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فحص أدوات المطور</title>
+    <title>فحص حركة الماوس</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f5f5f5;
             padding: 50px;
+            margin: 0;
+            height: 100vh;
         }
         .container {
             max-width: 600px;
@@ -21,23 +23,6 @@
         }
         h1 {
             color: #333;
-        }
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 20px 0;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .btn:hover {
-            background-color: #45a049;
         }
         .message {
             padding: 15px;
@@ -55,66 +40,84 @@
             color: #a94442;
             border: 1px solid #ebccd1;
         }
+        .instructions {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>فحص أدوات المطور في المتصفح</h1>
-        <p>انقر على الزر أدناه للتحقق مما إذا كانت أدوات المطور مفتوحة في متصفحك</p>
-        
-        <button class="btn" id="checkDevTools">فحص أدوات المطور</button>
+        <h1>فحص حركة الماوس</h1>
+        <div class="instructions">
+            <p>حرك الماوس على الشاشة ليتم الكشف عنه</p>
+            <p>إذا لم يتم الكشف عن حركة الماوس خلال 5 ثوانٍ، سيتم عرض رسالة خطأ</p>
+        </div>
         
         <div id="successMessage" class="message success">
-            ✓ تم اكتشاف أدوات المطور مفتوحة في المتصفح
+            ✓ تم الكشف عن حركة الماوس بنجاح
         </div>
         
         <div id="errorMessage" class="message error">
-            ✗ أدوات المطور غير مفتوحة في المتصفح
+            ✗ لم يتم الكشف عن حركة الماوس
         </div>
     </div>
 
     <script>
-        document.getElementById('checkDevTools').addEventListener('click', function() {
-            // إخفاء جميع الرسائل أولاً
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
+        // عناصر الرسائل
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // متغير لتتبع إذا تم اكتشاف حركة الماوس
+        let mouseDetected = false;
+        
+        // مؤقت لرسالة الخطأ
+        let errorTimer;
+        
+        // بدء المؤقت عند تحميل الصفحة
+        window.onload = function() {
+            startDetection();
+        };
+        
+        function startDetection() {
+            // إخفاء جميع الرسائل
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
             
-            // محاولة اكتشاف أدوات المطور
-            let devToolsOpen = false;
-            
-            // الطريقة 1: عن طريق قياس الوقت التنفيذي
-            const start = performance.now();
-            debugger;
-            const end = performance.now();
-            
-            // إذا كان الوقت كبيراً (أكثر من 100ms) فمن المحتمل أن أدوات المطور مفتوحة
-            if (end - start > 100) {
-                devToolsOpen = true;
-            }
-            
-            // الطريقة 2: عن طريق فحص حجم console.log
-            try {
-                const console = window.console;
-                if (console && console.log.toString().indexOf('native') === -1) {
-                    devToolsOpen = true;
+            // تعيين مؤقت لرسالة الخطأ بعد 5 ثوان
+            errorTimer = setTimeout(function() {
+                if (!mouseDetected) {
+                    errorMessage.style.display = 'block';
                 }
-            } catch (e) {}
+            }, 5000);
             
-            // الطريقة 3: عن طريق فحص outerWidth و innerWidth
-            const widthThreshold = window.outerWidth - window.innerWidth > 160;
-            const heightThreshold = window.outerHeight - window.innerHeight > 160;
-            
-            if (widthThreshold || heightThreshold) {
-                devToolsOpen = true;
+            // إضافة مستمع لحركة الماوس
+            document.addEventListener('mousemove', handleMouseMove);
+        }
+        
+        function handleMouseMove() {
+            // إذا تم اكتشاف حركة الماوس لأول مرة
+            if (!mouseDetected) {
+                mouseDetected = true;
+                clearTimeout(errorTimer); // إلغاء مؤقت الخطأ
+                successMessage.style.display = 'block';
+                
+                // إزالة مستمع الأحداث بعد الاكتشاف
+                document.removeEventListener('mousemove', handleMouseMove);
             }
-            
-            // عرض الرسالة المناسبة
-            if (devToolsOpen) {
-                document.getElementById('successMessage').style.display = 'block';
-            } else {
-                document.getElementById('errorMessage').style.display = 'block';
-            }
-        });
+        }
+        
+        // إعادة المحاولة عند النقر على الرسالة
+        successMessage.addEventListener('click', resetDetection);
+        errorMessage.addEventListener('click', resetDetection);
+        
+        function resetDetection() {
+            mouseDetected = false;
+            startDetection();
+        }
     </script>
 </body>
 </html>
