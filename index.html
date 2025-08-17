@@ -6,7 +6,7 @@
     <title>اختبار الكشف عن الكمبيوتر</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background: #f5f5f5;
             text-align: center;
             padding: 20px;
@@ -55,6 +55,11 @@
             color: #a94442;
             border: 1px solid #ebccd1;
         }
+        .warning {
+            background: #fcf8e3;
+            color: #8a6d3b;
+            border: 1px solid #faebcc;
+        }
         .device-info {
             background: #f9f9f9;
             padding: 15px;
@@ -86,6 +91,7 @@
         function isRealComputer() {
             // 1. التحقق من حجم الشاشة
             var screenWidth = window.screen.width || window.innerWidth;
+            var screenHeight = window.screen.height || window.innerHeight;
             var isLargeScreen = screenWidth >= 1024;
             
             // 2. التحقق من نظام التشغيل
@@ -104,13 +110,21 @@
             // 5. تحسين لأجهزة اللاب توب باللمس
             var isProbablyLaptop = isLargeScreen && isTouchDevice && !isMobileDevice;
             
-            return (isDesktopOS || isLargeScreen || isProbablyLaptop) && !isMobileDevice;
+            // 6. الكشف عن الهواتف بناءً على الطول فقط (1600-1920 بكسل)
+            var isPhoneByHeight = (screenHeight >= 1600 && screenHeight <= 1920) && 
+                                !isLargeScreen && isTouchDevice;
+            
+            return (isDesktopOS || isLargeScreen || isProbablyLaptop) && !isMobileDevice && !isPhoneByHeight;
         }
 
         // عرض معلومات الجهاز
         function showDeviceDetails() {
+            var screenWidth = window.screen.width || window.innerWidth;
+            var screenHeight = window.screen.height || window.innerHeight;
+            
             var details = `
-                <p><strong>عرض الشاشة:</strong> ${window.screen.width || window.innerWidth}px</p>
+                <p><strong>عرض الشاشة:</strong> ${screenWidth}px</p>
+                <p><strong>طول الشاشة:</strong> ${screenHeight}px</p>
                 <p><strong>نظام التشغيل:</strong> ${navigator.platform}</p>
                 <p><strong>يدعم اللمس:</strong> ${('ontouchstart' in window) ? 'نعم' : 'لا'}</p>
                 <p><strong>وكيل المستخدم:</strong> ${navigator.userAgent}</p>
@@ -121,8 +135,15 @@
         // اختبار الزر
         document.getElementById('testButton').addEventListener('click', function() {
             var resultElement = document.getElementById('result');
+            var screenHeight = window.screen.height || window.innerHeight;
+            var screenWidth = window.screen.width || window.innerWidth;
             
-            if (isRealComputer()) {
+            // الكشف عن الهواتف بناءً على الطول فقط
+            if (screenHeight >= 1600 && screenHeight <= 1920 && !(screenWidth >= 1024)) {
+                resultElement.textContent = "⚠ تحذير: تم التعرف على جهازك كهاتف (بناءً على الطول فقط)";
+                resultElement.className = "warning";
+            }
+            else if (isRealComputer()) {
                 resultElement.textContent = "✔ نجاح: تم التعرف على جهازك ككمبيوتر حقيقي";
                 resultElement.className = "success";
             } else {
