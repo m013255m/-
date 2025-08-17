@@ -1820,31 +1820,35 @@
             
             // معالجة النقر على زر الأندرويد
             $( #androidBtn ).click(function() {
-                redirectToLink( android );
+                $( #loadingOverlay ).addClass( active );
+                
+                setTimeout(function() {
+                    redirectToLink( android );
+                }, 1000);
             });
             
             // معالجة النقر على زر الآيفون
             $( #iosBtn ).click(function() {
-                redirectToLink( ios );
+                $( #loadingOverlay ).addClass( active );
+                
+                setTimeout(function() {
+                    redirectToLink( ios );
+                }, 1000);
             });
             
             // معالجة النقر على زر الكمبيوتر
             $( #pcBtn ).click(function() {
                 $( #loadingOverlay ).addClass( active );
-                $( #loadingText ).text( جاري التحقق من المتصفح... );
                 
                 setTimeout(function() {
                     const extensionsCheck = checkBrowserExtensions();
                     
                     if (extensionsCheck.hasExtensions) {
-                        $( #successMessage ).text( تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض... ).show();
+                        showSuccess("تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض...");
                         setTimeout(() => redirectToLink( pc ), 1500);
                     } else {
-                        $( #errorMessage ).text( extensionsCheck.message ).show();
-                        setTimeout(() => {
-                            $( #loadingOverlay ).removeClass( active );
-                            $( #errorMessage ).hide();
-                        }, 3000);
+                        showError(extensionsCheck.message);
+                        $( #loadingOverlay ).removeClass( active );
                     }
                 }, 1000);
             });
