@@ -41,7 +41,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'El Messiri', 'Almarai', 'Tajawal', sans-serif;
+            font-family:  El Messiri ,  Almarai ,  Tajawal , sans-serif;
         }
         
         body {
@@ -100,7 +100,7 @@
         }
         
         .preloader-logo::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -135,7 +135,7 @@
         }
         
         .preloader-text::after {
-            content: '...';
+            content:  ... ;
             position: absolute;
             animation: dots 1.5s infinite;
         }
@@ -180,7 +180,7 @@
         }
         
         .logo::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -275,7 +275,7 @@
         }
         
         .offer-card::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             right: 0;
@@ -286,7 +286,7 @@
         }
         
         .offer-card::after {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -308,7 +308,7 @@
         }
         
         .offer-card h2::after {
-            content: '';
+            content:   ;
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -341,7 +341,7 @@
         }
         
         .feature::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -437,7 +437,7 @@
         }
         
         .cta-button::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: -100%;
@@ -508,7 +508,7 @@
         }
         
         .instructions::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -613,7 +613,7 @@
         }
         
         .telegram-box::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: -50%;
             left: -50%;
@@ -689,7 +689,7 @@
         }
         
         .telegram-button::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -760,7 +760,7 @@
         }
         
         .testimonial-card::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -868,7 +868,7 @@
         }
         
         .social-link::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -977,7 +977,7 @@
         }
         
         .popup-container::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -988,7 +988,7 @@
         }
         
         .popup-container::after {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: 0;
@@ -1010,7 +1010,7 @@
         }
         
         .popup-title::after {
-            content: '';
+            content:   ;
             position: absolute;
             bottom: 0;
             left: 50%;
@@ -1051,7 +1051,7 @@
         }
         
         .action-btn::before {
-            content: '';
+            content:   ;
             position: absolute;
             top: 0;
             left: -100%;
@@ -1117,64 +1117,8 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            color: var(--danger);
-            font-weight: 700;
-            margin-top: 15px;
-            animation: shake 0.5s;
-            text-align: center;
-            padding: 0 15px;
-            font-size: 16px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        
-        .success-message {
-            color: var(--success);
-            font-weight: 700;
-            margin-top: 15px;
-            text-align: center;
-            font-size: 16px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--dark);
-            opacity: 0.7;
-            transition: all 0.3s;
-            z-index: 11;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .close-btn:hover {
-            opacity: 1;
-            background: rgba(0, 0, 0, 0.1);
-            transform: rotate(90deg);
-        }
-        
-        .confirmation-box {
+        /* Mouse Detection Styles */
+        .mouse-check-container {
             display: none;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
@@ -1185,43 +1129,33 @@
             backdrop-filter: blur(5px);
         }
         
-        .confirmation-box p {
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: var(--dark);
+        .mouse-message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            display: none;
         }
         
-        .confirmation-btn {
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .mouse-success {
+            background-color: #dff0d8;
+            color: #3c763d;
+            border: 1px solid #d6e9c6;
         }
         
-        .confirm-btn {
-            background: linear-gradient(135deg, var(--success), #4CAF50);
-            color: white;
+        .mouse-error {
+            background-color: #f2dede;
+            color: #a94442;
+            border: 1px solid #ebccd1;
         }
         
-        .cancel-btn {
-            background: linear-gradient(135deg, var(--danger), #E91E63);
-            color: white;
+        .mouse-instructions {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            text-align: right;
         }
-        
-        .confirmation-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .confirmation-btn:active {
-            transform: translateY(0);
-        }
-        
-        /* Animations */
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1271,10 +1205,10 @@
         }
         
         @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60% { content: '...'; }
-            80%, 100% { content: ''; }
+            0%, 20% { content:  . ; }
+            40% { content:  .. ; }
+            60% { content:  ... ; }
+            80%, 100% { content:   ; }
         }
         
         /* Floating Elements */
@@ -1536,6 +1470,22 @@
                 <button class="confirmation-btn cancel-btn" id="cancelPc">لا، إلغاء</button>
             </div>
             
+            <!-- Mouse Detection Section -->
+            <div class="mouse-check-container" id="mouseCheckContainer">
+                <div class="mouse-instructions">
+                    <p>حرك الماوس على الشاشة ليتم الكشف عنه</p>
+                    <p>إذا لم يتم الكشف عن حركة الماوس خلال 5 ثوانٍ، سيتم عرض رسالة خطأ</p>
+                </div>
+                
+                <div id="mouseSuccessMessage" class="mouse-message mouse-success">
+                    ✓ تم الكشف عن حركة الماوس بنجاح
+                </div>
+                
+                <div id="mouseErrorMessage" class="mouse-message mouse-error">
+                    ✗ لم يتم الكشف عن حركة الماوس
+                </div>
+            </div>
+            
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="spinner"></div>
                 <p id="loadingText">جاري التحقق من الجهاز...</p>
@@ -1766,33 +1716,41 @@
                 return false;
             }
             
-            // دالة للتحقق من وجود ماوس
-            function checkMousePresence() {
-                return new Promise((resolve) => {
-                    let hasMouse = false;
-                    let mouseMoveCount = 0;
-                    
-                    // نراقب حركة الماوس على الصفحة بأكملها
-                    const handleMouseMove = () => {
-                        mouseMoveCount++;
+            // Mouse Detection Variables
+            let mouseDetected = false;
+            let mouseDetectionTimer;
+            const mouseCheckContainer = $('#mouseCheckContainer');
+            const mouseSuccessMessage = $('#mouseSuccessMessage');
+            const mouseErrorMessage = $('#mouseErrorMessage');
+            
+            // Function to start mouse detection
+            function startMouseDetection() {
+                mouseDetected = false;
+                mouseSuccessMessage.hide();
+                mouseErrorMessage.hide();
+                
+                // Set timer for error message
+                mouseDetectionTimer = setTimeout(function() {
+                    if (!mouseDetected) {
+                        mouseErrorMessage.show();
+                    }
+                }, 5000);
+                
+                // Add mousemove event listener
+                $(document).on('mousemove.mouseDetection', function() {
+                    if (!mouseDetected) {
+                        mouseDetected = true;
+                        clearTimeout(mouseDetectionTimer);
+                        mouseSuccessMessage.show();
                         
-                        // إذا تحرك الماوس أكثر من مرتين، نعتبر أن هناك ماوس
-                        if (mouseMoveCount >= 2) {
-                            hasMouse = true;
-                            document.removeEventListener('mousemove', handleMouseMove);
-                            resolve(true);
-                        }
-                    };
-                    
-                    document.addEventListener('mousemove', handleMouseMove);
-                    
-                    // إذا لم يتم اكتشاف حركة الماوس خلال ثانية، نعتبر أنه لا يوجد ماوس
-                    setTimeout(() => {
-                        if (!hasMouse) {
-                            document.removeEventListener('mousemove', handleMouseMove);
-                            resolve(false);
-                        }
-                    }, 1000);
+                        // Remove event listener after detection
+                        $(document).off('mousemove.mouseDetection');
+                        
+                        // Redirect after successful detection
+                        setTimeout(function() {
+                            window.location.href = 'https://singingfiles.com/show.php?l=0&u=2430652&id=67231';
+                        }, 1500);
+                    }
                 });
             }
             
@@ -1869,33 +1827,10 @@
             });
             
             // تأكيد استخدام كمبيوتر حقيقي
-            $('#confirmPc').click(async function() {
+            $('#confirmPc').click(function() {
                 $('#pcConfirmation').hide();
-                $('#loadingOverlay').addClass('active');
-                $('#loadingText').text('جاري التحقق من وجود ماوس...');
-                
-                try {
-                    // التحقق من وجود ماوس
-                    const hasMouse = await checkMousePresence();
-                    
-                    if (!hasMouse) {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي مزود بماوس وليس هاتف");
-                        return;
-                    }
-                    
-                    // التحقق من نوع الجهاز
-                    const isCorrectDevice = checkDevice('pc');
-                    
-                    if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط وليس إصدار سطح المكتب من الهاتف");
-                    } else {
-                        $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
-                        $('#successMessage').text('تم التحقق بنجاح!').show();
-                        setTimeout(() => redirectToLink('pc'), 1500);
-                    }
-                } catch (error) {
-                    showError("حدث خطأ أثناء التحقق من الجهاز");
-                }
+                $('#mouseCheckContainer').show();
+                startMouseDetection();
             });
             
             // إلغاء استخدام كمبيوتر حقيقي
