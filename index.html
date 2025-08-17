@@ -3,143 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كشف دعم الإضافات في المتصفح</title>
+    <title>فحص أدوات المطور</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f5f5f5;
             text-align: center;
-            padding: 20px;
-            direction: rtl;
+            background-color: #f5f5f5;
+            padding: 50px;
         }
         .container {
             max-width: 600px;
             margin: 0 auto;
-            background: white;
+            background-color: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1 {
             color: #333;
         }
-        #checkBtn {
-            background: #4CAF50;
+        .btn {
+            background-color: #4CAF50;
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
             cursor: pointer;
-            margin: 20px 0;
-            transition: background 0.3s;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        #checkBtn:hover {
-            background: #45a049;
+        .btn:hover {
+            background-color: #45a049;
         }
-        #result {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 20px 0;
+        .message {
             padding: 15px;
+            margin: 20px 0;
             border-radius: 5px;
             display: none;
         }
         .success {
-            background: #dff0d8;
+            background-color: #dff0d8;
             color: #3c763d;
             border: 1px solid #d6e9c6;
         }
         .error {
-            background: #f2dede;
+            background-color: #f2dede;
             color: #a94442;
             border: 1px solid #ebccd1;
-        }
-        .info {
-            background: #d9edf7;
-            color: #31708f;
-            border: 1px solid #bce8f1;
-            text-align: right;
-            padding: 15px;
-            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>كشف دعم الإضافات في المتصفح</h1>
-        <p>هذا الاختبار يتحقق مما إذا كان متصفحك يدعم تثبيت الإضافات (Extensions)</p>
+        <h1>فحص أدوات المطور في المتصفح</h1>
+        <p>انقر على الزر أدناه للتحقق مما إذا كانت أدوات المطور مفتوحة في متصفحك</p>
         
-        <button id="checkBtn">فحص دعم الإضافات</button>
+        <button class="btn" id="checkDevTools">فحص أدوات المطور</button>
         
-        <div id="result"></div>
+        <div id="successMessage" class="message success">
+            ✓ تم اكتشاف أدوات المطور مفتوحة في المتصفح
+        </div>
         
-        <div class="info">
-            <h3>كيف يعمل هذا الفحص؟</h3>
-            <p>
-                - المتصفحات التي تدعم الإضافات (مثل كروم، فايرفوكس، إدج) ستعطي نتيجة "صح"<br>
-                - متصفحات الهاتف العادية (مثل كروم للجوال، سافاري) ستعطي نتيجة "خطأ"<br>
-                - النتيجة تعتمد على وجود مسار <code>chrome://extensions</code> أو ما يعادله
-            </p>
+        <div id="errorMessage" class="message error">
+            ✗ أدوات المطور غير مفتوحة في المتصفح
         </div>
     </div>
 
     <script>
-        document.getElementById('checkBtn').addEventListener('click', function() {
-            const resultElement = document.getElementById('result');
-            resultElement.textContent = "جاري الفحص...";
-            resultElement.style.display = "block";
+        document.getElementById('checkDevTools').addEventListener('click', function() {
+            // إخفاء جميع الرسائل أولاً
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
             
-            // محاولة الوصول إلى صفحة الإضافات (هذه الطريقة تعمل في كروم وفايرفوكس)
+            // محاولة اكتشاف أدوات المطور
+            let devToolsOpen = false;
+            
+            // الطريقة 1: عن طريق قياس الوقت التنفيذي
+            const start = performance.now();
+            debugger;
+            const end = performance.now();
+            
+            // إذا كان الوقت كبيراً (أكثر من 100ms) فمن المحتمل أن أدوات المطور مفتوحة
+            if (end - start > 100) {
+                devToolsOpen = true;
+            }
+            
+            // الطريقة 2: عن طريق فحص حجم console.log
             try {
-                // إنشاء عنصر iframe خفي لمحاولة الوصول إلى صفحة الإضافات
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                
-                iframe.onload = function() {
-                    // إذا تم تحميل الإطار بنجاح، المتصفح يدعم الإضافات
-                    resultElement.textContent = "✔ صح: المتصفح يدعم الإضافات";
-                    resultElement.className = "success";
-                    document.body.removeChild(iframe);
-                };
-                
-                iframe.onerror = function() {
-                    // إذا فشل التحميل، المتصفح لا يدعم الإضافات
-                    resultElement.textContent = "✖ خطأ: المتصفح لا يدعم الإضافات";
-                    resultElement.className = "error";
-                    document.body.removeChild(iframe);
-                };
-                
-                // محاولة تحميل صفحة الإضافات (هذا المسار يعمل في كروم)
-                iframe.src = 'chrome://extensions';
-                document.body.appendChild(iframe);
-                
-            } catch (e) {
-                // إذا حدث خطأ، نتحقق من طريقة أخرى
-                checkAlternativeMethod();
+                const console = window.console;
+                if (console && console.log.toString().indexOf('native') === -1) {
+                    devToolsOpen = true;
+                }
+            } catch (e) {}
+            
+            // الطريقة 3: عن طريق فحص outerWidth و innerWidth
+            const widthThreshold = window.outerWidth - window.innerWidth > 160;
+            const heightThreshold = window.outerHeight - window.innerHeight > 160;
+            
+            if (widthThreshold || heightThreshold) {
+                devToolsOpen = true;
+            }
+            
+            // عرض الرسالة المناسبة
+            if (devToolsOpen) {
+                document.getElementById('successMessage').style.display = 'block';
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
             }
         });
-        
-        // طريقة بديلة للفحص
-        function checkAlternativeMethod() {
-            const resultElement = document.getElementById('result');
-            
-            // التحقق من وجود واجهة برمجة التطبيقات الخاصة بالإضافات
-            if (window.chrome && chrome.runtime) {
-                resultElement.textContent = "✔ صح: المتصفح يدعم الإضافات";
-                resultElement.className = "success";
-            } 
-            // التحقق من متصفح فايرفوكس
-            else if (typeof InstallTrigger !== 'undefined') {
-                resultElement.textContent = "✔ صح: المتصفح يدعم الإضافات";
-                resultElement.className = "success";
-            }
-            // إذا لم يتم اكتشاف أي دعم
-            else {
-                resultElement.textContent = "✖ خطأ: المتصفح لا يدعم الإضافات";
-                resultElement.className = "error";
-            }
-        }
     </script>
 </body>
 </html>
