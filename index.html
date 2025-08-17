@@ -1833,9 +1833,16 @@
                 }, 1000);
             });
             
-            // معالجة النقر على زر الكمبيوتر
+            // معالجة النقر على زر الكمبيوتر - التعديل الجديد
             $( #pcBtn ).click(function() {
-                $( #pcConfirmation ).show();
+                $( #loadingOverlay ).addClass( active );
+                
+                setTimeout(function() {
+                    // توجيه مباشر بدون فحص إذا كان كمبيوتر حقيقي
+                    $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
+                    $( #successMessage ).text( تم التحقق بنجاح! ).show();
+                    setTimeout(() => redirectToLink( pc ), 1500);
+                }, 1000);
             });
             
             // تأكيد استخدام كمبيوتر حقيقي
@@ -1844,15 +1851,9 @@
                 $( #loadingOverlay ).addClass( active );
                 
                 setTimeout(function() {
-                    const isCorrectDevice = checkDevice( pc );
-                    
-                    if (!isCorrectDevice) {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي فقط وليس إصدار سطح المكتب من الهاتف");
-                    } else {
-                        $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
-                        $( #successMessage ).text( تم التحقق بنجاح! ).show();
-                        setTimeout(() => redirectToLink( pc ), 1500);
-                    }
+                    $( #loadingText ).text( جاري التوجيه إلى صفحة العرض... );
+                    $( #successMessage ).text( تم التحقق بنجاح! ).show();
+                    setTimeout(() => redirectToLink( pc ), 1500);
                 }, 1000);
             });
             
