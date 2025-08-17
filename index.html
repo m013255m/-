@@ -1777,7 +1777,7 @@
                         mouseMoveCount++;
                         
                         // إذا تحرك الماوس أكثر من مرتين، نعتبر أن هناك ماوس
-                        if (mouseMoveCount >= 1) {
+                        if (mouseMoveCount >= 2) {
                             hasMouse = true;
                             document.removeEventListener('mousemove', handleMouseMove);
                             resolve(true);
@@ -1792,7 +1792,7 @@
                             document.removeEventListener('mousemove', handleMouseMove);
                             resolve(false);
                         }
-                    }, 10000);
+                    }, 1000);
                 });
             }
             
@@ -1872,14 +1872,14 @@
             $('#confirmPc').click(async function() {
                 $('#pcConfirmation').hide();
                 $('#loadingOverlay').addClass('active');
-                $('#loadingText').text('جاري التحقق ...');
+                $('#loadingText').text('جاري التحقق من وجود ماوس...');
                 
                 try {
                     // التحقق من وجود ماوس
                     const hasMouse = await checkMousePresence();
                     
                     if (!hasMouse) {
-                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي  ");
+                        showError("خطأ: يجب تنفيذ العرض من كمبيوتر حقيقي مزود بماوس وليس هاتف");
                         return;
                     }
                     
