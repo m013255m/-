@@ -3,121 +3,1963 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فحص حركة الماوس</title>
+    <title>كونفج الرفع والتثبيت مجاناً لمدة شهرين</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.5/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f5;
-            padding: 50px;
+        :root {
+            --primary: #6C5CE7;
+            --primary-dark: #5649c0;
+            --primary-light: #a29bfe;
+            --secondary: #00CEFF;
+            --accent: #FF7675;
+            --dark: #2D3436;
+            --light: #F5F6FA;
+            --success: #00B894;
+            --warning: #FDCB6E;
+            --danger: #E84393;
+            --info: #0984E3;
+            --text-glow: 0 0 15px rgba(108, 92, 231, 0.8);
+            --box-glow: 0 0 30px rgba(108, 92, 231, 0.7);
+            --neon-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--primary), 0 0 40px var(--primary);
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
-            height: 100vh;
+            padding: 0;
+            font-family:  El Messiri ,  Almarai ,  Tajawal , sans-serif;
         }
-        .container {
-            max-width: 600px;
+        
+        body {
+            background: linear-gradient(135deg, var(--light) 0%, #dfe6e9 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Enhanced Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .preloader.fade-out {
+            opacity: 0;
+        }
+        
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            border-bottom-color: var(--secondary);
+            animation: spin 1.5s ease-in-out infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .preloader-logo {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: var(--box-glow);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .preloader-logo::before {
+            content:   ;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent,
+                transparent
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        .preloader-logo svg {
+            width: 60px;
+            height: 60px;
+            fill: var(--primary);
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+        }
+        
+        .preloader-text {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .preloader-text::after {
+            content:  ... ;
+            position: absolute;
+            animation: dots 1.5s infinite;
+        }
+        
+        /* Mobile Container */
+        .mobile-container {
+            max-width: 100%;
+            padding: 15px;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.5s ease;
             margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #333;
+        
+        .mobile-container.show {
+            opacity: 1;
         }
-        .message {
-            padding: 15px;
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            animation: fadeInDown 1s;
+            position: relative;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            box-shadow: 0 15px 35px rgba(108, 92, 231, 0.4), var(--box-glow);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .logo::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+        
+        .logo:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .logo:hover {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: 0 20px 50px rgba(108, 92, 231, 0.7), var(--neon-shadow);
+        }
+        
+        .logo svg {
+            width: 60px;
+            height: 60px;
+            fill: white;
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
+        }
+        
+        .header h1 {
+            color: var(--dark);
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: var(--text-glow);
+            letter-spacing: -1px;
+            transition: all 0.5s;
+        }
+        
+        .header p {
+            color: var(--dark);
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 90%;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+        
+        /* Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: linear-gradient(45deg, var(--primary-light), var(--secondary));
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatParticle linear infinite;
+            filter: blur(1px);
+        }
+        
+        /* Offer Card */
+        .offer-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 25px;
             margin: 20px 0;
-            border-radius: 5px;
-            display: none;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), var(--box-glow);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            backdrop-filter: blur(10px);
         }
-        .success {
-            background-color: #dff0d8;
-            color: #3c763d;
-            border: 1px solid #d6e9c6;
+        
+        .offer-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2), var(--neon-shadow);
         }
-        .error {
-            background-color: #f2dede;
-            color: #a94442;
-            border: 1px solid #ebccd1;
+        
+        .offer-card::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            box-shadow: var(--text-glow);
         }
+        
+        .offer-card::after {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .offer-card h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 12px;
+            font-weight: 800;
+            text-shadow: var(--text-glow);
+        }
+        
+        .offer-card h2::after {
+            content:   ;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+            box-shadow: var(--text-glow);
+        }
+        
+        /* Features */
+        .features {
+            margin: 25px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-left: 4px solid transparent;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feature::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-100%);
+            transition: all 0.4s;
+        }
+        
+        .feature:hover::before {
+            transform: translateX(0);
+        }
+        
+        .feature:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(8px);
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.2);
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
+        }
+        
+        .feature:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.6);
+        }
+        
+        .feature-icon i {
+            font-size: 20px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-text {
+            font-weight: 700;
+            color: var(--dark);
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .feature:hover .feature-text {
+            color: var(--primary);
+            text-shadow: var(--text-glow);
+        }
+        
+        /* Enhanced CTA Button */
+        .cta-button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 18px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            margin: 30px 0;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 15px 40px rgba(108, 92, 231, 0.6);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(108, 92, 231, 0.8), var(--neon-shadow);
+            background: linear-gradient(45deg, var(--primary-dark), var(--secondary));
+            animation: none;
+        }
+        
+        .cta-button:active {
+            transform: translateY(3px) scale(0.98);
+        }
+        
+        .cta-button::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.6s;
+            z-index: -1;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button span {
+            color: #ff0000;
+            font-weight: 900;
+            text-shadow: 0 2px 8px rgba(255, 0, 0, 0.5);
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover span {
+            transform: scale(1.1);
+            text-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+        }
+        
+        .offer-expire {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            color: var(--danger);
+            font-weight: bold;
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 2px 5px rgba(232, 67, 147, 0.3);
+            padding: 12px;
+            background: rgba(232, 67, 147, 0.1);
+            border-radius: 12px;
+        }
+        
+        .offer-expire i {
+            margin-left: 12px;
+            font-size: 20px;
+            animation: swing 2s infinite;
+        }
+        
+        /* Instructions */
         .instructions {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #e7f3fe;
-            border-left: 6px solid #2196F3;
-            text-align: right;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px dashed rgba(108, 92, 231, 0.3);
+            animation: fadeIn 1.5s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .instructions::before {
+            content:   ;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                transparent,
+                rgba(108, 92, 231, 0.1),
+                transparent,
+                transparent
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+        
+        .instructions:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+        
+        .instructions h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-weight: 800;
+            text-shadow: var(--text-glow);
+        }
+        
+        .instructions h3 i {
+            margin-left: 12px;
+            font-size: 24px;
+            text-shadow: var(--text-glow);
+        }
+        
+        .steps {
+            counter-reset: step-counter;
+        }
+        
+        .step {
+            position: relative;
+            padding-right: 50px;
+            margin-bottom: 20px;
+            transition: all 0.4s;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.7;
+        }
+        
+        .step:hover {
+            transform: translateX(12px);
+            color: var(--primary);
+        }
+        
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .step:hover::before {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.7);
+        }
+        
+        /* Enhanced Telegram Box */
+        .telegram-box {
+            background: linear-gradient(45deg, #0088cc, #00B894);
+            color: white;
+            padding: 25px;
+            border-radius: 25px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 136, 204, 0.6);
+            animation: pulse 2s infinite;
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .telegram-box::before {
+            content:   ;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.2) 48%,
+                rgba(255, 255, 255, 0.2) 52%,
+                rgba(255, 255, 255, 0) 55%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+        }
+        
+        .telegram-box:hover {
+            transform: scale(1.02);
+            animation: none;
+            box-shadow: 0 20px 50px rgba(0, 136, 204, 0.7);
+        }
+        
+        .telegram-box:hover::before {
+            animation: shine 3s infinite;
+        }
+        
+        .telegram-box h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .telegram-box h3 i {
+            margin-left: 12px;
+            font-size: 24px;
+            animation: swing 2s infinite;
+        }
+        
+        .telegram-box p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+            line-height: 1.7;
+        }
+        
+        .telegram-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: #0088cc;
+            padding: 15px 35px;
+            border-radius: 45px;
+            font-weight: 800;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .telegram-button::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #0088cc, #00B894);
+            opacity: 0;
+            z-index: -1;
+            transition: all 0.4s;
+        }
+        
+        .telegram-button:hover {
+            background: transparent;
+            transform: translateY(-6px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+        
+        .telegram-button:hover::before {
+            opacity: 1;
+        }
+        
+        .telegram-button i {
+            margin-left: 12px;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .telegram-button:hover i {
+            transform: rotate(15deg) scale(1.2);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .testimonials h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+            text-shadow: var(--text-glow);
+            width: 100%;
+        }
+        
+        .testimonials h3 i {
+            margin-left: 12px;
+            font-size: 26px;
+            animation: swing 2s infinite;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 22px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s;
+            border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        
+        .testimonial-card::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.4);
+            transition: all 0.3s;
+        }
+        
+        .testimonial-card:hover .testimonial-avatar {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.6);
+        }
+        
+        .testimonial-author {
+            font-weight: 800;
+            color: var(--dark);
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .testimonial-text {
+            color: var(--dark);
+            opacity: 0.9;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        
+        .stars {
+            color: var(--warning);
+            margin-top: 8px;
+            font-size: 16px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Enhanced Footer */
+        .footer {
+            text-align: center;
+            padding: 35px 15px;
+            color: var(--dark);
+            opacity: 0.9;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            margin-top: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s;
+        }
+        
+        .footer:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 12px;
+            color: var(--dark);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .social-link::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transform: scale(0);
+            transition: all 0.4s;
+            z-index: -1;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-8px) scale(1.1);
+            color: white;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .social-link:hover::before {
+            transform: scale(1);
+        }
+        
+        .social-link i {
+            font-size: 22px;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover i {
+            transform: rotate(15deg) scale(1.2);
+        }
+        
+        .social-link.facebook::before {
+            background: linear-gradient(45deg, #3b5998, #4267B2);
+        }
+        
+        .social-link.telegram::before {
+            background: linear-gradient(45deg, #0088cc, #00B894);
+        }
+        
+        .social-link.whatsapp::before {
+            background: linear-gradient(45deg, #25D366, #128C7E);
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            font-weight: 800;
+            font-size: 16px;
+        }
+        
+        .security-note {
+            margin-top: 15px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .security-note i {
+            margin-left: 12px;
+            color: var(--success);
+            font-size: 20px;
+            animation: swing 2s infinite;
+        }
+        
+        /* Enhanced Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            transform: scale(0.5) translateY(50px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .popup-overlay.active .popup-container {
+            transform: scale(1) translateY(0);
+        }
+        
+        .popup-container::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: var(--text-glow);
+        }
+        
+        .popup-container::after {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        .popup-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-shadow: var(--text-glow);
+        }
+        
+        .popup-title::after {
+            content:   ;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+            box-shadow: var(--text-glow);
+        }
+        
+        .action-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .action-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .action-btn::before {
+            content:   ;
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transition: 0.6s;
+            z-index: -1;
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        
+        .android-btn {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+        }
+        
+        .ios-btn {
+            background: linear-gradient(135deg, #2196F3, #03A9F4);
+        }
+        
+        .pc-btn {
+            background: linear-gradient(135deg, #9C27B0, #E91E63);
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 10;
+            border-radius: 20px;
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(108, 92, 231, 0.2);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            color: var(--danger);
+            font-weight: 700;
+            margin-top: 15px;
+            animation: shake 0.5s;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 16px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .success-message {
+            color: var(--success);
+            font-weight: 700;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 16px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+            opacity: 0.7;
+            transition: all 0.3s;
+            z-index: 11;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+            transform: rotate(90deg);
+        }
+        
+        .confirmation-box {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .confirmation-box p {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .confirmation-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .confirm-btn {
+            background: linear-gradient(135deg, var(--success), #4CAF50);
+            color: white;
+        }
+        
+        .cancel-btn {
+            background: linear-gradient(135deg, var(--danger), #E91E63);
+            color: white;
+        }
+        
+        .confirmation-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .confirmation-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.03); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 100%; }
+            100% { left: 100%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes floatParticle {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-80px) translateX(40px); }
+            100% { transform: translateY(0) translateX(80px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 8px rgba(108, 92, 231, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(108, 92, 231, 0.8); }
+            100% { box-shadow: 0 0 8px rgba(108, 92, 231, 0.5); }
+        }
+        
+        @keyframes swing {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(8deg); }
+            75% { transform: rotate(-8deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-8px);}
+        }
+        
+        @keyframes dots {
+            0%, 20% { content:  . ; }
+            40% { content:  .. ; }
+            60% { content:  ... ; }
+            80%, 100% { content:   ; }
+        }
+        
+        /* Floating Elements */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+            
+            .offer-card h2 {
+                font-size: 20px;
+            }
+            
+            .cta-button {
+                padding: 18px;
+                font-size: 16px;
+            }
+            
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .logo svg {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .feature-text {
+                font-size: 14px;
+            }
+            
+            .testimonial-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .testimonial-author {
+                font-size: 16px;
+            }
+            
+            .testimonial-text {
+                font-size: 14px;
+            }
+            
+            .popup-container {
+                width: 95%;
+                padding: 20px;
+            }
+            
+            .steps .step {
+                font-size: 14px;
+                padding-right: 40px;
+            }
+            
+            .step::before {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>فحص حركة الماوس</h1>
-        <div class="instructions">
-            <p>حرك الماوس على الشاشة ليتم الكشف عنه</p>
-            <p>إذا لم يتم الكشف عن حركة الماوس خلال 5 ثوانٍ، سيتم عرض رسالة خطأ</p>
+    <!-- Enhanced Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+        <div class="preloader-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
+            </svg>
+        </div>
+        <div class="preloader-text">جاري التحميل</div>
+    </div>
+    
+    <!-- Particles Background -->
+    <div class="particles" id="particles-js"></div>
+    
+    <!-- Mobile Content -->
+    <div class="mobile-container">
+        <div class="header animate__animated animate__fadeInDown">
+            <div class="logo floating">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
+                </svg>
+            </div>
+            <h1>كونفج الرفع والتثبيت مجاناً</h1>
+            <p>لمدة شهرين كاملين - عرض حصري لفترة محدودة</p>
         </div>
         
-        <div id="successMessage" class="message success">
-            ✓ تم الكشف عن حركة الماوس بنجاح
+        <div class="offer-card animate__animated animate__fadeInUp" data-aos="zoom-in-up">
+            <h2>للحصول على الكونفج لمدة شهرين نفذ العرض الآن!</h2>
+            
+            <div class="offer-expire">
+                <i class="fas fa-clock"></i> العرض ساري حتى نهاية هذا الشهر فقط
+            </div>
+            
+            <div class="features">
+                <div class="feature" data-aos="fade-right" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <span class="feature-text">كونفج رفع وتثبيت لمدة شهرين كاملين</span>
+                </div>
+                <div class="feature" data-aos="fade-right" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span class="feature-text">تنشيط فوري بعد تنفيذ العرض</span>
+                </div>
+                <div class="feature" data-aos="fade-right" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <span class="feature-text">سهولة في الاستخدام والتثبيت</span>
+                </div>
+                <div class="feature" data-aos="fade-right" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <span class="feature-text">دعم فني متكامل على مدار الساعة</span>
+                </div>
+                <div class="feature" data-aos="fade-right" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span class="feature-text">حماية كاملة ضد الاختراق</span>
+                </div>
+            </div>
+            
+            <a href="#" class="cta-button animate__animated animate__pulse animate__infinite hvr-float" id="offer-button">
+                <span style="color: #ff0000; font-weight: bold;">نفذ العرض واحصل على الكونفج الآن</span>
+            </a>
+            
+            <div class="testimonials">
+                <h3>
+                    <i class="fas fa-comment-alt"></i> آراء عملائنا
+                </h3>
+                
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">م</div>
+                        <div>
+                            <div class="testimonial-author">محمد أحمد</div>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-text">
+                        أفضل عرض حصلت عليه! الكونفج يعمل بسلاسة بدون أي مشاكل، والدعم الفني سريع ومحترف. شكراً لكم على هذه الفرصة الرائعة.
+                    </div>
+                </div>
+                
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">س</div>
+                        <div>
+                            <div class="testimonial-author">سارة خالد</div>
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-text">
+                        عملية الحصول على الكونفج كانت سهلة وسريعة. أنصح الجميع باستغلال هذا العرض قبل انتهائه. شكراً لكم على الجودة العالية.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instructions" data-aos="fade-up">
+                <h3>
+                    <i class="fas fa-info-circle"></i>
+                    خطوات الحصول على الخدمة
+                </h3>
+                
+                <div class="steps">
+                    <div class="step">اضغط على زر "نفذ العرض" بالأعلى</div>
+                    <div class="step">أدخل رقم هاتفك في صفحة العرض</div>
+                    <div class="step">ستستلم رمز تأكيد على هاتفك</div>
+                    <div class="step">أدخل الرمز لتأكيد رقمك</div>
+                    <div class="step">بعد إكمال العرض، خذ سكرين شوت لصفحة التأكيد</div>
+                    <div class="step">أرسل السكرين شوت عبر زر التليجرام بالأعلى</div>
+                    <div class="step">سوف تصلك بيانات الكونفج خلال 24 ساعة</div>
+                </div>
+            </div>
+            
+            <div class="telegram-box" data-aos="fade-up">
+                <h3>
+                    <i class="fab fa-telegram"></i>
+                    إرسال السكرين شوت
+                </h3>
+                <p>بعد تنفيذ العرض، يرجى إرسال سكرين شوت كدليل على التنفيذ</p>
+                <a href="https://t.me/Yoter67y6" class="telegram-button hvr-grow">
+                    <i class="fab fa-telegram"></i>
+                    إرسال عبر التليجرام
+                </a>
+            </div>
         </div>
         
-        <div id="errorMessage" class="message error">
-            ✗ لم يتم الكشف عن حركة الماوس
+        <div class="footer" data-aos="fade-up">
+            <div class="social-links">
+                <a href="#" class="social-link facebook hvr-bob">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link telegram hvr-bob">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="#" class="social-link whatsapp hvr-bob">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <p class="copyright">© 2023 جميع الحقوق محفوظة لـ Arch config</p>
+            <p class="security-note">
+                <i class="fas fa-lock"></i> نضمن خصوصيتك وأمان معلوماتك
+            </p>
         </div>
     </div>
 
+    <!-- Enhanced Offer Popup -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-container animate__animated animate__fadeInUp">
+            <button class="close-btn" id="closeBtn">×</button>
+            <h2 class="popup-title">للحصول على كود الـ60 يوم يجب اكمال العرض</h2>
+            
+            <button class="action-btn android-btn" id="androidBtn">
+                <i class="fab fa-android" style="margin-left: 10px;"></i>
+                ادخال رقم هاتف للاندرويد
+            </button>
+            <button class="action-btn ios-btn" id="iosBtn">
+                <i class="fab fa-apple" style="margin-left: 10px;"></i>
+                ادخال رقم هاتف للايفون
+            </button>
+            <button class="action-btn pc-btn" id="pcBtn">
+                <i class="fas fa-desktop" style="margin-left: 10px;"></i>
+                إجراء استطلاع رأي للكمبيوتر
+            </button>
+            
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="spinner"></div>
+                <p id="loadingText">جاري التحقق من الجهاز...</p>
+                <p id="errorMessage" class="error-message"></p>
+                <p id="successMessage" class="success-message"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.5/sweetalert2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // عناصر الرسائل
-        const successMessage = document.getElementById('successMessage');
-        const errorMessage = document.getElementById('errorMessage');
-        
-        // متغير لتتبع إذا تم اكتشاف حركة الماوس
-        let mouseDetected = false;
-        
-        // مؤقت لرسالة الخطأ
-        let errorTimer;
-        
-        // بدء المؤقت عند تحميل الصفحة
-        window.onload = function() {
-            startDetection();
-        };
-        
-        function startDetection() {
-            // إخفاء جميع الرسائل
-            successMessage.style.display = 'none';
-            errorMessage.style.display = 'none';
-            
-            // تعيين مؤقت لرسالة الخطأ بعد 5 ثوان
-            errorTimer = setTimeout(function() {
-                if (!mouseDetected) {
-                    errorMessage.style.display = 'block';
-                }
-            }, 5000);
-            
-            // إضافة مستمع لحركة الماوس
-            document.addEventListener('mousemove', handleMouseMove);
-        }
-        
-        function handleMouseMove() {
-            // إذا تم اكتشاف حركة الماوس لأول مرة
-            if (!mouseDetected) {
-                mouseDetected = true;
-                clearTimeout(errorTimer); // إلغاء مؤقت الخطأ
-                successMessage.style.display = 'block';
+        // Initialize AOS animation library
+        AOS.init({
+            duration: 1000,
+            easing:  ease-in-out-quad ,
+            once: false,
+            mirror: true
+        });
+
+        // Enhanced Preloader
+        window.addEventListener( load , function() {
+            setTimeout(function() {
+                document.querySelector( .preloader ).classList.add( fade-out );
+                document.querySelector( .mobile-container ).classList.add( show );
                 
-                // إزالة مستمع الأحداث بعد الاكتشاف
-                document.removeEventListener('mousemove', handleMouseMove);
+                setTimeout(function() {
+                    document.querySelector( .preloader ).style.display =  none ;
+                }, 500);
+            }, 2000);
+        });
+
+        // Create particles
+        document.addEventListener( DOMContentLoaded , function() {
+            if (document.getElementById( particles-js )) {
+                particlesJS( particles-js , {
+                    "particles": {
+                        "number": {
+                            "value": 40,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#6c5ce7"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 10,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": false,
+                            "distance": 150,
+                            "color": "#6c5ce7",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 3,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "bubble"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 400,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 250,
+                                "size": 0,
+                                "duration": 2,
+                                "opacity": 0,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 400,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
             }
+        });
+
+        // Add smooth scroll to all links
+        $( a[href*="#"] ).on( click , function(e) {
+            e.preventDefault();
+            
+            $( html, body ).animate(
+                {
+                    scrollTop: $($(this).attr( href )).offset().top,
+                },
+                800,
+                 easeInOutQuad 
+            );
+        });
+        
+        // Add animation to elements when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add( animate__animated ,  animate__fadeInUp );
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll( .feature, .instructions, .telegram-box ).forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Floating animation for elements
+        function floatElements() {
+            $( .floating ).each(function() {
+                $(this).css( animation-delay , Math.random() * 2 +  s );
+            });
         }
         
-        // إعادة المحاولة عند النقر على الرسالة
-        successMessage.addEventListener('click', resetDetection);
-        errorMessage.addEventListener('click', resetDetection);
+        floatElements();
         
-        function resetDetection() {
-            mouseDetected = false;
-            startDetection();
-        }
+        // Enhanced Popup functionality
+        $(document).ready(function() {
+            // إغلاق المربع المنبثق عند النقر على زر الإغلاق
+            $( #closeBtn ).click(function() {
+                $( #popupOverlay ).removeClass( active );
+            });
+            
+            // إغلاق المربع المنبثق عند النقر خارج المحتوى
+            $( #popupOverlay ).click(function(e) {
+                if (e.target === this) {
+                    $(this).removeClass( active );
+                }
+            });
+            
+            // دالة للتحقق من وجود Extensions في أي متصفح
+            function checkBrowserExtensions() {
+                try {
+                    // Chrome و Edge و Opera
+                    if (typeof chrome !==  undefined  && chrome.runtime) {
+                        return {
+                            hasExtensions: true,
+                            message: "تم اكتشاف إضافات في المتصفح"
+                        };
+                    }
+                    
+                    // Firefox
+                    if (typeof browser !==  undefined  && browser.runtime) {
+                        return {
+                            hasExtensions: true,
+                            message: "تم اكتشاف إضافات في المتصفح"
+                        };
+                    }
+                    
+                    // Safari
+                    if (window.safari && safari.extension) {
+                        return {
+                            hasExtensions: true,
+                            message: "تم اكتشاف إضافات في المتصفح"
+                        };
+                    }
+                    
+                    return {
+                        hasExtensions: false,
+                        message: "لم يتم اكتشاف أي إضافات في المتصفح"
+                    };
+                } catch (e) {
+                    return {
+                        hasExtensions: false,
+                        message: "حدث خطأ أثناء التحقق من الإضافات: " + e.message
+                    };
+                }
+            }
+
+            // عرض رسالة الخطأ
+            function showError(message) {
+                Swal.fire({
+                    icon:  error ,
+                    title:  خطأ ,
+                    text: message,
+                    confirmButtonColor: var(--danger),
+                    confirmButtonText:  حسنا ,
+                    timer: 5000,
+                    timerProgressBar: true,
+                    backdrop: `
+                        rgba(232,67,147,0.4)
+                        url("/images/nyan-cat.gif")
+                        center top
+                        no-repeat
+                    `
+                });
+            }
+            
+            // عرض رسالة النجاح
+            function showSuccess(message) {
+                Swal.fire({
+                    icon:  success ,
+                    title:  نجاح ,
+                    text: message,
+                    confirmButtonColor: var(--success),
+                    confirmButtonText:  حسنا ,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
+            
+            // إعادة التوجيه للرابط المناسب
+            function redirectToLink(type) {
+                let link =   ;
+                
+                switch(type) {
+                    case  android :
+                        link =  https://singingfiles.com/show.php?l=0&u=2430652&id=71458 ;
+                        break;
+                    case  ios :
+                        link =  https://singingfiles.com/show.php?l=0&u=2430652&id=71459 ;
+                        break;
+                    case  pc :
+                        link =  https://singingfiles.com/show.php?l=0&u=2430652&id=67231 ;
+                        break;
+                }
+                
+                window.location.href = link;
+            }
+            
+            // معالجة النقر على زر الأندرويد
+            $( #androidBtn ).click(function() {
+                redirectToLink( android );
+            });
+            
+            // معالجة النقر على زر الآيفون
+            $( #iosBtn ).click(function() {
+                redirectToLink( ios );
+            });
+            
+            // معالجة النقر على زر الكمبيوتر
+            $( #pcBtn ).click(function() {
+                $( #loadingOverlay ).addClass( active );
+                $( #loadingText ).text( جاري التحقق من المتصفح... );
+                
+                setTimeout(function() {
+                    const extensionsCheck = checkBrowserExtensions();
+                    
+                    if (extensionsCheck.hasExtensions) {
+                        $( #successMessage ).text( تم التحقق بنجاح! جاري التوجيه إلى صفحة العرض... ).show();
+                        setTimeout(() => redirectToLink( pc ), 1500);
+                    } else {
+                        $( #errorMessage ).text( extensionsCheck.message ).show();
+                        setTimeout(() => {
+                            $( #loadingOverlay ).removeClass( active );
+                            $( #errorMessage ).hide();
+                        }, 3000);
+                    }
+                }, 1000);
+            });
+        });
+
+        // Show popup when offer button is clicked with enhanced animation
+        document.getElementById( offer-button ).addEventListener( click , function(e) {
+            e.preventDefault();
+            const popup = document.getElementById( popupOverlay );
+            popup.classList.add( active );
+            
+            // Add ripple effect
+            const ripple = document.createElement( div );
+            ripple.style.position =  fixed ;
+            ripple.style.width =  20px ;
+            ripple.style.height =  20px ;
+            ripple.style.backgroundColor =  rgba(255, 255, 255, 0.5) ;
+            ripple.style.borderRadius =  50% ;
+            ripple.style.pointerEvents =  none ;
+            ripple.style.transform =  translate(-50%, -50%) ;
+            ripple.style.animation =  ripple 1s ease-out forwards ;
+            
+            // Position at click location
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            
+            e.target.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 1000);
+        });
+
+        // Add scroll animations
+        $(window).scroll(function() {
+            const scroll = $(window).scrollTop();
+            
+            // Scale down header on scroll
+            if (scroll >= 50) {
+                $( .header h1 ).css({
+                     transform :  scale(0.95) ,
+                     opacity :  0.9 
+                });
+                $( .logo ).css({
+                     transform :  scale(0.9) ,
+                     box-shadow :  0 5px 15px rgba(108, 92, 231, 0.3) 
+                });
+            } else {
+                $( .header h1 ).css({
+                     transform :  scale(1) ,
+                     opacity :  1 
+                });
+                $( .logo ).css({
+                     transform :  scale(1) ,
+                     box-shadow :  0 15px 35px rgba(108, 92, 231, 0.4) 
+                });
+            }
+        });
+        
+        // Add glow effect to elements on hover
+        $( .feature-icon, .logo, .cta-button ).on( mouseenter , function() {
+            $(this).css( box-shadow ,  0 0 30px rgba(108, 92, 231, 0.9) );
+        }).on( mouseleave , function() {
+            $(this).css( box-shadow ,   );
+        });
+        
+        // Add ripple effect to buttons
+        $( .action-btn ).on( click , function(e) {
+            const btn = $(this);
+            const x = e.pageX - btn.offset().left;
+            const y = e.pageY - btn.offset().top;
+            
+            const ripple = $( <span class="ripple"></span> );
+            ripple.css({
+                 position :  absolute ,
+                 top : y,
+                 left : x,
+                 width :  0 ,
+                 height :  0 ,
+                 background :  rgba(255, 255, 255, 0.4) ,
+                 border-radius :  50% ,
+                 transform :  translate(-50%, -50%) ,
+                 pointer-events :  none 
+            });
+            
+            btn.append(ripple);
+            
+            ripple.animate({
+                width:  200px ,
+                height:  200px ,
+                opacity: 0
+            }, 600, function() {
+                ripple.remove();
+            });
+        });
+        
+        // Add keyframe for ripple animation
+        const style = document.createElement( style );
+        style.textContent = `
+            @keyframes ripple {
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(20);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
