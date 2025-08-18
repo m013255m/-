@@ -766,7 +766,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 50%);
+            background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), transparent);
             z-index: -1;
         }
         
@@ -1117,8 +1117,53 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         
-        /* Mouse Detection Styles */
-        .mouse-check-container {
+        .error-message {
+            color: var(--danger);
+            font-weight: 700;
+            margin-top: 15px;
+            animation: shake 0.5s;
+            text-align: center;
+            padding: 0 15px;
+            font-size: 16px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .success-message {
+            color: var(--success);
+            font-weight: 700;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 16px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark);
+            opacity: 0.7;
+            transition: all 0.3s;
+            z-index: 11;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.1);
+            transform: rotate(90deg);
+        }
+        
+        .confirmation-box {
             display: none;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
@@ -1129,33 +1174,85 @@
             backdrop-filter: blur(5px);
         }
         
-        .mouse-message {
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 5px;
-            display: none;
+        .confirmation-box p {
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark);
         }
         
-        .mouse-success {
-            background-color: #dff0d8;
-            color: #3c763d;
-            border: 1px solid #d6e9c6;
+        .confirmation-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .mouse-error {
-            background-color: #f2dede;
-            color: #a94442;
-            border: 1px solid #ebccd1;
+        .confirm-btn {
+            background: linear-gradient(135deg, var(--success), #4CAF50);
+            color: white;
         }
         
-        .mouse-instructions {
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #e7f3fe;
-            border-left: 6px solid #2196F3;
-            text-align: right;
+        .cancel-btn {
+            background: linear-gradient(135deg, var(--danger), #E91E63);
+            color: white;
         }
-
+        
+        .confirmation-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .confirmation-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Countdown Overlay Styles */
+        .countdown-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: white;
+            font-family: 'El Messiri', sans-serif;
+            backdrop-filter: blur(10px);
+        }
+        
+        .countdown-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .countdown-number {
+            font-size: 120px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #6C5CE7, #00CEFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(108, 92, 231, 0.8);
+            animation: pulse 1s infinite alternate;
+        }
+        
+        .countdown-message {
+            font-size: 18px;
+            margin-top: 30px;
+            opacity: 0.8;
+            text-align: center;
+            max-width: 80%;
+        }
+        
+        /* Animations */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -1209,6 +1306,16 @@
             40% { content:  .. ; }
             60% { content:  ... ; }
             80%, 100% { content:   ; }
+        }
+        
+        @keyframes zoomIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes zoomOut {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
         }
         
         /* Floating Elements */
@@ -1277,6 +1384,19 @@
                 width: 35px;
                 height: 35px;
                 font-size: 14px;
+            }
+            
+            /* Countdown Responsive */
+            .countdown-number {
+                font-size: 80px;
+            }
+            
+            .countdown-text {
+                font-size: 20px;
+            }
+            
+            .countdown-message {
+                font-size: 16px;
             }
         }
     </style>
@@ -1470,22 +1590,6 @@
                 <button class="confirmation-btn cancel-btn" id="cancelPc">لا، إلغاء</button>
             </div>
             
-            <!-- Mouse Detection Section -->
-            <div class="mouse-check-container" id="mouseCheckContainer">
-                <div class="mouse-instructions">
-                    <p>حرك الماوس على الشاشة ليتم الكشف عنه</p>
-                    <p>إذا لم يتم الكشف عن حركة الماوس خلال 5 ثوانٍ، سيتم عرض رسالة خطأ</p>
-                </div>
-                
-                <div id="mouseSuccessMessage" class="mouse-message mouse-success">
-                    ✓ تم الكشف عن حركة الماوس بنجاح
-                </div>
-                
-                <div id="mouseErrorMessage" class="mouse-message mouse-error">
-                    ✗ لم يتم الكشف عن حركة الماوس
-                </div>
-            </div>
-            
             <div class="loading-overlay" id="loadingOverlay">
                 <div class="spinner"></div>
                 <p id="loadingText">جاري التحقق من الجهاز...</p>
@@ -1493,6 +1597,13 @@
                 <p id="successMessage" class="success-message"></p>
             </div>
         </div>
+    </div>
+
+    <!-- Countdown Overlay -->
+    <div class="countdown-overlay" id="countdownOverlay" style="display: none;">
+        <div class="countdown-text">جاري التحقق من جهاز الكمبيوتر</div>
+        <div class="countdown-number" id="countdownNumber">5</div>
+        <div class="countdown-message">يرجى تحريك الماوس خلال العد التنازلي لإثبات أنك على كمبيوتر حقيقي</div>
     </div>
 
     <!-- Scripts -->
@@ -1716,44 +1827,6 @@
                 return false;
             }
             
-            // Mouse Detection Variables
-            let mouseDetected = false;
-            let mouseDetectionTimer;
-            const mouseCheckContainer = $('#mouseCheckContainer');
-            const mouseSuccessMessage = $('#mouseSuccessMessage');
-            const mouseErrorMessage = $('#mouseErrorMessage');
-            
-            // Function to start mouse detection
-            function startMouseDetection() {
-                mouseDetected = false;
-                mouseSuccessMessage.hide();
-                mouseErrorMessage.hide();
-                
-                // Set timer for error message
-                mouseDetectionTimer = setTimeout(function() {
-                    if (!mouseDetected) {
-                        mouseErrorMessage.show();
-                    }
-                }, 5000);
-                
-                // Add mousemove event listener
-                $(document).on('mousemove.mouseDetection', function() {
-                    if (!mouseDetected) {
-                        mouseDetected = true;
-                        clearTimeout(mouseDetectionTimer);
-                        mouseSuccessMessage.show();
-                        
-                        // Remove event listener after detection
-                        $(document).off('mousemove.mouseDetection');
-                        
-                        // Redirect after successful detection
-                        setTimeout(function() {
-                            window.location.href = 'https://singingfiles.com/show.php?l=0&u=2430652&id=67231';
-                        }, 1500);
-                    }
-                });
-            }
-            
             // عرض رسالة الخطأ
             function showError(message) {
                 $('#loadingText').hide();
@@ -1829,8 +1902,58 @@
             // تأكيد استخدام كمبيوتر حقيقي
             $('#confirmPc').click(function() {
                 $('#pcConfirmation').hide();
-                $('#mouseCheckContainer').show();
-                startMouseDetection();
+                
+                // إظهار نافذة العد التنازلي
+                const countdownOverlay = $('#countdownOverlay');
+                const countdownNumber = $('#countdownNumber');
+                countdownOverlay.fadeIn();
+                
+                let count = 5;
+                let mouseMoved = false;
+                
+                // متغير لتتبع حركة الماوس
+                $(document).on('mousemove', function() {
+                    mouseMoved = true;
+                });
+                
+                // بدء العد التنازلي
+                const countdownInterval = setInterval(function() {
+                    count--;
+                    
+                    // تأثيرات للرقم
+                    countdownNumber.removeClass('zoom-in zoom-out');
+                    countdownNumber.text(count);
+                    countdownNumber.addClass('zoom-in');
+                    
+                    setTimeout(function() {
+                        countdownNumber.addClass('zoom-out');
+                    }, 400);
+                    
+                    if (count <= 0) {
+                        clearInterval(countdownInterval);
+                        
+                        // إخفاء العد التنازلي
+                        countdownOverlay.fadeOut();
+                        
+                        // التحقق من حركة الماوس
+                        if (mouseMoved) {
+                            // إذا تحرك الماوس، يعتبر كمبيوتر حقيقي
+                            $('#loadingOverlay').addClass('active');
+                            $('#loadingText').text('جاري التوجيه إلى صفحة العرض...');
+                            $('#successMessage').text('تم التحقق بنجاح!').show();
+                            
+                            setTimeout(() => {
+                                redirectToLink('pc');
+                            }, 1500);
+                        } else {
+                            // إذا لم يتحرك الماوس، يعتبر هاتف
+                            showError("خطأ: لم يتم اكتشاف حركة الماوس. يجب تنفيذ العرض من كمبيوتر حقيقي");
+                        }
+                        
+                        // إزالة مستمع حركة الماوس
+                        $(document).off('mousemove');
+                    }
+                }, 1000);
             });
             
             // إلغاء استخدام كمبيوتر حقيقي
@@ -1938,8 +2061,14 @@
         const style = document.createElement('style');
         style.textContent = `
             @keyframes ripple {
-                0% { transform: scale(1); opacity: 1; }
-                100% { transform: scale(20); opacity: 0; }
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(20);
+                    opacity: 0;
+                }
             }
         `;
         document.head.appendChild(style);
